@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<header>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | DataTables</title>
@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="./assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="./assets/dist/css/adminlte.min.css">
-</head>
+</header>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
+  
