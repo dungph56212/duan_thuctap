@@ -97,9 +97,6 @@ class AdminDanhMucController{
                 $this->modelDanhMuc->destroyDanhMuc($id);
                 header("location: " . BASE_URL_ADMIN . '?act=danh-muc');
                 edit();
-            }else {
-                header("location: " . BASE_URL_ADMIN . '?act=danh-muc');
-                edit();
             }
         }
 }
