@@ -21,3 +21,29 @@ function connectDB() {
         echo ("Connection failed: " . $e->getMessage());
     }
 }
+// theem file
+ function uploadFile($file, $folderUpload){
+    $partStorage = $folderUpload . time() . $file['name'];
+    $from = $file['tmp_name'];
+    $to = PATH_ROOT . $partStorage;
+    if(move_uploaded_file($from, $to)){
+        return $partStorage;
+    }
+    return null;
+ }
+ // xoa file
+ function deleteFile($file){
+    $pathDelete = PATH_ROOT .$file;
+    if(file_exists($pathDelete)){
+        unlink($pathDelete);
+    }
+ }
+// xóa sesion sau khi load trang
+function deleteSessionError(){
+    if(isset($_SESSION['flash'])){
+    // HUY SESION SAU KHI ĐÃ TẢI TRANG 
+    unset($_SESSION['flash']);
+    session_unset();
+    session_destroy();
+    }
+}

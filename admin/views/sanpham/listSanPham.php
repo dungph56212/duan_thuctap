@@ -24,7 +24,7 @@
             <div class="card">
               <div class="card-header">
                <a href="<?= BASE_URL_ADMIN . '?act=form-them-san-pham' ?>">
-                <button class="btn btn-success">Thêm sản phẩm</button>
+                <button class="btn btn-success">Thêm sách</button>
                </a>
               </div>
               <!-- /.card-header -->
@@ -47,11 +47,18 @@
                   <tr>
                   <td><?= $key+1 ?></td>
                   <td><?=$sanPham['ten_san_pham'] ?></td>
-                  <td><?=$sanPham['hinh_anh'] ?></td>
+                  <td>
+                    <img src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" style="width: 100px" alt=""
+                   
+
+                    onerror="this.onerror=null; this.src = 'https://img.lovepik.com/free-png/20210923/lovepik-creative-three-hardcover-books-illustration-png-image_401276495_wh1200.png'"  
+                    >
+                  </td>
                   <td><?=$sanPham['gia_san_pham'] ?></td>
                   <td><?=$sanPham['so_luong'] ?></td>
-                  <td><?=$sanPham['danh_muc_id'] ?></td>
-                  <td><?=$sanPham['trang_thai'] ?></td>
+                  <td><?=$sanPham['ten_danh_muc'] ?></td>
+                  <!-- Toán tử ba ngôi -->
+                  <td><?=$sanPham['trang_thai'] ==1 ? 'còn bán' : 'dừng bán'  ?></td> 
                   <td>
                     <a href="<?= BASE_URL_ADMIN . '?act=form-sua-san-pham&id_san_pham=' . $sanPham['id'] ?>"> <button class="btn btn-warning">Sửa</button></a>
                     <a href="<?= BASE_URL_ADMIN . '?act=xoa-san-pham&id_san_pham=' . $sanPham['id'] ?>" 
