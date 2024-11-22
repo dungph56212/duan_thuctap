@@ -18,6 +18,8 @@ $act = $_GET['act'] ?? '/';
 
 match ($act) {
     //route
+  // '/' => (new AdminDashboardController())->dashboard(),
+
   'danh-muc' => (new AdminDanhMucController())->danhSachDanhMuc(),
   'form-them-danh-muc' => (new AdminDanhMucController())->formAddDanhMuc(),
   'them-danh-muc' => (new AdminDanhMucController())->postAddDanhMuc(),
@@ -31,6 +33,7 @@ match ($act) {
  'them-san-pham' => (new AdminSanPhamController())->postAddSanPham(),
  'form-sua-san-pham' => (new AdminSanPhamController())->formEditSanPham(),
  'sua-san-pham' => (new AdminSanPhamController())->postEditSanPham(),
+ 'sua-album-anh-san-pham' => (new AdminSanPhamController())->postEditAnhSanPham(),
 //  'xoa-san-pham' => (new AdminSanPhamController())->deleteSanPham()
 
 };
