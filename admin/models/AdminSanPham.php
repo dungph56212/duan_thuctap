@@ -60,7 +60,11 @@ class AdminSanPham{
 
     public function getDetailSanPham($id){
         try {
-            $sql = 'SELECT * FROM san_phams WHERE id = :id';
+            $sql = ' SELECT san_phams.*, danh_mucs.ten_danh_muc
+            FROM san_phams
+            INNER JOIN danh_mucs ON san_phams.danh_muc_id = danh_mucs.id
+            
+             WHERE san_phams.id = :id';
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([':id'=>$id]);
@@ -170,6 +174,21 @@ class AdminSanPham{
             
         }
     }
+    
 
+
+    public function destroySanPham($id){
+        try {
+            $sql = 'DELETE FROM san_phams WHERE id = :id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':id' =>  $id
+            ]);
+            return true;
+        } catch (Exception $e) {
+            echo "lỗi" . $e->getMessage();
+            
+        }
+    }
 
 }

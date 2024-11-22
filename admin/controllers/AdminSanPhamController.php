@@ -129,7 +129,7 @@ class AdminSanPhamController{
             deleteSessionError();
         } else {
             header("location: " . BASE_URL_ADMIN . '?act=san-pham');
-              edit();
+              exit();
         }
         
         }
@@ -301,13 +301,38 @@ exit();
 }
 }
 
-    //     public function deleteDanhMuc(){
-    //         $id = $_GET['id_danh_muc'];
-    //         $danhMuc = $this->modelDanhMuc->getDetailDanhMuc($id);
-    //         if( $danhMuc){
-    //             $this->modelDanhMuc->destroyDanhMuc($id);
-    //             header("location: " . BASE_URL_ADMIN . '?act=danh-muc');
-    //             edit();
-    //         }
-    //     }
+        public function deleteSanPham(){
+            $id = $_GET['id_san_pham'];
+            $sanPham = $this->modelSanPham->getDetailSanPham($id);
+            $listAnhSanPham = $this->modelSanPham->getlistAnhSanPham($id);
+            if( $sanPham){
+               deleteFile($sanPham['hinh_anh']);
+                $this->modelSanPham->destroySanPham($id);
+               }
+               if($listAnhSanPham ){
+                  foreach($listAnhSanPham as $key =>$anhSP){
+                     deleteFile($anhSP['link_hinh_anh']);
+                     $this->modelSanPham->destroyAnhSanPham($anhSP['id']);
+
+                  }
+               }
+                header("location: " . BASE_URL_ADMIN . '?act=san-pham');
+                edit();
+            
+        }
+
+
+        public function detailSanPham(){
+         $id = $_GET['id_san_pham'];
+         $sanPham = $this->modelSanPham->getDetailSanPham($id);
+         // var_dump($sanPham['hinh_anh']);die;
+         $listAnhSanPham = $this->modelSanPham->getListAnhSanPham($id);
+         if( $sanPham){
+             require_once './views/sanpham/detailSanPham.php';
+         } else {
+             header("location: " . BASE_URL_ADMIN . '?act=san-pham');
+               exit();
+         }
+         
+         }
 }
