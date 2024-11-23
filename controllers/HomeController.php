@@ -11,6 +11,10 @@ class HomeController
 
     public function home() {
         echo "Dự án 1 team 9";
+        // $listSanPham = $this->modelSanPham->getAllSanPham();
+        $listSanPham = $this->modelSanPham->getAllProduct();
+        // var_dump($listSanPham);die;
+        require_once './views/home.php';
     }
     public function trangchu(){
         echo "Đây là trang chủ của tôi";

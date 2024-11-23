@@ -129,7 +129,7 @@ class AdminSanPhamController{
             deleteSessionError();
         } else {
             header("location: " . BASE_URL_ADMIN . '?act=san-pham');
-              edit();
+              exit();
         }
         
         }
