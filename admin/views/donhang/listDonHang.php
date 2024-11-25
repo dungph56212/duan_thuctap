@@ -55,10 +55,10 @@
                   <td><?=$donHang['ten_trang_thai'] ==1 ? 'còn bán' : 'dừng bán'  ?></td> 
                   <td >
                     <div class="btn-group">
-                    <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-dong-hang&id_dong-hang=' . $sanPham['id'] ?>"> 
+                    <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-don-hang&id_don_hang=' . $donHang['id'] ?>"> 
                       <button class="btn btn-primary"><i class="far fa-eye"></i></button>
                     </a>
-                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-san-pham&id_san_pham=' . $sanPham['id'] ?>"> 
+                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-don_hang&id_don_hang=' . $donHang['id'] ?>"> 
                       <button class="btn btn-warning"><i class="fas fa-cogs"></i></button>
                     </a>
 
