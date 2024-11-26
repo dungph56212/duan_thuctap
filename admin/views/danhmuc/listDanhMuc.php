@@ -45,10 +45,10 @@
                   <td><?=$danhMuc['ten_danh_muc'] ?></td>
                   <td><?=$danhMuc['mo_ta'] ?></td>
                   <td>
-                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-danh-muc&id_danh_muc=' . $danhMuc['id'] ?>"> <button class="btn btn-warning">Sửa</button></a>
+                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-danh-muc&id_danh_muc=' . $danhMuc['id'] ?>"> <button class="btn btn-warning"><i class="fas fa-cogs"></i></button></a>
                     <a href="<?= BASE_URL_ADMIN . '?act=xoa-danh-muc&id_danh_muc=' . $danhMuc['id'] ?>" 
                     onclick="return confirm('Bạn có đồng ý xóa hay không')">
-                    <button class="btn btn-danger">Xóa</button>
+                    <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                     </a>
                   </td>
                   </tr>

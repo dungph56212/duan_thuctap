@@ -60,7 +60,11 @@ class AdminSanPham{
 
     public function getDetailSanPham($id){
         try {
-            $sql = 'SELECT * FROM san_phams WHERE id = :id';
+            $sql = ' SELECT san_phams.*, danh_mucs.ten_danh_muc
+            FROM san_phams
+            INNER JOIN danh_mucs ON san_phams.danh_muc_id = danh_mucs.id
+            
+             WHERE san_phams.id = :id';
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([':id'=>$id]);
@@ -123,6 +127,67 @@ class AdminSanPham{
         } catch (Exception $e) {
             echo "lỗi" . $e->getMessage();
             flush();
+        }
+    }
+
+    public function getDeltaiAnhSanPham($id){
+        try {
+            $sql = 'SELECT * FROM hinh_anh_san_phams WHERE id = :id';
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':id'=>$id]);
+            return $stmt->fetch();
+        } catch (Exception $e) {
+            echo "lỗi" . $e->getMessage();
+        }
+    }
+    public function updateAnhSanPham($id, $new_file){
+        try {
+            $sql = 'UPDATE hinh_anh_san_phams
+            SET 
+              link_hinh_anh = :new_file
+              WHERE id = :id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':new_file' => $new_file, 
+                ':id' => $id
+
+            ]);
+            //lấy id sp vừa thêm
+            return true;
+        } catch (Exception $e) {
+            echo "lỗi" . $e->getMessage();
+            flush();
+        }
+    }
+
+    public function destroyAnhSanPham($id){
+        try {
+            $sql = 'DELETE FROM hinh_anh_san_phams WHERE id = :id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':id' =>  $id
+            ]);
+            return true;
+        } catch (Exception $e) {
+            echo "lỗi" . $e->getMessage();
+            
+        }
+    }
+    
+
+
+    public function destroySanPham($id){
+        try {
+            $sql = 'DELETE FROM san_phams WHERE id = :id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':id' =>  $id
+            ]);
+            return true;
+        } catch (Exception $e) {
+            echo "lỗi" . $e->getMessage();
+            
         }
     }
 

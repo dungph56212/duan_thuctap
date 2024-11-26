@@ -63,7 +63,7 @@
                                                 <i class="pe-7s-user"></i>
                                             </a>
                                             <ul class="dropdown-list">
-                                                <li><a href="login-register.html">Đăng nhập</a></li>
+                                                <li><a href="<?= BASE_URL .'?act=login'?> ">Đăng nhập</a></li>
                                                 <li><a href="login-register.html">Đăng kí</a></li>
                                                 <li><a href="my-account.html">Tài khoản</a></li>
                                             </ul>

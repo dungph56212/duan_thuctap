@@ -47,3 +47,17 @@ function deleteSessionError(){
     session_destroy();
     }
 }
+
+//upload album ảnh
+function uploadFileAlbum($file, $folderUpload, $key){
+    $partStorage = $folderUpload . time() . $file['name'][$key];
+    $from = $file['tmp_name'][$key];
+    $to = PATH_ROOT . $partStorage;
+    if(move_uploaded_file($from, $to)){
+        return $partStorage;
+    }
+    return null;
+ }
+ function formatPrice($price){
+    return number_format($price, 0, ',', '.');
+ }
