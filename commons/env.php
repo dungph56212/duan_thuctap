@@ -4,7 +4,7 @@
 // Khai báo dưới dạng HẰNG SỐ để không phải dùng $GLOBALS
 
 define('BASE_URL'   , 'http://localhost/du-an1-WD19314/');
-define('BASE_URL_ADMIN'   , BASE_URL . 'admin/');
+define('BASE_URL_ADMIN'   , 'http://localhost/du-an1-WD19314/admin/');
 
 define('DB_HOST'    , 'localhost');
 define('DB_PORT'    , 3306);
