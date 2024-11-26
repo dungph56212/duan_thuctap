@@ -26,27 +26,22 @@ class AdminDonHangController{
     }  
 
 
-//     public function formEditSanPham(){
-//         // dùng để hiển thị from nhập
-//         // Lấy ra thông tin của sản phẩm cần sửa
-//         $id = $_GET['id_san_pham'];
-//         $sanPham = $this->modelSanPham->getDetailSanPham($id);
-//         $listAnhSanPham = $this->modelSanPham->getListAnhSanPham($id);
-//         $listDanhMuc = $this->modelDanhMuc->getAllDanhMuc();
-//         // var_dump($sanPham);
-//         // die();
-//         if( $sanPham){
-//             require_once './views/sanpham/editSanPham.php';
-//             deleteSessionError();
-//         } else {
-//             header("location: " . BASE_URL_ADMIN . '?act=san-pham');
-//               exit();
-//         }
-        
-//         }
-   
-        
+    public function formEditDonHang(){
 
+        $id = $_GET['id_don_hang'];
+        $donHang = $this->modelDonHang->getDetailDonHang($id);
+        $listTrangThaiDonHang = $this->modelDonHang->getAllTrangThaiDonHang($id);
+        // var_dump($donHang);
+        // die();
+        if( $donHang){
+            require_once './views/donhang/editDonHang.php';
+            deleteSessionError();
+        } else {
+            header("location: " . BASE_URL_ADMIN . '?act=don-hang');
+              exit();
+        }
+        
+        }
 
 
 
