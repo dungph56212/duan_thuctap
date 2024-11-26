@@ -68,12 +68,8 @@
                 <label for="inputStatus">Danh mục sản phẩm</label>
                 <select id="inputStatus" name="danh_muc_id" class="form-control custom-select">
                   <?php foreach($listDanhMuc as $danhMuc): ?>
-                  <option <?= $danhMuc['id'] == $sanPham['danh_muc_id'] ? 'select': ''?> value="<?= $danhMuc['id'];?>"><?= $danhMuc['ten_danh_muc'];?></option>
+                  <option <?= $danhMuc['id'] == $sanPham['danh_muc_id'] ? 'selected': ''?> value="<?= $danhMuc['id'];?>"><?= $danhMuc['ten_danh_muc'];?></option>
                     <?php endforeach ?>
-                  <option disabled>Select one</option>
-                  <option>On Hold</option>
-                  <option>Canceled</option>
-                  <option selected>Success</option>
                 </select>
               </div>
               <div class="form-group">
