@@ -55,7 +55,7 @@ class AdminDanhMucController{
             require_once './views/danhmuc/editDanhMuc.php';
         } else {
             header("location: " . BASE_URL_ADMIN . '?act=danh-muc');
-              edit();
+              exit();
         }
         
         }
@@ -96,7 +96,7 @@ class AdminDanhMucController{
             if( $danhMuc){
                 $this->modelDanhMuc->destroyDanhMuc($id);
                 header("location: " . BASE_URL_ADMIN . '?act=danh-muc');
-                edit();
+                exit();
             }
         }
 }
