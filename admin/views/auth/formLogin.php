@@ -120,7 +120,7 @@
             <div class="card-body">
             <?php if(isset($_SESSION['error'])) {?>
                     <p class="text-danger login-box-msg"><?= $_SESSION['error']?></p>
-                  <?php} else{ ?>
+                  <?php } else { ?>
                     <?php ?>
                 <p class="login-box-msg">Vui lòng đăng nhập</p>
                 <?php } ?>
