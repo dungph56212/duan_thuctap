@@ -324,17 +324,12 @@ public function deleteSanPham(){
             deleteFile($anhSP['link_hinh_anh']);
             $this->modelSanPham->destroyAnhSanPham($anhSP['id']);
 
-<<<<<<< HEAD
                   }
                }
                 header("location: " . BASE_URL_ADMIN . '?act=san-pham');
                 exit();
             
-=======
-         }
-      }
-       header("location: " . BASE_URL_ADMIN . '?act=san-pham');
-       exit();
+      
    
 }
 
@@ -375,7 +370,6 @@ if( $sanPham){
           header("Location:" . BASE_URL_ADMIN . '?act=chi-tiet-khach-hang&id_khach_hang=' . $binhLuan['tai_khoan_id']);
         } else{
           header("Location:" . BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham='.$binhLuan['san_pham_id']);
->>>>>>> f6465fcccbbaac5321d0f281d8fc1b4cda4069ff
         }
        }
       }
