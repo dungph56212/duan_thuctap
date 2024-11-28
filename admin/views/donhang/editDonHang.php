@@ -21,12 +21,12 @@
           <div class="col-12">
           <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Sửa thông tin đươn hàng: <?= $donHang['ma_don_hang'] ?></h3>
+                <h3 class="card-title">Sửa thông tin đơn hàng: <?= $donHang['ma_don_hang'] ?></h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form action="<?= BASE_URL_ADMIN . '?act=sua-danh-muc' ?>" method="POST">
-                <input type="text" name="id" value="<?= $donHang['id'] ?>" hidden>
+              <form action="<?= BASE_URL_ADMIN . '?act=sua-don-hang' ?>" method="POST">
+                <input type="text" name="don_hang_id" value="<?= $donHang['id'] ?>" hidden>
                 
                 <div class="card-body">
                   <div class="form-group">

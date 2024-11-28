@@ -25,5 +25,11 @@
         </a>
       </li>
      
+      <li class="nav-item">
+        <a class="nav-link"  href="<?= BASE_URL_ADMIN .'?act=logout-admin' ?>" onclick="return confirm('Bạn có muốn đăng xuất tài khoản không ?')" role="button">
+        <i class="fas fa-sign-out-alt"></i>
+        </a>
+        
+      </li>
     </ul>
   </nav>

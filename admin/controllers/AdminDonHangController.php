@@ -47,102 +47,65 @@ class AdminDonHangController{
 
 
 
-//         public function postEditSanPham(){
-//             // Hàm này dùng để thêm dữ liệu
-//             //kiểm tra xem dữ liệu có phải được submit lên không
-//             if($_SERVER['REQUEST_METHOD'] == 'POST'){
-//                 // var_dump(13);die;
-//                  //LẤY RA DỮ LIỆU 
-                
-//                  // lấy dữ liệu cũ của sản phẩm 
-//                  $san_pham_id = $_POST['san_pham_id'] ?? '';
-//                  //truy vấn 
-//                  $sanPhamOld = $this->modelSanPham->getDetailSanPham($san_pham_id);
-//                  $old_file = $sanPhamOld['hinh_anh'] ;// lấy ảnh cũ để phục vu jcho sửa ảnh
-
-                
-
-//                  $ten_san_pham = $_POST['ten_san_pham'] ?? '';
-//                  $gia_san_pham = $_POST['gia_san_pham'] ?? '';
-//                  $gia_khuyen_mai = $_POST['gia_khuyen_mai'] ?? '';
-//                  $so_luong = $_POST['so_luong'] ?? '';
-//                  $ngay_nhap = $_POST['ngay_nhap'] ?? '';
-//                  $danh_muc_id = $_POST['danh_muc_id'] ?? '';
-//                  $trang_thai = $_POST['trang_thai'] ?? '';
-//                  $mo_ta = $_POST['mo_ta'] ?? '';
-//                  // hình ảnh
-//                  $hinh_anh = $_FILES['hinh_anh'] ?? null;
-              
+        public function postEditDonHang(){
+            // Hàm này dùng để thêm dữ liệu
+            //kiểm tra xem dữ liệu có phải được submit lên không
+            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                // var_dump(13);die;
+                 //LẤY RA DỮ LIỆU 
+                 $don_hang_id = $_POST['don_hang_id'] ?? '';
+                 $ten_nguoi_nhan = $_POST['ten_nguoi_nhan'] ?? '';
+                 $sdt_nguoi_nhan = $_POST['sdt_nguoi_nhan'] ?? '';
+                 $email_nguoi_nhan = $_POST['email_nguoi_nhan'] ?? '';
+                 $dia_chi_nguoi_nhan = $_POST['dia_chi_nguoi_nhan'] ?? '';
+                 $ghi_chu = $_POST['ghi_chu'] ?? '';
+                 $trang_thai_id = $_POST['trang_thai_id'] ?? '';
 
     
-                
-    
-//                 // var_dump($_POST);die;
-//                  // tạo một mảng trống để chứa dữ liệu
-//                  $errors = [];
-//                  if(empty($ten_san_pham)){
-//                     $errors['ten_san_pham'] = 'tên sản phẩm không được để trống';
-//                  }
-//                  if(empty($gia_san_pham)){
-//                     $errors['gia_san_pham'] = 'giá sản phẩm không được để trống';
-//                  }
-//                  if(empty($gia_khuyen_mai)){
-//                     $errors['gia_khuyen_mai'] = 'giá khuyến mãi không được để trống';
-//                  }
-//                  if(empty($so_luong)){
-//                     $errors['so_luong'] = 'số lượng không được để trống';
-//                  }
-//                  if(empty($ngay_nhap)){
-//                     $errors['ngay_nhap'] = 'ngày nhập không được để trống';
-//                  }
-//                  if(empty($danh_muc_id)){
-//                     $errors['danh_muc_id'] = 'danh mục phải chọn';
-//                  }
-//                  if(empty($trang_thai)){
-//                     $errors['trang_thai'] = 'trạng thái phải chọn';
-//                  }
-//                  $_SESSION['error'] = $errors;
-                
-//                  // logic sửa ảnh
-//                  if (isset($hinh_anh) && $hinh_anh['error'] == UPLOAD_ERR_OK) {
-//                     # code... 
-//                     //UPLPAD FILE ẢNH MỚI LÊN
-//                     $new_file = uploadFile($hinh_anh, './uploads/');
-//                     if(!empty($old_file)) { // nếu có ảnh cũ thì xóa đi
-//                         deleteFile($old_file);
-//                     }
-//                  } else {
-//                     $new_file = $old_file;
-//                  }
-//                 //  var_dump($errors);die;
-//                  //nếu không có lỗi thì tiến hành thêm sp
-//                  if(empty($errors)){
-//                     // nếu k có lỗi thì tiến hành thêm sp
-//                     // var_dump('oke');die;
-//                    $san_pham_id = $this->modelSanPham->updateSanPham(
-//                                                        $san_pham_id,
-//                                                       $ten_san_pham, 
-//                                                       $gia_san_pham, 
-//                                                       $gia_khuyen_mai, 
-//                                                       $so_luong, 
-//                                                        $ngay_nhap, 
-//                                                        $danh_muc_id, 
-//                                                        $trang_thai, 
-//                                                        $mo_ta,  
-//                                                        $new_file
-//                                                     );     
+                // var_dump($_POST);die;
+                 // tạo một mảng trống để chứa dữ liệu
+                 $errors = [];
+                 if(empty($ten_nguoi_nhan)){
+                    $errors['ten_nguoi_nhan'] = 'tên người nhận không được để trống';
+                 }
+                 if(empty($sdt_nguoi_nhan)){
+                    $errors['sdt_nguoi_nhan'] = 'số điện thoại không được để trống';
+                 }
+                 if(empty($email_nguoi_nhan)){
+                    $errors['email_nguoi_nhan'] = 'Email người nhận không được để trống';
+                 }
+                 if(empty($dia_chi_nguoi_nhan)){
+                    $errors['dia_chi_nguoi_nhan'] = 'Địa chỉ nhận không được để trống';
+                 }
+               //   if(empty($ghi_chu)){
+               //    $errors['ghi_chu'] = 'Địa chỉ nhận không được để trống';
+               // }
+
+                 if(empty($trang_thai_id)){
+                    $errors['trang_thai_id'] = 'Trạng thái đơn hàng';
+                 }
+         
+                 $_SESSION['error'] = $errors;
+                //  var_dump($errors);die;
+                 //nếu không có lỗi thì tiến hành sửa
+                 if(empty($errors)){
+                    // nếu k có lỗi thì tiến hành thêm sp
+                    // var_dump('oke');die;
+                 $this->modelDonHang->updateDonHang($don_hang_id, $ten_nguoi_nhan, $sdt_nguoi_nhan, $email_nguoi_nhan, $dia_chi_nguoi_nhan, $ghi_chu, $trang_thai_id);     
                                                                            
-//                    header("location: " . BASE_URL_ADMIN . '?act=san-pham');
-//                   exit();
-//                  } else {
-//                     //trả về form và lỗi
-//                  //đặt chỉ thị xóa session sau khi hiển thi form
-//                  $_SESSION['flash'] = true;
-//                  header("location: " . BASE_URL_ADMIN . '?act=form-sua-san-pham&id_san_pham' . $san_pham_id);
-//                   exit();
-//                  }
-//             }
-//         }
+                   header("location: " . BASE_URL_ADMIN . '?act=don-hang');
+                  exit();
+                 } else {
+                    //trả về form và lỗi
+                 //đặt chỉ thị xóa session sau khi hiển thi form
+                 $_SESSION['flash'] = true;
+                 header("location: " . BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang' . $don_hang_id);
+                  exit();
+                 }
+            }
+        }
+      }
+   
     
 //     //SỬA ALBUM ẢNH
 //     // sửa ảnh cũ
@@ -241,4 +204,3 @@ class AdminDonHangController{
 //          }
          
 //          }
-}

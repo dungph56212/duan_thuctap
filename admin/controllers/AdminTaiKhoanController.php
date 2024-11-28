@@ -6,7 +6,7 @@ class AdminTaiKhoanController{
 
     public function __construct(){
         $this->modelTaiKhoan = new AdminTaiKhoan();
-        // $this->modelDonHang = new AdminDonHang();
+        $this->modelDonHang = new AdminDonHang();
         $this->modelSanPham = new AdminSanPham();
     }
 
@@ -51,7 +51,7 @@ class AdminTaiKhoanController{
                     // nếu k có lỗi thì tiến hành thêm danh mục
                     // var_dump('oke');
                     // đặt password mặc định - 123@123ab
-                    $password = password_hash('123@123ab', PASSWORD_BCRYPT);
+                    $password = password_hash('123123', PASSWORD_BCRYPT);
 
                     // khai báo chức vụ
                     $chuc_vu_id=1;
@@ -225,7 +225,7 @@ class AdminTaiKhoanController{
     public function detailKhachHang(){
         $id_khach_hang = $_GET['id_khach_hang'];
         $khachHang = $this->modelTaiKhoan->getDetailTaiKhoan($id_khach_hang);
-        // $listDonHang = $this->modelDonHang->getDonHangFromKhachHang($id_khach_hang);
+        $listDonHang = $this->modelDonHang->getDonHangFromKhachHang($id_khach_hang);
         $listBinhLuan = $this->modelSanPham->getBinhLuanFromKhachHang($id_khach_hang);
         require_once './views/taikhoan/khachhang/deltailKhachHang.php';
     }
@@ -238,4 +238,149 @@ class AdminTaiKhoanController{
 
         exit();
     }
+
+    public function login(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // lấy email và pass từ form
+            $email = $_POST['email'];    
+            $password = $_POST['password'];
+             
+            $user = $this->modelTaiKhoan->checkLogin($email, $password);
+            if($user == $email){
+                 $_SESSION['user_admin'] = $user;
+                 header("Location:" . BASE_URL_ADMIN );
+                 exit();
+            }else{
+                $_SESSION['error']= $user;
+                // var_dump($_SESSION['error']);
+                // die();
+                $_SESSION['flash']= true;  
+                header("Location:" . BASE_URL_ADMIN . '?act=login-admin');
+                exit();
+                
+            }
+        }
+    }
+
+    public function logout(){
+        if(isset($_SESSION['user_admin'])) {
+            unset($_SESSION['user_admin']);
+            header("Location:" . BASE_URL_ADMIN . '?act=login-admin');
+            exit();
+        }
+    }
+
+    public function formEditCaNhanQuanTri(){
+
+        $email = $_SESSION['user_admin'];
+
+        $thongTin = $this->modelTaiKhoan->getTaiKhoanformEmail($email);
+
+        require_once './views/taikhoan/canhan/editCaNhan.php';
+        deleteSessionError();
+    }
+
+    public function postEditCaNhanQuanTri()
+    {
+        // xử lí thêm dữ liệu
+        // kiểm tra dữ liệu có đc submit lên không
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+          
+         
+
+            $ho_ten = $_POST['ho_ten'] ?? ' ';
+            $email = $_POST['email'] ?? ' ';
+            $so_dien_thoai = $_POST['so_dien_thoai'] ?? ' ';
+           
+            $trang_thai = $_POST['trang_thai'] ?? ' ';
+    
+  
+            $errors = [];
+            if (empty($ho_ten)) {
+                $errors['ho_ten'] = 'Vui lòng nhập không bỏ trống ';
+            }
+            if (empty($email)) {
+               
+                $errors['email'] = 'Vui lòng nhập không bỏ trống ';
+            }
+            if (empty($so_dien_thoai)) {
+               
+                $errors['so_dien_thoai'] = 'Vui lòng nhập không bỏ trống ';
+            }
+          
+            if (empty($trang_thai)) {
+               
+                $errors['trang_thai'] = 'Vui lòng nhập không bỏ trống ';
+            }
+        
+           
+            
+            $_SESSION['error'] = $errors;
+           
+              
+            if (empty($errors)) {
+         $this->modelTaiKhoan->updateThongTinCaNhan($ho_ten, $email, $so_dien_thoai, $trang_thai);
+
+          
+                header("Location:" . BASE_URL_ADMIN . '?act=form-sua-thong-tin-ca-nhan-quan-tri');
+                exit();
+            } else {
+                // require_once './views/sanpham/addSanPham.php';
+                $_SESSION['flash']= true;
+                header("Location:" . BASE_URL_ADMIN . '?act=form-sua-thong-tin-ca-nhan-quan-tri' );
+                exit();
+            }
+        }
+    }
+
+    public function postEditMatKhauCaNhan(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+      
+          $old_pass= $_POST['old_pass'];
+          $new_pass= $_POST['new_pass'];
+          $confirm_pass= $_POST['confirm_pass'];
+          // var_dump($old_pass);
+          // die();
+           
+          $user = $this->modelTaiKhoan->getTaiKhoanformEmail($_SESSION['user_admin']);
+          $checkPass = password_verify($old_pass, $user['mat_khau']);
+          $errors = [];
+          if(!$checkPass){
+            $errors['old_pass'] = 'Mật khẩu không đúng';
+          }
+      
+          if($new_pass !== $confirm_pass){
+            $errors['confirm_pass'] = 'Xác nhận mật khẩu';
+            
+            }
+            if(empty($old_pass)){
+              $errors['old_pass'] = 'Vui lòng nhập mật khẩu';
+            }
+         if(empty($new_pass)){
+            $errors['new_pass'] = 'Vui lòng nhập mật khẩu';
+        }
+        if(empty($confirm_pass)){
+          $errors['confirm_pass'] = 'Vui lòng nhập mật khẩu';
+      }
+      $_SESSION['error'] = $errors;
+      if(!$errors){
+        $hashPass = password_hash($new_pass, PASSWORD_BCRYPT);
+        $status =  $this -> modelTaiKhoan->resetPassword($user['id'],$hashPass);
+        if($status){
+          $_SESSION['success'] = 'Đổi mật khẩu thành công';
+          $_SESSION['flash']= true;  
+      
+          header("Location:" . BASE_URL_ADMIN . '?act=form-sua-thong-tin-ca-nhan-quan-tri');
+        }
+      }else{
+          // var_dump($_SESSION['error']);
+          // die();
+          $_SESSION['flash']= true;  
+          header("Location:" . BASE_URL_ADMIN . '?act=form-sua-thong-tin-ca-nhan-quan-tri');
+          exit();
+          
+      }
+        }
+          }
 }
