@@ -85,7 +85,11 @@ match ($act) {
 //  //route đơn hàng
  'don-hang' => (new AdminDonHangController())->danhSachDonHang(),
  'form-sua-don-hang' => (new AdminDonHangController())->formEditDonHang(),
+<<<<<<< HEAD
 //  'sua-don-hang' => (new AdminDonHangController())->postEditDonHang(),
 //  'xoa-don-hang' => (new AdminDonHangController())->deleteDonHang(),
+=======
+ 'sua-don-hang' => (new AdminDonHangController())->postEditDonHang(),
+>>>>>>> 03cdfe879d5f0488e60a7991da19e448809b5e93
  'chi-tiet-don-hang' => (new AdminDonHangController())->detailDonHang()
 };

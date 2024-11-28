@@ -59,6 +59,7 @@ function uploadFileAlbum($file, $folderUpload, $key){
     }
     return null;
  }
+<<<<<<< HEAD
 
  function checkLoginAdmin() {
     if(!isset($_SESSION['user_admin'])) {
@@ -66,3 +67,8 @@ function uploadFileAlbum($file, $folderUpload, $key){
         exit();
     }
    }
+=======
+ function formatPrice($price){
+    return number_format($price, 0, ',', '.');
+ }
+>>>>>>> 03cdfe879d5f0488e60a7991da19e448809b5e93

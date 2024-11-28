@@ -324,10 +324,12 @@ public function deleteSanPham(){
             deleteFile($anhSP['link_hinh_anh']);
             $this->modelSanPham->destroyAnhSanPham($anhSP['id']);
 
-         }
-      }
-       header("location: " . BASE_URL_ADMIN . '?act=san-pham');
-       exit();
+                  }
+               }
+                header("location: " . BASE_URL_ADMIN . '?act=san-pham');
+                exit();
+            
+      
    
 }
 
