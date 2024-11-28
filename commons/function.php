@@ -43,8 +43,9 @@ function deleteSessionError(){
     if(isset($_SESSION['flash'])){
     // HUY SESION SAU KHI ĐÃ TẢI TRANG 
     unset($_SESSION['flash']);
-    session_unset();
-    session_destroy();
+    unset($_SESSION['error']);
+    // session_unset();
+    // session_destroy();
     }
 }
 
@@ -58,3 +59,10 @@ function uploadFileAlbum($file, $folderUpload, $key){
     }
     return null;
  }
+
+ function checkLoginAdmin() {
+    if(!isset($_SESSION['user_admin'])) {
+       require_once './views/auth/formLogin.php';
+        exit();
+    }
+   }
