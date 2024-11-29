@@ -32,7 +32,7 @@
                                            
                                             <li><a href="#">Sản phẩm <i class="fa fa-angle-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
+                                                    <li><a href="blog-left-sidebar.html"></a></li>
                                
                                                 </ul>
                                             </li>

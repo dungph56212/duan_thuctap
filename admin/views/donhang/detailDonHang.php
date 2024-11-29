@@ -33,6 +33,7 @@
         <div class="row">
           <div class="col-12">
             <?php
+  
             if($donHang['trang_thai_id'] == 1){
                 $colorAlerts = 'primary';
             } elseif($donHang['trang_thai_id'] >= 2 && $donHang['trang_thai_id'] <= 9){
@@ -155,11 +156,11 @@
                      
                       <tr>
                         <th>Vận chuyển:</th>
-                        <td>200.000</td>
+                        <td>30.000</td>
                       </tr>
                       <tr>
                         <th>Tổng tiền:</th>
-                        <td><?= $tong_tien + 200000 ?></td>
+                        <td><?= $tong_tien + 30000 ?></td>
                       </tr>
                     </table>
                   </div>

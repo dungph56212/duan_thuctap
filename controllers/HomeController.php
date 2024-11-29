@@ -51,8 +51,8 @@ class HomeController
     public function postlogin(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST')  {
             $email = $_POST['email'];
-            $passwork = $_POST['passwork'];
-         $user = $this->modelTaiKhoan->checkLogin($email, $passwork);
+            $password = $_POST['password'];
+         $user = $this->modelTaiKhoan->checkLogin($email, $password);
          if ($user == $email) {
             $_SESSION['user_client'] = $user;
             header("Location: " . BASE_URL);
