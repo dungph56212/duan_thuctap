@@ -1,5 +1,6 @@
 <?php 
 session_start();
+
 // Require file Common
 require_once './commons/env.php'; // Khai báo biến môi trường
 require_once './commons/function.php'; // Hàm hỗ trợ
@@ -10,6 +11,7 @@ require_once './controllers/HomeController.php';
 // Require toàn bộ file Models
 require_once './models/SanPham.php';
 require_once './models/TaiKhoan.php';
+require_once './models/GioHang.php';
 // Route
 $act = $_GET['act'] ?? '/';
 // var_dump($_GET['act']);die();
@@ -28,6 +30,10 @@ match ($act) {
     'trangchu'           =>(new HomeController())->trangchu(),
     'danh-sach-san-pham' =>(new HomeController())->danhSachSanPham(),
     'chi-tiet-san-pham' => (new HomeController())->chiTietSanPham(),
+    'them-gio-hang'     =>(new HomeController())->addGioHang(),
+    'gio-hang'         =>(new HomeController())->gioHang(),
+    'thanh-toan'         =>(new HomeController())->thanhToan(),
+    'xu-ly-thanh-toan'         =>(new HomeController())->postThanhToan(),
     //auth    
     'login'  => (new HomeController())->formLogin(),
     'check-login'  => (new HomeController())->postLogin(),
