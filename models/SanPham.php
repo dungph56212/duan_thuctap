@@ -19,7 +19,22 @@ class SanPham {
         }
     }
 
-    public function getDetailSanPham($id){
+
+    // Lấy dữ liệu của comment để render ra trang feedback
+    public function getDataComment(){
+        try{
+            $sql = 'SELECT tai_khoans.ho_ten, tai_khoans.anh_dai_dien, binh_luans.noi_dung, binh_luans.ngay_dang FROM `binh_luans` JOIN tai_khoans ON binh_luans.tai_khoan_id = tai_khoans.id;
+            ';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (Exception $e){
+            echo "Lỗi" . $e->getMessage();
+        }
+    }
+
+
+    public function  getDetailSanPham($id){
         try {
             $sql = ' SELECT san_phams.*, danh_mucs.ten_danh_muc
             FROM san_phams

@@ -39,8 +39,11 @@ class HomeController
         $sanPham = $this->modelSanPham->getDetailSanPham($id);
         // var_dump($sanPham['hinh_anh']);die;
         $listAnhSanPham = $this->modelSanPham->getListAnhSanPham($id);
+        // var_dump($listAnhSanPham);die;
+        // exit;
         $listBinhLuan = $this->modelSanPham->getBinhLuanFromSanPham($id);
         $listSanPhamCungDanhMuc = $this->modelSanPham->getListSanPhamDanhMuc($sanPham['danh_muc_id']);
+        $dataComment = $this->modelSanPham->getDataComment();
         if ($sanPham) {
             require_once './views/detailSanPham.php';
         } else {
@@ -60,8 +63,9 @@ class HomeController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = $_POST['email'];
-            $passwork = $_POST['passwork'];
-            $user = $this->modelTaiKhoan->checkLogin($email, $passwork);
+            $password = $_POST['password'];
+            $user = $this->modelTaiKhoan->checkLogin($email, $password);
+            var_dump($user);die;
             if ($user == $email) {
                 $_SESSION['user_client'] = $user;
                 header("Location: " . BASE_URL);
@@ -74,14 +78,18 @@ class HomeController
             }
         }
     }
+    
+    
     public function addGioHang()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_SESSION['user_client'])) {
-
-                $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            if (isset($_SESSION['user_client']['id'])) {
+                // var_dump($_SESSION['user_client']['email']);die;
+                $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
                 // lấy dữ liệu giỏ hàng của người dung
+                // var_dump($mail);die;
                 $gioHang = $this->modelGioHang->getGioHangFromUser($mail['id']);
+                // var_dump($gioHang);die;
                 if (!$gioHang) {
                     $gioHangId = $this->modelGioHang->addGioHang($mail['id']);
                     $gioHang = ['id' => $gioHangId];
@@ -116,10 +124,10 @@ class HomeController
     }
     public function gioHang()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_SESSION['user_client'])) {
-
-                $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+        // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // var_dump(1230);die;
+            if (isset($_SESSION['user_client']['id'])) {
+                $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
                 // lấy dữ liệu giỏ hàng của người dung
                 $gioHang = $this->modelGioHang->getGioHangFromUser($mail['id']);
                 if (!$gioHang) {
@@ -132,9 +140,35 @@ class HomeController
                 }
                 require_once './views/gioHang.php';
             } else {
-                var_dump('Chưa đăng nhập');
-                die;
+               header("Location: ".BASE_URL . '?act=login');
             }
+        // }
+    }
+    public function thanhToan(){
+        if (isset($_SESSION['user_client']['id'])) {
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
+            // lấy dữ liệu giỏ hàng của người dung
+            $gioHang = $this->modelGioHang->getGioHangFromUser($user['id']);
+            if (!$gioHang) {
+                $gioHangId = $this->modelGioHang->addGioHang($user['id']);
+                $gioHang = ['id' => $gioHangId];
+                $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
+            } else {
+
+                $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
+            }
+            require_once './views/gioHang.php';
+        } else {
+            var_dump('Chưa đăng nhập');
+            die;
+        }
+        
+        require_once './views/thanhToan.php';
+    }
+    public function postThanhToan(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // var_dump($_POST);die;
         }
     }
+
 }

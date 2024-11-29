@@ -60,7 +60,7 @@
                                     <ul class="nav justify-content-end">
                                         <label for="">
                                             <?php if (isset($_SESSION['user_client'])) {
-                                              echo $_SESSION['user_client'];
+                                            //   echo $_SESSION['user_client'];
                                             } ?>
                                         </label>
                                         <li class="user-hover">
@@ -71,7 +71,7 @@
                                             <?php if (!isset($_SESSION['user_client'])) {?>
                                                 <li><a href="<?= BASE_URL .'?act=login'?> ">Đăng nhập</a></li>
                                           <?php  } else {?>
-                                                <li><a href="my-account.html">Tài khoản</a></li>
+                                                <li><a href="<?= BASE_URL .'?act=login'?> ">Tài khoản</a></li>
                                                 <?php }?>
                                             </ul>
                                         </li>

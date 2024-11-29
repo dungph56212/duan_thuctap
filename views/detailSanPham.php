@@ -249,6 +249,96 @@
         <!-- </div> -->
     </section>
     <!-- related products area end -->
+
+
+    <!-- Trang feedback -->
+ <style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.box{
+    height: 500px;
+    overflow: auto;
+}
+
+.tuan {
+    width: 60%; /* Giảm chiều rộng */
+    margin: 10px auto; /* Giảm khoảng cách trên dưới */
+    padding: 15px; /* Giảm padding bên trong */
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Giảm độ bóng */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Giảm khoảng cách giữa các phần */
+}
+
+.img img {
+    width: 60px; /* Giảm kích thước hình ảnh */
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #007bff;
+    object-fit: cover;
+}
+
+.content {
+    flex: 1;
+}
+
+.content h4 {
+    margin: 3px 0;
+    font-size: 14px; /* Giảm kích thước font tiêu đề */
+    color: #333;
+}
+
+.content p {
+    margin: 5px 0; /* Giảm khoảng cách giữa các đoạn văn */
+    font-size: 12px; /* Giảm kích thước font nội dung */
+    line-height: 1.3; /* Giảm khoảng cách giữa các dòng */
+    color: #555;
+    text-align: justify;
+}
+
+@media (max-width: 768px) {
+    .tuan {
+        flex-direction: column;
+        text-align: center;
+    }
+    .img img {
+        margin-bottom: 10px;
+    }
+}
+
+
+</style>
+<body>
+   <div class="box">
+   <?php
+    foreach($dataComment as $index){
+        // var_dump($dataComment);
+        // exit;
+    ?>
+    <div class="tuan">
+    <div class="img">
+            <img src="https://tse3.mm.bing.net/th?id=OIP.njDZuvc46_VmiKUoWJ0z7wHaEK&pid=Api&P=0&h=220" alt="">
+        </div>
+        <div class="content">
+            <h4><?php echo $index['ho_ten'] ?>
+            <p><?php echo $index['noi_dung'] ?></p>
+            <p><?php echo $index['ngay_dang'] ?></p>
+            </h4>
+        </div>
+    </div>
+    <?php
+    }
+    ?>
+   </div>
+</body>
 </main>
 
 

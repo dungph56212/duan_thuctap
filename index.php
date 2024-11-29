@@ -1,5 +1,6 @@
 <?php 
 session_start();
+
 // Require file Common
 require_once './commons/env.php'; // Khai báo biến môi trường
 require_once './commons/function.php'; // Hàm hỗ trợ
@@ -31,7 +32,8 @@ match ($act) {
     'chi-tiet-san-pham' => (new HomeController())->chiTietSanPham(),
     'them-gio-hang'     =>(new HomeController())->addGioHang(),
     'gio-hang'         =>(new HomeController())->gioHang(),
-    // 'thanh-toan'         =>(new HomeController())->thanhToan(),
+    'thanh-toan'         =>(new HomeController())->thanhToan(),
+    'xu-ly-thanh-toan'         =>(new HomeController())->postThanhToan(),
     //auth    
     'login'  => (new HomeController())->formLogin(),
     'check-login'  => (new HomeController())->postLogin(),
