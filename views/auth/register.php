@@ -38,7 +38,7 @@
                 <!-- Register Content Start -->
                 <div class="col-lg-6">
                     <div class="login-reg-form-wrap sign-up-form">
-                        <h5>Đăng kí</h5>
+                        <h5 class="text-center">Đăng kí</h5>
                         <form action="<?= BASE_URL . '?act=register' ?>" method="post">
                             <div class="col-md-12">
                                 <div class="single-input-item">
@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                             <div class="single-input-item">
-                                <button class="btn btn-sqr">Đăng kí</button>
+                                <button class="btn btn-sqr"><a href="<?= BASE_URL.'?act=login'?>">Đăng kí</a> </button>
                             </div>
                         </form>
                     </div>
