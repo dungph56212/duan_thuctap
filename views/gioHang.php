@@ -83,7 +83,7 @@
                             <div class="cart-update-option d-block d-md-flex justify-content-between">
                                 <div class="apply-coupon-wrapper">
                                     <form action="#" method="post" class=" d-block d-md-flex">
-                                        <input type="text" placeholder="Enter Your Coupon Code" required />
+                                        <input type="text" placeholder="Nhập mã giảm giá" required />
                                         <button class="btn btn-sqr">Mã giảm giá</button>
                                     </form>
                                 </div>

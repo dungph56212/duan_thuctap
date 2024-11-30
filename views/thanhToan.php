@@ -1,6 +1,5 @@
 <?php require_once 'layout/header.php';  ?>
 <?php require_once 'layout/menu.php';  ?>
-
 <main>
     <!-- breadcrumb area start -->
     <div class="breadcrumb-area">
@@ -137,7 +136,7 @@
                                     <tfoot>
                                         <tr>
                                             <td>Tổng tiền sản phẩm</td>
-                                            <td><strong><?=formatPrice($tongGioHang).'đ' ?>/strong></td>
+                                            <td><strong><?=formatPrice($tongGioHang).'đ' ?></strong></td>
                                         </tr>
                                         <tr>
                                             <td>Shipping</td>
