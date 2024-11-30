@@ -13,7 +13,7 @@
                         <div class="col-lg-2">
                             <div class="logo">
                                 <a href="<?= BASE_URL ?> ?>">
-                                    <img src="assets/img/logo/logo.webp" alt="Brand Logo">
+                                    <img src="assets/img/logo/lg.jpg" alt="Brand Logo">
                                 </a>
                             </div>
                         </div>
