@@ -72,7 +72,7 @@
 
                                 <div class="single-input-item">
                                     <label for="sdt_nguoi_nhan" class="required"> Số điện thoại</label>
-                                    <input type="text" id="sdt_nguoi_nhan" name="so_dien_thoai" value="<?= $user['so_dien_thoai'] ?>" placeholder="Số điện thoại" required />
+                                    <input type="text" id="sdt_nguoi_nhan" name="sdt_nguoi_nhan" value="<?= $user['so_dien_thoai'] ?>" placeholder="Số điện thoại" required />
                                 </div>
 
                                 <div class="single-input-item">
@@ -147,6 +147,7 @@
                                         </tr>
                                         <tr>
                                             <td>Tổng đơn hàng</td>
+                                            <input type="hidden" name="tong_tien" value="<?=($tongGioHang + 30000) ?>">
                                             <td><strong><?= formatPrice($tongGioHang + 30000) . 'đ' ?></strong></td>
                                         </tr>
                                     </tfoot>
@@ -157,7 +158,7 @@
                                 <div class="single-payment-method show">
                                     <div class="payment-method-name">
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="cashon" name="paymentmethod"  name="phuong_thuc_thanh_toan" value="1" class="custom-control-input" checked />
+                                            <input type="radio" id="cashon" name="phuong_thuc_thanh_toan_id" value="1" class="custom-control-input" checked />
                                             <label class="custom-control-label" for="cashon">Thanh toán khi nhận hàng</label>
                                         </div>
                                     </div>
@@ -168,7 +169,7 @@
                                 <div class="single-payment-method">
                                     <div class="payment-method-name">
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="directbank" name="paymentmethod" name="phuong_thuc_thanh_toan" value="2" class="custom-control-input" />
+                                            <input type="radio" id="directbank" name="phuong_thuc_thanh_toan_id" value="2" class="custom-control-input" />
                                             <label class="custom-control-label" for="directbank">Thanh toán online
                                                 </label>
                                         </div>
