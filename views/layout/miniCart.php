@@ -21,7 +21,7 @@
                                 </h3>
                                 <p>
                                     <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                    <span class="cart-price">Sản phẩm 1</span>
+                                    <span class="cart-price"></span>
                                 </p>
                             </div>
                             <button class="minicart-remove"><i class="pe-7s-close"></i></button>
@@ -38,7 +38,7 @@
                                 </h3>
                                 <p>
                                     <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                    <span class="cart-price">$80.00</span>
+                                    <span class="cart-price"></span>
                                 </p>
                             </div>
                             <button class="minicart-remove"><i class="pe-7s-close"></i></button>
@@ -56,22 +56,27 @@
                             <span>Giá khuyến mãi</span>
                             <span><strong><?= formatPrice($sanPham['gia_khuyen_mai']) . 'đ'; ?></strong></span>
                         </li>
-                        
+
                         <li class="total">
                             <span>Tổng tiền</span>
                             <span><strong>
-                            <?php
-                                                $tongTien = 0;
-                                                if ($sanPham['gia_khuyen_mai']) {
-                                                    $tongTien = $sanPham['gia_khuyen_mai'] * $sanPham['so_luong'];
-                                                }else{
-                                                    $tongTien = $sanPham['gia_san_pham'] * $sanPham['so_luong'];
-
-                                                }
-                                                $tongGioHang += $tongTien;
-                                                echo formatPrice($tongTien) .'đ';
-                                                 ?>
-                            </strong></span>
+                                    <?php
+                                    $chiTietGioHang =[];
+                                    $tongGioHang = 0;
+                                    foreach ($chiTietGioHang as $key => $sanPham):
+                                    ?>
+                                        <?php
+                                        $tongTien = 0;
+                                        if ($sanPham['gia_khuyen_mai']) {
+                                            $tongTien = $sanPham['gia_khuyen_mai'] * $sanPham['so_luong'];
+                                        } else {
+                                            $tongTien = $sanPham['gia_san_pham'] * $sanPham['so_luong'];
+                                        }
+                                        $tongGioHang += $tongTien;
+                                        echo formatPrice($tongTien) . 'đ';
+                                        ?>
+                                    <?php endforeach ?>
+                                </strong></span>
                         </li>
                     </ul>
                 </div>

@@ -37,4 +37,5 @@ match ($act) {
     //auth    
     'login'  => (new HomeController())->formLogin(),
     'check-login'  => (new HomeController())->postLogin(),
+    'register'  => (new HomeController())-> registers(),
 };

@@ -71,6 +71,12 @@
             echo "Lỗi" . $e->getMessage();
         }
      }
+    //  public function  Xoa_gio_hang($san_pham_id)
+    //  {
+    //     try{
+            
+    //     }
+    //  }
      
  }
 
