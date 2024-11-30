@@ -84,11 +84,11 @@
                                 <div class="apply-coupon-wrapper">
                                     <form action="#" method="post" class=" d-block d-md-flex">
                                         <input type="text" placeholder="Enter Your Coupon Code" required />
-                                        <button class="btn btn-sqr">Apply Coupon</button>
+                                        <button class="btn btn-sqr">Mã giảm giá</button>
                                     </form>
                                 </div>
                                 <div class="cart-update">
-                                    <a href="#" class="btn btn-sqr">Update Cart</a>
+                                    <a href="#" class="btn btn-sqr">Sửa sản phẩm</a>
                                 </div>
                             </div>
                         </div>

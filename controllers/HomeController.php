@@ -66,7 +66,7 @@ class HomeController
             $password = $_POST['password'];
          $user = $this->modelTaiKhoan->checkLogin($email, $password);
          if ($user == $email) {
-            $_SESSION['user_client'] = $user;
+            // $_SESSION['user_client'] = $user;
             header("Location: " . BASE_URL);
             exit();
             
@@ -100,6 +100,7 @@ class HomeController
     public function addGioHang()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // var_dump($_SESSION['user_client']['email']);die;
             if (isset($_SESSION['user_client']['id'])) {
                 // var_dump($_SESSION['user_client']['email']);die;
                 $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);

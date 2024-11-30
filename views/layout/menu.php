@@ -32,7 +32,7 @@
                                            
                                             <li><a href="#">Sản phẩm <i class="fa fa-angle-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="blog-left-sidebar.html"></a></li>
+                                                    <li><?=$danhMuc['ten_danh_muc'] ?></a></li>
                                
                                                 </ul>
                                             </li>
