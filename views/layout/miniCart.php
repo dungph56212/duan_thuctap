@@ -11,8 +11,8 @@
                     <ul>
                         <li class="minicart-item">
                             <div class="minicart-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/img/cart/cart-1.jpg" alt="product">
+                                <a href="?act=gio-hang">
+                                    <img src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="product">
                                 </a>
                             </div>
                             <div class="minicart-content">
@@ -21,15 +21,15 @@
                                 </h3>
                                 <p>
                                     <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                    <span class="cart-price">$100.00</span>
+                                    <span class="cart-price">Sản phẩm 1</span>
                                 </p>
                             </div>
                             <button class="minicart-remove"><i class="pe-7s-close"></i></button>
                         </li>
                         <li class="minicart-item">
                             <div class="minicart-thumb">
-                                <a href="product-details.html">
-                                    <img src="assets/img/cart/cart-2.jpg" alt="product">
+                                <a href="?act=gio-hang">
+                                    <img src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="product">
                                 </a>
                             </div>
                             <div class="minicart-content">
@@ -49,20 +49,29 @@
                 <div class="minicart-pricing-box">
                     <ul>
                         <li>
-                            <span>sub-total</span>
-                            <span><strong>$300.00</strong></span>
+                            <span>Giá tiền</span>
+                            <span><strong><del><?= formatPrice($sanPham['gia_san_pham']) . 'đ'; ?></strong></span>
                         </li>
                         <li>
-                            <span>Eco Tax (-2.00)</span>
-                            <span><strong>$10.00</strong></span>
+                            <span>Giá khuyến mãi</span>
+                            <span><strong><?= formatPrice($sanPham['gia_khuyen_mai']) . 'đ'; ?></strong></span>
                         </li>
-                        <li>
-                            <span>VAT (20%)</span>
-                            <span><strong>$60.00</strong></span>
-                        </li>
+                        
                         <li class="total">
-                            <span>total</span>
-                            <span><strong>$370.00</strong></span>
+                            <span>Tổng tiền</span>
+                            <span><strong>
+                            <?php
+                                                $tongTien = 0;
+                                                if ($sanPham['gia_khuyen_mai']) {
+                                                    $tongTien = $sanPham['gia_khuyen_mai'] * $sanPham['so_luong'];
+                                                }else{
+                                                    $tongTien = $sanPham['gia_san_pham'] * $sanPham['so_luong'];
+
+                                                }
+                                                $tongGioHang += $tongTien;
+                                                echo formatPrice($tongTien) .'đ';
+                                                 ?>
+                            </strong></span>
                         </li>
                     </ul>
                 </div>
