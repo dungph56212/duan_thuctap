@@ -74,7 +74,7 @@
                                         <!-- <span class="price-regular">$70.00</span>
                                             <span class="price-old"><del>$90.00</del></span> -->
                                     </div>
-                                    >
+                                    
                                     <div class="availability">
                                         <i class="fa fa-check-circle"></i>
                                         <span><?= $sanPham['so_luong'] . 'trong kho' ?></span>
@@ -126,13 +126,13 @@
                                                     </div>
                                                 </div>
                                             <?php endforeach ?>
-                                            <form action="#" class="review-form">
+                                            <form action="<?= BASE_URL . '?act=add_comment&id_san_pham=' . $sanPham['id'] ?>" method="POST" class="review-form">
 
                                                 <div class="form-group row">
                                                     <div class="col">
                                                         <label class="col-form-label"><span class="text-danger">*</span>
                                                             Nội dung bình luận</label>
-                                                        <textarea class="form-control" required></textarea>
+                                                        <textarea class="form-control" required  name="noi_dung"></textarea>
 
                                                         <div class="buttons">
                                                             <button class="btn btn-sqr" type="submit">Bình luận</button>

@@ -6,11 +6,15 @@ class HomeController
     public $modelSanPham;
     public $modelTaiKhoan;
     public $modelGioHang;
+    public $modelDonHang;
+    public $commentModel;
     public function __construct()
     {
         $this->modelSanPham = new SanPham();
         $this->modelTaiKhoan = new TaiKhoan();
         $this->modelGioHang = new GioHang();
+        $this->modelDonHang = new DonHang();
+        $this->commentModel = new commentModel();
     }
 
 
@@ -81,18 +85,18 @@ class HomeController
 
 
 
-            $user = $this->modelTaiKhoan->checkLogin($email, $password);
-            var_dump($user);die;
-            if ($user == $email) {
-                $_SESSION['user_client'] = $user;
-                header("Location: " . BASE_URL);
-                exit();
-            } else {
-                $_SESSION['error'] = $user;
-                $_SESSION['flash'] = true;
-                header("Location: " . BASE_URL . '?act=login');
-                exit();
-            }
+            // $user = $this->modelTaiKhoan->checkLogin($email, $password);
+            // var_dump($user);die;
+            // if ($user == $email) {
+            //     $_SESSION['user_client'] = $user;
+            //     header("Location: " . BASE_URL);
+            //     exit();
+            // } else {
+            //     $_SESSION['error'] = $user;
+            //     $_SESSION['flash'] = true;
+            //     header("Location: " . BASE_URL . '?act=login');
+            //     exit();
+            // }
         }
     }
     
@@ -175,7 +179,7 @@ class HomeController
 
                 $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
             }
-            require_once './views/gioHang.php';
+            // require_once './views/gioHang.php';
         } else {
             var_dump('Chưa đăng nhập');
             die;
@@ -186,7 +190,153 @@ class HomeController
     public function postThanhToan(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // var_dump($_POST);die;
+            $ten_nguoi_nhan= $_POST['ten_nguoi_nhan'];
+            $email_nguoi_nhan= $_POST['email_nguoi_nhan'];
+            $sdt_nguoi_nhan= $_POST['sdt_nguoi_nhan'];
+            $dia_chi_nguoi_nhan= $_POST['dia_chi_nguoi_nhan'];
+            $ghi_chu= $_POST['ghi_chu'];
+            $tong_tien= $_POST['tong_tien'];
+            $phuong_thuc_thanh_toan_id = $_POST['phuong_thuc_thanh_toan_id'];
+
+            $ngay_dat = date('Y-m-d');
+            // var_dump($ngay_dat);die;
+            $trang_thai_id = 1;
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
+            $tai_khoan_id = $_SESSION['user_client']['id'];
+
+            $ma_don_hang = 'DH' . rand(1000,9999);
+
+            $this->modelDonHang->addDonHang($tai_khoan_id, $ten_nguoi_nhan, $email_nguoi_nhan , $sdt_nguoi_nhan , $dia_chi_nguoi_nhan, $ghi_chu, $tong_tien, $phuong_thuc_thanh_toan_id, $ngay_dat , $ma_don_hang , $trang_thai_id);
+            var_dump('Thêm thành công');die;
+
+
         }
+    }
+    public function registers()
+    {
+        // var_dump(123);die;
+        if (empty($_POST['email'])) {
+            require_once './views/auth/register.php';
+            die;
+        }
+        $errors = [];
+        $email = $_POST['email'];
+        // var_dump($email);die;
+        // Kiểm tra email có tồn tại không
+        if ($this->modelTaiKhoan->checkEmailExist($email)) {
+            $errors['email'] = "Email đã tồn tại.";
+            $_SESSION['errors'] = $errors;
+            // var_dump($errors);
+            require_once './views/auth/register.php';
+            die;
+        }
+        // die;
+        $ho_ten = $_POST['ho_ten'];
+        $mat_khau = ($_POST['mat_khau']);
+        // var_dump($mat_khau)
+        $xac_nhan_mat_khau = ($_POST['xac_nhan_mat_khau']);
+        
+        if($mat_khau != $xac_nhan_mat_khau){
+            $errors['xac_nhan_mat_khau'] = "Nhập lại mật khẩu không trùng khớp.";
+            $_SESSION['errors'] = $errors;
+            require_once './views/auth/register.php';
+            die;
+        }
+        if($this->modelTaiKhoan->register($ho_ten, $email, password_hash($mat_khau, PASSWORD_DEFAULT))){
+            // var_dump(123);die;
+            header("location: " . BASE_URL . '?act=login');
+            die();
+        }else{
+            header("location: " . BASE_URL . '?act=register');
+            die();
+        }
+
+        // $ma_xac_thuc =
+        // // var_dump($ma_xac_thuc);die;
+        // if ($ma_xac_thuc) {
+        //     $subject = 'Đăng Ký Tại PawPaw';
+        //     $content = 'Vui lòng không chia sẽ mã này với bất kỳ ai. Mã xác thực của bạn là: ' . $ma_xac_thuc;
+        //     sendMail($email, $subject, $content);
+
+        //     // Chuyển đến view yêu cầu mã xác thực
+        //     require_once './views/auth/comfirm_register.php';
+        //     die;
+        // } else {
+        //     $_SESSION['errors']['email'] = "Email đã tồn tại.";
+        //     require_once './views/auth/register.php';
+        //     die;
+        // }
+    }
+
+
+
+    // public function comfirm_registers()
+    // {
+        
+    //     $ma_xac_thuc = isset($_POST['ma_xac_thuc']) ? $_POST['ma_xac_thuc'] : null;
+    //     if ($this->modelTaiKhoan->comfirm_register($ma_xac_thuc)) {
+    //         header('location: ' . BASE_URL);
+    //         exit();
+    //         // Bạn có thể chuyển hướng hoặc cập nhật trạng thái tài khoản tại đây
+    //     } else {
+    //         $errors = [];
+    //         $errors['ma_xac_thuc'] = 'Nhập Sai Mã Xác Thực!!';
+    //         $_SESSION['errors'] = $errors;
+    //         require_once './views/auth/comfirm_register.php';
+    //         exit();
+    //     }
+    // }
+    public function logins()
+    {
+        // var_dump(123);die;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'];
+            $mat_khau = $_POST['mat_khau'];
+            // var_dump($_POST);die;
+            $accounts = $this->modelTaiKhoan->login($email, md5($mat_khau));
+            // var_dump($accounts);die;
+            foreach ($accounts as $account) {
+                if ($email === $account['email'] && ($mat_khau) === $account['mat_khau']) {
+                    $_SESSION['user'] = [
+                        'id' => $account['id'],
+                        'ho_ten' => $account['ho_ten'],
+                        'email' => $account['email'],
+                        'chuc_vu_id' => $account['chuc_vu_id'],
+                        'trang_thai' => $account['trang_thai'],
+                    ];
+                    if ($_SESSION['user']['chuc_vu_id'] == 3 && $_SESSION['user']['trang_thai'] == 1) {
+                        header('location: ' . BASE_URL );
+                        exit();
+                    } else if ($_SESSION['user']['chuc_vu_id'] == 1 && $_SESSION['user']['trang_thai'] == 1) {
+                        header('location: ' . BASE_URL_ADMIN);
+                        exit();
+                    }
+                }
+            }
+        }
+    }
+
+
+    public function add_comment() {
+        $san_pham_id = $_GET['id_san_pham'];
+        $tai_khoan_id = $_SESSION['user_client']['id'];
+        $noi_dung = $_POST['noi_dung'];
+        // var_dump($noi_dung);
+        $this->commentModel->add_comment($san_pham_id, $tai_khoan_id, $noi_dung);
+        header('location: ' . BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $san_pham_id);
+        exit();
+
+    }
+
+    public function logout()
+    {
+        if (isset($_SESSION['user_client'])){
+            unset($_SESSION['user_client']);
+            session_destroy();
+            header("location: " . BASE_URL );
+            exit();
+        }
+        
     }
 
 }

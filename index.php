@@ -12,6 +12,8 @@ require_once './controllers/HomeController.php';
 require_once './models/SanPham.php';
 require_once './models/TaiKhoan.php';
 require_once './models/GioHang.php';
+require_once './models/DonHang.php';
+require_once './models/comment.php';
 // Route
 $act = $_GET['act'] ?? '/';
 // var_dump($_GET['act']);die();
@@ -37,4 +39,7 @@ match ($act) {
     //auth    
     'login'  => (new HomeController())->formLogin(),
     'check-login'  => (new HomeController())->postLogin(),
+    'register'  => (new HomeController())-> registers(),
+    'logout'  => (new HomeController())-> logout(),
+    'add_comment'  => (new HomeController())-> add_comment(),
 };

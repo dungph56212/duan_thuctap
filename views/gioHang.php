@@ -88,7 +88,7 @@
                                     </form>
                                 </div>
                                 <div class="cart-update">
-                                    <a href="#" class="btn btn-sqr">Sửa sản phẩm</a>
+                                 
                                 </div>
                             </div>
                         </div>
@@ -126,11 +126,8 @@
         <!-- cart main wrapper end -->
     </main>
 
-
-
-
-
-
-
+<script>
+    
+</script>
 <?php require_once 'layout/miniCart.php'; ?>
 <?php require_once 'layout/footer.php'; ?>
