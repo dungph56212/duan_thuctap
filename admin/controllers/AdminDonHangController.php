@@ -16,7 +16,7 @@ class AdminDonHangController{
         // var_dump($don_hang_id);die;
         // lấy thông tin đơn hàng ở bảng đơn hàng
         $donHang = $this->modelDonHang->getDetailDonHang($don_hang_id);
-        // var_dump($donHang);die;
+      //   var_dump($donHang);die;  
         //lấy danh sách sản phẩm đã cài đặt của đơn hàng ở bảng chi_tiet_don_hangs
         $sanPhamDonHang = $this->modelDonHang->getListSpDonHang($don_hang_id);
          $listTrangThaiDonHang = $this->modelDonHang->getAllTrangThaiDonHang();

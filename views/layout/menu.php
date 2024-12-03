@@ -13,7 +13,7 @@
                         <div class="col-lg-2">
                             <div class="logo">
                                 <a href="<?= BASE_URL ?> ?>">
-                                    <img src="assets/img/logo/logo.webp" alt="Brand Logo">
+                                    <img src="assets/img/logo/lg.jpg" alt="Brand Logo">
                                 </a>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
                                            
                                             <li><a href="#">Sản phẩm <i class="fa fa-angle-down"></i></a>
                                                 <ul class="dropdown">
-                                                    <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
+                                                    <li><?=$danhMuc['ten_danh_muc'] ?></a></li>
                                
                                                 </ul>
                                             </li>
@@ -58,14 +58,25 @@
                                 </div>
                                 <div class="header-configure-area">
                                     <ul class="nav justify-content-end">
+                                        <label for="">
+                                            <?php if (isset($_SESSION['user_client'])) {
+                                            //   echo $_SESSION['user_client'];
+                                            } ?>
+                                        </label>
                                         <li class="user-hover">
                                             <a href="#">
                                                 <i class="pe-7s-user"></i>
                                             </a>
                                             <ul class="dropdown-list">
+                                            <?php if (!isset($_SESSION['user_client'])) {?>
                                                 <li><a href="<?= BASE_URL .'?act=login'?> ">Đăng nhập</a></li>
-                                                <li><a href="login-register.html">Đăng kí</a></li>
-                                                <li><a href="my-account.html">Tài khoản</a></li>
+                                                <li><a href="<?= BASE_URL .'?act=register'?> ">Đăng kí</a></li>
+                                             
+                                          <?php  } else {?>
+                                                <li>Xin Chào, <?= $_SESSION['user_client']['ho_ten'] ?></li>
+                                                <li><a href="<?= BASE_URL .'?act=login'?> ">Tài khoản</a></li>
+                                                <li><a onclick="return confirm('Bạn muốn đăng xuất??')" href="<?= BASE_URL .'?act=logout'?> ">Đăng Xuất</a></li>
+                                                <?php }?>
                                             </ul>
                                         </li>
                                        

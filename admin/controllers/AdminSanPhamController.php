@@ -323,7 +323,6 @@ public function deleteSanPham(){
          foreach($listAnhSanPham as $key =>$anhSP){
             deleteFile($anhSP['link_hinh_anh']);
             $this->modelSanPham->destroyAnhSanPham($anhSP['id']);
-
                   }
                }
                 header("location: " . BASE_URL_ADMIN . '?act=san-pham');
@@ -370,12 +369,18 @@ if( $sanPham){
           header("Location:" . BASE_URL_ADMIN . '?act=chi-tiet-khach-hang&id_khach_hang=' . $binhLuan['tai_khoan_id']);
         } else{
           header("Location:" . BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham='.$binhLuan['san_pham_id']);
+
+        }
+          if($name_view == 'detail_khach')
+        {
+          header("Location:" . BASE_URL_ADMIN . '?act=chi-tiet-khach-hang&id_khach_hang=' . $binhLuan['tai_khoan_id']);
+        } else{
+          header("Location:" . BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham='.$binhLuan['san_pham_id']);
         }
        }
       }
-  }
+  }}
        //khai báo mảng để lưu ảnh thêm mới hoặc thay thế
        
 
        
-}
