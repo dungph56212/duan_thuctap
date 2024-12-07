@@ -75,6 +75,7 @@
                                           <?php  } else {?>
                                                 <li>Xin Chào, <?= $_SESSION['user_client']['ho_ten'] ?></li>
                                                 <li><a href="<?= BASE_URL .'?act=login'?> ">Tài khoản</a></li>
+                                                <li><a href="<?= BASE_URL .'?act=lich-su-mua-hang'?> ">Đơn hàng</a></li>
                                                 <li><a onclick="return confirm('Bạn muốn đăng xuất??')" href="<?= BASE_URL .'?act=logout'?> ">Đăng Xuất</a></li>
                                                 <?php }?>
                                             </ul>
