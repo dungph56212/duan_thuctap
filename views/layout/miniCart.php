@@ -17,10 +17,10 @@
                             </div>
                             <div class="minicart-content">
                                 <h3 class="product-name">
-                                    <a href="product-details.html">Dozen White Botanical Linen Dinner Napkins</a>
+                                    <a href="product-details.html"><?= $sanPham['ten_san_pham'] ?></a>
                                 </h3>
                                 <p>
-                                    <span class="cart-quantity">1 <strong>&times;</strong></span>
+                                    <span class="cart-quantity"><?= $sanPham['so_luong'] ?> <strong>&times;</strong></span>
                                     <span class="cart-price"></span>
                                 </p>
                             </div>

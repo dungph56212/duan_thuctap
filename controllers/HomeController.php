@@ -139,8 +139,7 @@ class HomeController
                 header("Location:" . BASE_URL . '?act=gio-hang');
                 // var_dump('Thêm giỏ hàng thành công');die;
             } else {
-                var_dump('Chưa đăng nhập');
-                die;
+                header("Location:" . BASE_URL . '?act=login');
             }
         }
     }

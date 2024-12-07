@@ -45,7 +45,9 @@
                                     <div class="single-input-item">
                                         <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
                                             
-                                            <a href="#" class="forget-pwd">Quên mật khẩu</a>
+                                            <a href="#" class="forget-pwd">Quên mật khẩu</a> <hr>
+                                         <a href="<?= BASE_URL. '?act=register' ?>" class="forget-pwd">Đăng kí tài khoản</a> 
+
                                         </div>
                                     </div>
                                     <div class="single-input-item">

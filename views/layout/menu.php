@@ -13,7 +13,7 @@
                         <div class="col-lg-2">
                             <div class="logo">
                                 <a href="<?= BASE_URL ?> ?>">
-                                    <img src="assets/img/logo/lg.jpg" alt="Brand Logo">
+                                    <img src="assets/img/logo/lg.png" alt="Brand Logo">
                                 </a>
                             </div>
                         </div>
@@ -26,16 +26,11 @@
                                     <!-- main menu navbar start -->
                                     <nav class="desktop-menu">
                                         <ul>
-                                            <li class="active"><a href="index.html">Trang chủ</i></a>
+                                            <li class="active"><a href="<?= BASE_URL. '?act=/'?>">Trang chủ</i></a>
                                                
                                             </li>
                                            
-                                            <li><a href="#">Sản phẩm <i class="fa fa-angle-down"></i></a>
-                                                <ul class="dropdown">
-                                                    <li><?=$danhMuc['ten_danh_muc'] ?></a></li>
-                               
-                                                </ul>
-                                            </li>
+                                            <li class="active"><a href="<?= BASE_URL. '?act=danh-sach-san-pham'?>">Sản phẩm</i></a>
                                             <li><a href="#">Giới thiệu</a></li>
                                             <li><a href="#">Liên hệ</a></li>
                                         </ul>

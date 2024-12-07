@@ -14,6 +14,7 @@ require_once './models/TaiKhoan.php';
 require_once './models/GioHang.php';
 require_once './models/DonHang.php';
 require_once './models/comment.php';
+require_once './models/productlistModel.php';
 // Route
 $act = $_GET['act'] ?? '/';
 // var_dump($_GET['act']);die();
