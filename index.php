@@ -7,6 +7,7 @@ require_once './commons/function.php'; // Hàm hỗ trợ
 
 // Require toàn bộ file Controllers
 require_once './controllers/HomeController.php';
+require_once './controllers/productlistController.php';
 
 // Require toàn bộ file Models
 require_once './models/SanPham.php';
@@ -14,6 +15,7 @@ require_once './models/TaiKhoan.php';
 require_once './models/GioHang.php';
 require_once './models/DonHang.php';
 require_once './models/comment.php';
+require_once './models/danhmucmodels.php';
 require_once './models/productlistModel.php';
 // Route
 $act = $_GET['act'] ?? '/';
@@ -31,7 +33,6 @@ match ($act) {
     //route
     '/'                 => (new HomeController())->home(),
     'trangchu'           =>(new HomeController())->trangchu(),
-    'danh-sach-san-pham' =>(new HomeController())->danhSachSanPham(),
     'chi-tiet-san-pham' => (new HomeController())->chiTietSanPham(),
     'them-gio-hang'     =>(new HomeController())->addGioHang(),
     'gio-hang'         =>(new HomeController())->gioHang(),
@@ -46,4 +47,7 @@ match ($act) {
     'register'  => (new HomeController())-> registers(),
     'logout'  => (new HomeController())-> logout(),
     'add_comment'  => (new HomeController())-> add_comment(),
+    'productlist' => (new ProductController())->index(),
+
+
 };

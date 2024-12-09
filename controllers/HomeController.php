@@ -30,13 +30,7 @@ class HomeController
     {
         echo "Đây là trang chủ của tôi";
     }
-    public function danhSachSanPham()
-    {
-        // echo "Đây là danh sách sản phẩm";
-        $listProduct = $this->modelSanPham->getAllProduct();
-        // var_dump($listProduct);die();
-        require_once './views/listProduct.php';
-    }
+  
     public function chiTietSanPham()
     {
         $id = $_GET['id_san_pham'];

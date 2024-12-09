@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ProductModel {
     public $conn;
 
@@ -31,3 +31,6 @@ class ProductModel {
     }
 }
 ?>
+
+
+

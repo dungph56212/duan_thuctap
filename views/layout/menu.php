@@ -30,7 +30,7 @@
                                                
                                             </li>
                                            
-                                            <li class="active"><a href="<?= BASE_URL. '?act=danh-sach-san-pham'?>">Sản phẩm</i></a>
+                                            <li class="active"><a href="<?= BASE_URL. '?act=productlist'?>">Sản phẩm</i></a>
                                             <li><a href="#">Giới thiệu</a></li>
                                             <li><a href="#">Liên hệ</a></li>
                                         </ul>

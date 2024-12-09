@@ -7,66 +7,18 @@
                 <i class="pe-7s-close"></i>
             </div>
             <div class="minicart-content-box">
-                <div class="minicart-item-wrapper">
-                    <ul>
-                        <li class="minicart-item">
-                            <div class="minicart-thumb">
-                                <a href="?act=gio-hang">
-                                    <img src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="product">
-                                </a>
-                            </div>
-                            <div class="minicart-content">
-                                <h3 class="product-name">
-                                    <a href="product-details.html"><?= $sanPham['ten_san_pham'] ?></a>
-                                </h3>
-                                <p>
-                                    <span class="cart-quantity"><?= $sanPham['so_luong'] ?> <strong>&times;</strong></span>
-                                    <span class="cart-price"></span>
-                                </p>
-                            </div>
-                            <button class="minicart-remove"><i class="pe-7s-close"></i></button>
-                        </li>
-                    </ul>
-                </div>
+            <div class="section-title text-center">
+                            <h2 class="title">INNOVATIVE PUBLISHING  AND MEDIA</h2>
+                            <p class="sub-title">thế giới lập trình</p>
+                        </div>
 
-                <div class="minicart-pricing-box">
-                    <ul>
-                        <li>
-                            <span>Giá tiền</span>
-                            <span><strong><del><?= formatPrice($sanPham['gia_san_pham']) . 'đ'; ?></strong></span>
-                        </li>
-                        <li>
-                            <span>Giá khuyến mãi</span>
-                            <span><strong><?= formatPrice($sanPham['gia_khuyen_mai']) . 'đ'; ?></strong></span>
-                        </li>
 
-                        <li class="total">
-                            <span>Tổng tiền</span>
-                            <span><strong>
-                                    <?php
-                                    $chiTietGioHang =[];
-                                    $tongGioHang = 0;
-                                    foreach ($chiTietGioHang as $key => $sanPham):
-                                    ?>
-                                        <?php
-                                        $tongTien = 0;
-                                        if ($sanPham['gia_khuyen_mai']) {
-                                            $tongTien = $sanPham['gia_khuyen_mai'] * $sanPham['so_luong'];
-                                        } else {
-                                            $tongTien = $sanPham['gia_san_pham'] * $sanPham['so_luong'];
-                                        }
-                                        $tongGioHang += $tongTien;
-                                        echo formatPrice($tongTien) . 'đ';
-                                        ?>
-                                    <?php endforeach ?>
-                                </strong></span>
-                        </li>
-                    </ul>
-                </div>
 
                 <div class="minicart-button">
                     <a href="<?= BASE_URL . '?act=gio-hang' ?>"><i class="fa fa-shopping-cart"></i> Xem giỏ hàng</a>
                     <a href="<?= BASE_URL . '?act=thanh-toan' ?>"><i class="fa fa-share"></i>Thanh toán</a>
+                    <a href="<?= BASE_URL . '?act=lich-su-mua-hang' ?>"><i class="fa fa-history"></i>Lịch sử mua hàng</a>
+
                 </div>
             </div>
         </div>
