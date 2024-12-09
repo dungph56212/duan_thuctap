@@ -28,7 +28,7 @@
         
           <div class="col-md-3">
             <div class="text-center">
-              <img src="<?= BASE_URL_ADMIN . $thongTin['anh_dai_dien']?>" style="width: 100px;" class="avatar img-circle" alt="avatar" onerror="this.onerror=null;this.src='https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg '">
+              <img src="<?= BASE_URL_ADMIN . $thongTin['anh_dai_dien']?>" style="width: 100px;" class="avatar img-circle" alt="avatar" onerror="this.onerror=null;this.src='https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg'">
               <h6 class="mt-2">Họ tên : <?= $thongTin['ho_ten'] ?></h6>
               <h6 class="mt-2">Chức vụ: <?= $thongTin['chuc_vu_id'] ?></h6>
 
