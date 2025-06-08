@@ -37,16 +37,16 @@
                              <?php   } ?>
                                 <form action="<?= BASE_URL . '?act=check-login'?>" method="post">
                                     <div class="single-input-item">
-                                        <input type="email" placeholder="Email or Username" name="email" required />
+                                        <input type="email" placeholder="Email hoặc tên đăng nhập" name="email" required />
                                     </div>
                                     <div class="single-input-item">
-                                        <input type="password" placeholder="Enter your Password" name="password" required />
+                                        <input type="password" placeholder="Nhập mật khẩu" name="password" required />
                                     </div>
                                     <div class="single-input-item">
                                         <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
                                             
                                             <a href="#" class="forget-pwd">Quên mật khẩu</a> <hr>
-                                         <a href="<?= BASE_URL. '?act=register' ?>" class="forget-pwd">Đăng kí tài khoản</a> 
+                                         <a href="<?= BASE_URL. '?act=register' ?>" class="forget-pwd">Đăng ký tài khoản</a> 
 
                                         </div>
                                     </div>
@@ -80,7 +80,7 @@
                         <li class="minicart-item">
                             <div class="minicart-thumb">
                                 <a href="product-details.html">
-                                    <img src="assets/img/cart/cart-1.jpg" alt="product">
+                                    <img src="<?= BASE_URL ?>assets/img/cart/cart-1.jpg" alt="product">
                                 </a>
                             </div>
                             <div class="minicart-content">
@@ -97,7 +97,7 @@
                         <li class="minicart-item">
                             <div class="minicart-thumb">
                                 <a href="product-details.html">
-                                    <img src="assets/img/cart/cart-2.jpg" alt="product">
+                                    <img src="<?= BASE_URL ?>assets/img/cart/cart-2.jpg" alt="product">
                                 </a>
                             </div>
                             <div class="minicart-content">

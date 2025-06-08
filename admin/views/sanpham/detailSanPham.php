@@ -25,7 +25,7 @@
         <h3 class="d-inline-block">
         <div class="col-12">
           
-          <img style="width: 390px; height: 500px" src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" class="product-image" alt="Product Image">
+          <img style="width: 390px; height: 500px" src="<?= getImageUrl($sanPham['hinh_anh']) ?>" class="product-image" alt="Product Image">
         </div>
         <div class="col-12 product-image-thumbs">
           <?php foreach($listAnhSanPham as $key=>$anhSP): ?>

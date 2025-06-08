@@ -45,9 +45,8 @@
                                         <?php 
                                         $tongGioHang = 0;
                                         foreach($chiTietGioHang as $key=>$sanPham ):
-                                            ?>
-                                        <tr>
-                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="Product" /></a></td>
+                                            ?>                                        <tr>
+                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="<?= getImageUrl($sanPham['hinh_anh']) ?>" alt="Product" /></a></td>
                                             <td class="pro-title"><a href="#"><?= $sanPham['ten_san_pham'] ?></a></td>
                                             <td class="pro-price"><span>
                                                 <?php  if ($sanPham['gia_khuyen_mai']) { ?>

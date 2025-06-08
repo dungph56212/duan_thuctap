@@ -32,18 +32,15 @@
                     <div class="product-details-inner">
                         <div class="row">
                             <div class="col-lg-5">
-                                <div class="product-large-slider">
-
-                                    <?php foreach ($listAnhSanPham as $key => $anhSanPham):   ?>
+                                <div class="product-large-slider">                    <?php foreach ($listAnhSanPham as $key => $anhSanPham):   ?>
                                         <div class="pro-large-img img-zoom">
-                                            <img src="<?= BASE_URL . $anhSanPham['link_hinh_anh'] ?>" alt="product-details" />
+                                            <img src="<?= getImageUrl($anhSanPham['link_hinh_anh']) ?>" alt="product-details" />
                                         </div>
                                     <?php endforeach ?>
                                 </div>
-                                <div class="pro-nav slick-row-10 slick-arrow-style">
-                                    <?php foreach ($listAnhSanPham as $key => $anhSanPham):   ?>
+                                <div class="pro-nav slick-row-10 slick-arrow-style">                    <?php foreach ($listAnhSanPham as $key => $anhSanPham):   ?>
                                         <div class="pro-nav-thumb">
-                                            <img src="<?= BASE_URL . $anhSanPham['link_hinh_anh'] ?>" alt="product-details" />
+                                            <img src="<?= getImageUrl($anhSanPham['link_hinh_anh']) ?>" alt="product-details" />
                                         </div>
                                     <?php endforeach ?>
 
@@ -74,24 +71,85 @@
                                         <!-- <span class="price-regular">$70.00</span>
                                             <span class="price-old"><del>$90.00</del></span> -->
                                     </div>
-                                    
+                                      <!-- Enhanced inventory display -->
                                     <div class="availability">
-                                        <i class="fa fa-check-circle"></i>
-                                        <span><?= $sanPham['so_luong'] . 'trong kho' ?></span>
+                                        <?php if ($sanPham['so_luong'] > 0): ?>
+                                            <?php if ($sanPham['so_luong'] > 10): ?>
+                                                <i class="fa fa-check-circle" style="color: #28a745;"></i>
+                                                <span style="color: #28a745; font-weight: bold;">Còn hàng (<?= $sanPham['so_luong'] ?> sản phẩm)</span>
+                                            <?php elseif ($sanPham['so_luong'] > 5): ?>
+                                                <i class="fa fa-exclamation-triangle" style="color: #ffc107;"></i>
+                                                <span style="color: #ffc107; font-weight: bold;">Còn ít hàng (<?= $sanPham['so_luong'] ?> sản phẩm)</span>
+                                            <?php else: ?>
+                                                <i class="fa fa-exclamation-triangle" style="color: #dc3545;"></i>
+                                                <span style="color: #dc3545; font-weight: bold;">Sắp hết hàng (<?= $sanPham['so_luong'] ?> sản phẩm)</span>
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <i class="fa fa-times-circle" style="color: #dc3545;"></i>
+                                            <span style="color: #dc3545; font-weight: bold;">Hết hàng</span>
+                                        <?php endif; ?>
                                     </div>
-                                    <p class="pro-desc"><?= $sanPham['mo_ta'] ?></p>
-                                    <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="post">
-                                        <div class="quantity-cart-box d-flex align-items-center">
-                                            <h6 class="option-title">Số lượng:</h6>
-                                            <div class="quantity">
-                                                <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
-                                                <div class="pro-qty"><input type="text" value="1" name="so_luong"></div>
-                                            </div>
-                                            <div class="action_link">
-                                                <button class="btn btn-cart2">Thêm giỏ hàng</button>
-                                            </div>
+                                    
+                                    <?php if ($sanPham['so_luong'] <= 5 && $sanPham['so_luong'] > 0): ?>
+                                        <div class="stock-warning" style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                                            <i class="fa fa-exclamation-triangle" style="color: #856404;"></i>
+                                            <span style="color: #856404;">⚠️ Chỉ còn <?= $sanPham['so_luong'] ?> sản phẩm. Đặt hàng ngay để không bỏ lỡ!</span>
                                         </div>
-                                    </form>
+                                    <?php endif; ?>
+                                    
+                                    <p class="pro-desc"><?= $sanPham['mo_ta'] ?></p>
+                                    
+                                    <?php if ($sanPham['so_luong'] > 0): ?>
+                                        <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="post" id="addToCartForm">
+                                            <div class="quantity-cart-box d-flex align-items-center">
+                                                <h6 class="option-title">Số lượng:</h6>
+                                                <div class="quantity">
+                                                    <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                                    <div class="pro-qty">
+                                                        <input type="number" value="1" name="so_luong" min="1" max="<?= $sanPham['so_luong'] ?>" id="quantityInput">
+                                                    </div>
+                                                </div>
+                                                <div class="action_link">
+                                                    <button type="submit" class="btn btn-cart2" id="addToCartBtn">Thêm giỏ hàng</button>
+                                                </div>
+                                            </div>
+                                            <small style="color: #6c757d;">Tối đa <?= $sanPham['so_luong'] ?> sản phẩm có thể đặt hàng</small>
+                                        </form>
+                                        
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                const quantityInput = document.getElementById('quantityInput');
+                                                const maxStock = <?= $sanPham['so_luong'] ?>;
+                                                
+                                                quantityInput.addEventListener('input', function() {
+                                                    let value = parseInt(this.value);
+                                                    if (value > maxStock) {
+                                                        this.value = maxStock;
+                                                        alert('Số lượng không được vượt quá số lượng tồn kho (' + maxStock + ')');
+                                                    } else if (value < 1) {
+                                                        this.value = 1;
+                                                    }
+                                                });
+                                                
+                                                document.getElementById('addToCartForm').addEventListener('submit', function(e) {
+                                                    const quantity = parseInt(quantityInput.value);
+                                                    if (quantity > maxStock) {
+                                                        e.preventDefault();
+                                                        alert('Số lượng không được vượt quá số lượng tồn kho (' + maxStock + ')');
+                                                        return false;
+                                                    }
+                                                });
+                                            });
+                                        </script>
+                                    <?php else: ?>
+                                        <div class="out-of-stock" style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 5px; margin: 20px 0;">
+                                            <h5 style="color: #dc3545; margin-bottom: 10px;">
+                                                <i class="fa fa-times-circle"></i> Sản phẩm tạm hết hàng
+                                            </h5>
+                                            <p style="color: #6c757d; margin-bottom: 15px;">Sản phẩm này hiện đang hết hàng. Vui lòng quay lại sau hoặc liên hệ với chúng tôi để biết thêm thông tin.</p>
+                                            <button class="btn btn-secondary" disabled>Hết hàng</button>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -174,10 +232,9 @@
                             <?php foreach ($listSanPhamCungDanhMuc as $key => $sanPham): ?>
                                 <!-- product item start -->
                                 <div class="product-item">
-                                    <figure class="product-thumb">
-                                        <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $SanPham['id']; ?>">
-                                            <img class="pri-img" src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="product">
-                                            <img class="sec-img" src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="product">
+                                    <figure class="product-thumb">                                        <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $SanPham['id']; ?>">
+                                            <img class="pri-img" src="<?= getImageUrl($sanPham['hinh_anh']) ?>" alt="product">
+                                            <img class="sec-img" src="<?= getImageUrl($sanPham['hinh_anh']) ?>" alt="product">
                                         </a>
                                         <div class="product-badge">
                                             <?php

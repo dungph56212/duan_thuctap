@@ -11,10 +11,10 @@
                                 <h5>Sign In</h5>
                                 <form action="#" method="post">
                                     <div class="single-input-item">
-                                        <input type="email" placeholder="Email or Username" required />
+                                        <input type="email" placeholder="Email hoặc tên đăng nhập" required />
                                     </div>
                                     <div class="single-input-item">
-                                        <input type="password" placeholder="Enter your Password" required />
+                                        <input type="password" placeholder="Nhập mật khẩu" required />
                                     </div>
                                     <div class="single-input-item">
                                         <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
@@ -38,7 +38,7 @@
                 <!-- Register Content Start -->
                 <div class="col-lg-6">
                     <div class="login-reg-form-wrap sign-up-form">
-                        <h5 class="text-center">Đăng kí</h5>
+                        <h5 class="text-center">Đăng ký</h5>
                         <form action="<?= BASE_URL . '?act=register' ?>" method="post">
                             <div class="col-md-12">
                                 <div class="single-input-item">
@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="single-input-item">
-                                            <input type="password" name="xac_nhan_mat_khau" placeholder="Confirm Passwwork" value="" />
+                                            <input type="password" name="xac_nhan_mat_khau" placeholder="Confirm Password" value="" />
                                         </div>
                                     </div>
                                     <?php if (isset($errors['password'])): ?>
@@ -71,13 +71,13 @@
                                     <div class="remember-meta">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" id="subnewsletter">
-                                            <label class="custom-control-label" for="subnewsletter">Đăng kí bản tin của chúng tôi</label>
+                                            <label class="custom-control-label" for="subnewsletter">Đăng ký bản tin của chúng tôi</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="single-input-item">
-                                <button class="btn btn-sqr"><a href="<?= BASE_URL.'?act=login'?>">Đăng kí</a> </button>
+                                <button class="btn btn-sqr"><a href="<?= BASE_URL.'?act=login'?>">Đăng ký</a> </button>
                             </div>
                         </form>
                     </div>

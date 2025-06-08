@@ -16,8 +16,11 @@ require_once './controllers/AdminDonHangController.php';
 require_once './models/AdminDanhMuc.php';
 require_once './models/AdminSanPham.php';
 require_once './models/AdminTaiKhoan.php';
-
+require_once './models/AdminBaoCaoThongKe.php';
 require_once './models/AdminDonHang.php';
+
+// Require models from main directory that are used in admin controllers
+require_once '../models/SanPham.php';
 // Route
 $act = $_GET['act'] ?? '';
 
@@ -88,5 +91,13 @@ match ($act) {
  'sua-don-hang' => (new AdminDonHangController())->postEditDonHang(),
 //  'xoa-don-hang' => (new AdminDonHangController())->deleteDonHang(),
 //  'sua-don-hang' => (new AdminDonHangController())->postEditDonHang(),
- 'chi-tiet-don-hang' => (new AdminDonHangController())->detailDonHang()
+ 'chi-tiet-don-hang' => (new AdminDonHangController())->detailDonHang(), // route quản lý tồn kho
+ 'quan-ly-ton-kho' => (new AdminBaoCaoThongKeController())->inventoryManagement(),
+ 'cap-nhat-ton-kho' => (new AdminBaoCaoThongKeController())->quickStockUpdate(),
+ 'cap-nhat-hang-loat-ton-kho' => (new AdminBaoCaoThongKeController())->bulkStockUpdate(),
+ 'xuat-bao-cao-ton-kho' => (new AdminBaoCaoThongKeController())->exportInventoryReport(),
+ 'lich-su-ton-kho' => (new AdminBaoCaoThongKeController())->inventoryHistory(),
+ 'canh-bao-ton-kho' => (new AdminBaoCaoThongKeController())->inventoryAlerts(),
+ 'danh-dau-da-doc-canh-bao' => (new AdminBaoCaoThongKeController())->markAlertRead(),
+ 'ajax-get-alerts' => (new AdminBaoCaoThongKeController())->getAjaxAlerts()
 };

@@ -46,7 +46,7 @@
                             <div class="sidebar-banner">
                                 <div class="img-container">
                                     <a href="#">
-                                        <img src="assets/img/banner/sidebar-banner.jpg" alt="">
+                                        <img src="<?= BASE_URL ?>assets/img/banner/sidebar-banner.jpg" alt="">
                                     </a>
                                 </div>
                             </div>
@@ -79,10 +79,9 @@
                                 <?php foreach($products as $product){ ?>
                                 <div class="col-md-4 col-sm-6">
                                     <!-- product grid start -->
-                                    <div class="product-item">
-                                        <figure class="product-thumb">
+                                    <div class="product-item">                                        <figure class="product-thumb">
                                             <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $product['id'] ?>">
-                                                <img class="" src="<?= $product['hinh_anh'] ?>" alt="product">
+                                                <img class="" src="<?= getImageUrl($product['hinh_anh']) ?>" alt="product">
                                             </a>
                                             <div class="product-badge">
                                                 <div class="product-label new">

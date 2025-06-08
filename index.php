@@ -17,6 +17,7 @@ require_once './models/DonHang.php';
 require_once './models/comment.php';
 require_once './models/danhmucmodels.php';
 require_once './models/productlistModel.php';
+require_once './models/DiaChi.php';
 // Route
 $act = $_GET['act'] ?? '/';
 // var_dump($_GET['act']);die();
@@ -40,7 +41,16 @@ match ($act) {
     'xu-ly-thanh-toan'         =>(new HomeController())->postThanhToan(),
     'lich-su-mua-hang'         =>(new HomeController())->lichSuMuaHang(),
     'chi-tiet-mua-hang'         =>(new HomeController())->chiTietMuaHang(),
-    'huy-don-hang'         =>(new HomeController())->huyDonHang(),
+    'huy-don-hang'         =>(new HomeController())->huyDonHang(),    //user account
+    'thong-tin-nguoi-dung' => (new HomeController())->thongTinNguoiDung(),
+    'cap-nhat-thong-tin' => (new HomeController())->capNhatThongTin(),
+    'doi-mat-khau' => (new HomeController())->doiMatKhau(),
+    //address management
+    'quan-ly-dia-chi' => (new HomeController())->quanLyDiaChi(),
+    'them-dia-chi' => (new HomeController())->themDiaChi(),
+    'sua-dia-chi' => (new HomeController())->suaDiaChi(),
+    'xoa-dia-chi' => (new HomeController())->xoaDiaChi(),
+    'dat-dia-chi-mac-dinh' => (new HomeController())->datDiaChiMacDinh(),
     //auth    
     'login'  => (new HomeController())->formLogin(),
     'check-login'  => (new HomeController())->postLogin(),

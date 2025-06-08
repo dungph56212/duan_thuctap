@@ -49,23 +49,7 @@
                 return true;
 
             } catch (Exception $e) {
-                echo "Lỗi".$e->getMessage();
-            }
-         }
-        
-         public function getDonHangFromUser($taiKhoanId){
-            try {
-                $sql="SELECT * FROM don_hangs WHERE tai_khoan_id = :tai_khoan_id";
-
-                $stmt = $this->conn->prepare($sql);
-                $stmt->execute([
-                    ':tai_khoan_id'=>$taiKhoanId
-                ]);
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            } catch (Exception $e) {
-                echo "Lỗi".$e->getMessage();
-            }
+                echo "Lỗi".$e->getMessage();            }
          }
 
          public function getTrangThaiDonHang(){
@@ -142,6 +126,58 @@
 
             } catch (Exception $e) {
                 echo "Lỗi".$e->getMessage();
+            }
+         }
+
+         public function countDonHangByUser($tai_khoan_id){
+            try {
+                $sql = 'SELECT COUNT(*) FROM don_hangs WHERE tai_khoan_id = :tai_khoan_id';
+                $stmt = $this->conn->prepare($sql);
+                $stmt->execute([':tai_khoan_id' => $tai_khoan_id]);
+                return $stmt->fetchColumn();
+            } catch (Exception $e) {
+                echo "Lỗi: " . $e->getMessage();
+                return 0;
+            }
+         }
+
+         public function countDonHangByUserAndStatus($tai_khoan_id, $trang_thai_id){
+            try {
+                if(is_array($trang_thai_id)){
+                    $placeholders = str_repeat('?,', count($trang_thai_id) - 1) . '?';
+                    $sql = "SELECT COUNT(*) FROM don_hangs WHERE tai_khoan_id = ? AND trang_thai_id IN ($placeholders)";
+                    $params = array_merge([$tai_khoan_id], $trang_thai_id);
+                } else {
+                    $sql = 'SELECT COUNT(*) FROM don_hangs WHERE tai_khoan_id = ? AND trang_thai_id = ?';
+                    $params = [$tai_khoan_id, $trang_thai_id];
+                }
+                
+                $stmt = $this->conn->prepare($sql);
+                $stmt->execute($params);
+                return $stmt->fetchColumn();
+            } catch (Exception $e) {
+                echo "Lỗi: " . $e->getMessage();
+                return 0;
+            }         }
+
+         public function getDonHangFromUser($tai_khoan_id, $limit = null){
+            try {
+                $sql = 'SELECT don_hangs.*, trang_thai_don_hangs.ten_trang_thai 
+                        FROM don_hangs 
+                        LEFT JOIN trang_thai_don_hangs ON don_hangs.trang_thai_id = trang_thai_don_hangs.id
+                        WHERE don_hangs.tai_khoan_id = :tai_khoan_id 
+                        ORDER BY don_hangs.ngay_dat DESC';
+                
+                if($limit){
+                    $sql .= " LIMIT $limit";
+                }
+                
+                $stmt = $this->conn->prepare($sql);
+                $stmt->execute([':tai_khoan_id' => $tai_khoan_id]);
+                return $stmt->fetchAll();
+            } catch (Exception $e) {
+                echo "Lỗi: " . $e->getMessage();
+                return [];
             }
          }
 

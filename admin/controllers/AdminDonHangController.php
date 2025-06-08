@@ -1,8 +1,10 @@
 <?php
 class AdminDonHangController{
     public $modelDonHang;
+    public $modelSanPham;
     public function __construct(){
         $this->modelDonHang = new AdminDonHang();
+        $this->modelSanPham = new SanPham();
     }
     public function danhSachDonHang(){
 
@@ -86,12 +88,59 @@ class AdminDonHangController{
                  }
          
                  $_SESSION['error'] = $errors;
-                //  var_dump($errors);die;
-                 //nếu không có lỗi thì tiến hành sửa
+                //  var_dump($errors);die;                 //nếu không có lỗi thì tiến hành sửa
                  if(empty($errors)){
-                    // nếu k có lỗi thì tiến hành thêm sp
-                    // var_dump('oke');die;
-                 $this->modelDonHang->updateDonHang($don_hang_id, $ten_nguoi_nhan, $sdt_nguoi_nhan, $email_nguoi_nhan, $dia_chi_nguoi_nhan, $ghi_chu, $trang_thai_id);     
+                    // Get current order status before updating
+                    $currentOrder = $this->modelDonHang->getDetailDonHang($don_hang_id);
+                    $oldStatus = $currentOrder['trang_thai_id'];
+                    $newStatus = $trang_thai_id;
+                    
+                    // Handle inventory when order status changes to cancelled (11)
+                    if($newStatus == 11 && $oldStatus != 11) {
+                        // Restore inventory when order is cancelled
+                        $chiTietDonHang = $this->modelDonHang->getListSpDonHang($don_hang_id);
+                        foreach($chiTietDonHang as $item){
+                            $this->modelSanPham->incrementInventory($item['san_pham_id'], $item['so_luong']);
+                        }
+                    }
+                    // Handle inventory when cancelled order is reactivated
+                    elseif($oldStatus == 11 && $newStatus != 11) {
+                        // Decrement inventory when cancelled order is reactivated
+                        $chiTietDonHang = $this->modelDonHang->getListSpDonHang($don_hang_id);
+                        $inventoryCheck = true;
+                        $insufficientItems = [];
+                        
+                        // Check if there's enough inventory
+                        foreach($chiTietDonHang as $item){
+                            if(!$this->modelSanPham->checkInventory($item['san_pham_id'], $item['so_luong'])){
+                                $inventoryCheck = false;
+                                $currentStock = $this->modelSanPham->getCurrentInventory($item['san_pham_id']);
+                                $insufficientItems[] = [
+                                    'name' => $item['ten_san_pham'],
+                                    'requested' => $item['so_luong'],
+                                    'available' => $currentStock
+                                ];
+                            }
+                        }
+                        
+                        if(!$inventoryCheck){
+                            $_SESSION['error']['inventory'] = "Không đủ hàng trong kho để kích hoạt lại đơn hàng:";
+                            foreach($insufficientItems as $item){
+                                $_SESSION['error']['inventory'] .= "\n- {$item['name']}: Yêu cầu {$item['requested']}, còn lại {$item['available']}";
+                            }
+                            $_SESSION['flash'] = true;
+                            header("location: " . BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang=' . $don_hang_id);
+                            exit();
+                        }
+                        
+                        // Decrement inventory
+                        foreach($chiTietDonHang as $item){
+                            $this->modelSanPham->decrementInventory($item['san_pham_id'], $item['so_luong']);
+                        }
+                    }
+                    
+                    // Update order
+                    $this->modelDonHang->updateDonHang($don_hang_id, $ten_nguoi_nhan, $sdt_nguoi_nhan, $email_nguoi_nhan, $dia_chi_nguoi_nhan, $ghi_chu, $trang_thai_id);     
                                                                            
                    header("location: " . BASE_URL_ADMIN . '?act=don-hang');
                   exit();

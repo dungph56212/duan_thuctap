@@ -90,4 +90,61 @@ class SanPham {
             echo "Lỗi" . $e->getMessage();
         }
     }
+
+    // Inventory management methods
+    public function decrementInventory($san_pham_id, $so_luong) {
+        try {
+            $sql = 'UPDATE san_phams SET so_luong = so_luong - :so_luong WHERE id = :san_pham_id AND so_luong >= :so_luong';
+            $stmt = $this->conn->prepare($sql);
+            $result = $stmt->execute([
+                ':san_pham_id' => $san_pham_id,
+                ':so_luong' => $so_luong
+            ]);
+            return $stmt->rowCount() > 0; // Returns true if inventory was decremented
+        } catch (Exception $e) {
+            echo "Lỗi" . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function incrementInventory($san_pham_id, $so_luong) {
+        try {
+            $sql = 'UPDATE san_phams SET so_luong = so_luong + :so_luong WHERE id = :san_pham_id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':san_pham_id' => $san_pham_id,
+                ':so_luong' => $so_luong
+            ]);
+            return $stmt->rowCount() > 0;
+        } catch (Exception $e) {
+            echo "Lỗi" . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function checkInventory($san_pham_id, $so_luong) {
+        try {
+            $sql = 'SELECT so_luong FROM san_phams WHERE id = :san_pham_id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':san_pham_id' => $san_pham_id]);
+            $result = $stmt->fetch();
+            return $result ? $result['so_luong'] >= $so_luong : false;
+        } catch (Exception $e) {
+            echo "Lỗi" . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function getCurrentInventory($san_pham_id) {
+        try {
+            $sql = 'SELECT so_luong FROM san_phams WHERE id = :san_pham_id';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':san_pham_id' => $san_pham_id]);
+            $result = $stmt->fetch();
+            return $result ? $result['so_luong'] : 0;
+        } catch (Exception $e) {
+            echo "Lỗi" . $e->getMessage();
+            return 0;
+        }
+    }
 }

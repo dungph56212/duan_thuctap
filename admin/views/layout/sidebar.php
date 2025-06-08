@@ -49,9 +49,7 @@
  
               </p>
             </a>
-          </li>
-
-          <li class="nav-item">
+          </li>          <li class="nav-item">
           <a href="<?= BASE_URL_ADMIN . '?act=don-hang' ?>" class="nav-link">
             <i class="fas fa-file-invoice-dollar"></i>
               <p>
@@ -60,6 +58,33 @@
  
               </p>
             </a>
+          </li>          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-boxes"></i>
+              <p>Quản lý tồn kho</p>
+              <i class="fas fa-angle-left right"></i>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=quan-ly-ton-kho' ?>" class="nav-link">
+                  <i class="fas fa-warehouse"></i>
+                  <p>Tổng quan tồn kho</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=lich-su-ton-kho' ?>" class="nav-link">
+                  <i class="fas fa-history"></i>
+                  <p>Lịch sử tồn kho</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=canh-bao-ton-kho' ?>" class="nav-link">
+                  <i class="fas fa-bell"></i>
+                  <p>Cảnh báo tồn kho</p>
+                  <span id="alert-badge" class="badge badge-danger right" style="display: none;">0</span>
+                </a>
+              </li>
+            </ul>
           </li>
 
           <li class="nav-item">

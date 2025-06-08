@@ -15,12 +15,14 @@ class TaiKhoan
       $user = $stmt->fetch();
       // var_dump($user);die;
       if ($user && password_verify($mat_khau, $user['mat_khau'])) {
-        if ($user['chuc_vu_id'] == 2) {
-          if ($user['trang_thai'] == 1) {
+        if ($user['chuc_vu_id'] == 2) {          if ($user['trang_thai'] == 1) {
             $_SESSION['user_client'] = [
               'id' => $user['id'],
               'email' => $user['email'],
-              'ho_ten' => $user['ho_ten']
+              'ho_ten' => $user['ho_ten'],
+              'so_dien_thoai' => $user['so_dien_thoai'],
+              'ngay_sinh' => $user['ngay_sinh'],
+              'dia_chi' => $user['dia_chi']
             ];
             // var_dump($_SESSION['user_client']['id']);die;
             header("location: " . BASE_URL);
@@ -126,6 +128,58 @@ public function login($email, $mat_khau){
         return $stmt->fetchAll();
     } catch (PDOException $th) {
         echo "Lỗi: " . $th->getMessage();
+    }
+}
+
+public function getTaiKhoanById($id){
+    try {
+        $sql = 'SELECT * FROM tai_khoans WHERE id = :id';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch();
+    } catch (PDOException $th) {
+        echo "Lỗi: " . $th->getMessage();
+        return false;
+    }
+}
+
+public function updateThongTinTaiKhoan($id, $ho_ten, $email, $so_dien_thoai, $ngay_sinh, $dia_chi){
+    try {
+        $sql = 'UPDATE tai_khoans SET 
+                ho_ten = :ho_ten, 
+                email = :email, 
+                so_dien_thoai = :so_dien_thoai, 
+                ngay_sinh = :ngay_sinh, 
+                dia_chi = :dia_chi 
+                WHERE id = :id';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':ho_ten' => $ho_ten,
+            ':email' => $email,
+            ':so_dien_thoai' => $so_dien_thoai,
+            ':ngay_sinh' => $ngay_sinh,
+            ':dia_chi' => $dia_chi,
+            ':id' => $id
+        ]);
+        return true;
+    } catch (PDOException $th) {
+        echo "Lỗi: " . $th->getMessage();
+        return false;
+    }
+}
+
+public function updateMatKhau($id, $mat_khau){
+    try {
+        $sql = 'UPDATE tai_khoans SET mat_khau = :mat_khau WHERE id = :id';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':mat_khau' => $mat_khau,
+            ':id' => $id
+        ]);
+        return true;
+    } catch (PDOException $th) {
+        echo "Lỗi: " . $th->getMessage();
+        return false;
     }
 }
 

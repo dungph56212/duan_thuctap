@@ -16,7 +16,37 @@
   <link rel="stylesheet" href="./assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="./assets/dist/css/adminlte.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="./assets/plugins/toastr/toastr.min.css">
 </header>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
+
+<script>
+// Global function to update alert count
+function updateInventoryAlertBadge() {
+    fetch('<?= BASE_URL_ADMIN ?>?act=ajax-get-alerts')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.count > 0) {
+                document.getElementById('alert-badge').style.display = 'inline';
+                document.getElementById('alert-badge').textContent = data.count;
+            } else {
+                document.getElementById('alert-badge').style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.log('Error fetching alerts:', error);
+        });
+}
+
+// Update alert count on page load
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('alert-badge')) {
+        updateInventoryAlertBadge();
+        // Update every 2 minutes
+        setInterval(updateInventoryAlertBadge, 120000);
+    }
+});
+</script>
   

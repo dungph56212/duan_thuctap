@@ -38,7 +38,7 @@
                                     <div class="cart-update-option">
                                         <div class="apply-coupon-wrapper">
                                             <form action="#" method="post" class=" d-block d-md-flex">
-                                                <input type="text" placeholder="Enter Your Coupon Code" required />
+                                                <input type="text" placeholder="Nhập mã giảm giá" required />
                                                 <button class="btn btn-sqr">Apply Coupon</button>
                                             </form>
                                         </div>
@@ -85,7 +85,7 @@
 
                                 <div class="single-input-item">
                                     <label for="ghi_chu">Ghi chú</label>
-                                    <textarea name="ghi_chu" id="ghi_chu" cols="30" rows="3" placeholder="Nhập ghi chú đơn hành của bạn"></textarea>
+                                    <textarea name="ghi_chu" id="ghi_chu" cols="30" rows="3" placeholder="Nhập ghi chú đơn hàng của bạn"></textarea>
                                 </div>
                             
                         </div>

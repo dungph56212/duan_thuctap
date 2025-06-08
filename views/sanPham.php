@@ -105,7 +105,7 @@
                     <div class="col-sm-6">
                         <figure class="banner-statistics mt-20">
                             <a href="#">
-                                <img style="height: 20%;" src="assets/img/banner/bn1.webp" alt="product banner">
+                                <img style="height: 20%;" src="<?= BASE_URL ?>assets/img/banner/bn1.webp" alt="product banner">
                             </a>
 
                         </figure>
@@ -113,7 +113,7 @@
                     <div class="col-sm-6">
                         <figure class="banner-statistics mt-20">
                             <a href="#">
-                                <img src="assets/img/banner/bn2.webp" alt="product banner">
+                                <img src="<?= BASE_URL ?>assets/img/banner/bn2.webp" alt="product banner">
                             </a>
 
                         </figure>
@@ -151,9 +151,8 @@
                                         <!-- product item start -->
                                         <div class="product-item">
                                             <figure class="product-thumb">
-                                                <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id']; ?>">
-                                                    <img class="pri-img" src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="product">
-                                                    <img class="sec-img" src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="product">
+                                                <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id']; ?>">                                                    <img class="pri-img" src="<?= getImageUrl($sanPham['hinh_anh']) ?>" alt="product">
+                                                    <img class="sec-img" src="<?= getImageUrl($sanPham['hinh_anh']) ?>" alt="product">
                                                 </a>
                                                 <div class="product-badge">
                                                     <?php 
@@ -177,10 +176,20 @@
                                                         
                                                         <div class="product-label discount">
                                                             <span>Giảm Giá</span>
-                                                        </div>
-                                                   <?php
+                                                        </div>                                                   <?php
                                                     }
                                                     ?>
+
+                                                    <!-- Inventory Status Labels -->
+                                                    <?php if ($sanPham['so_luong'] <= 0) { ?>
+                                                        <div class="product-label out-of-stock" style="background-color: #dc3545;">
+                                                            <span>Hết hàng</span>
+                                                        </div>
+                                                    <?php } elseif ($sanPham['so_luong'] <= 5) { ?>
+                                                        <div class="product-label low-stock" style="background-color: #ffc107;">
+                                                            <span>Sắp hết</span>
+                                                        </div>
+                                                    <?php } ?>
 
                                                     <!-- <div class="product-label new">
                                                         <span>Mới</span>
@@ -192,11 +201,9 @@
                                                 </div>
                                             </figure>
                                             <div class="product-caption text-center">
-                                                
-                                                <h6 class="product-name">
-                                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $SanPham['id']; ?>"><?= $sanPham['ten_san_pham'] ?></a>
-                                                </h6>
-                                                <div class="price-box">
+                                                  <h6 class="product-name">
+                                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id']; ?>"><?= $sanPham['ten_san_pham'] ?></a>
+                                                </h6>                                                <div class="price-box">
                                                     <?php if ($sanPham['gia_khuyen_mai']) { ?>
                                                     
                                                         <span class="price-regular"><?= formatPrice($sanPham['gia_khuyen_mai']). 'đ'; ?></span>
@@ -205,6 +212,15 @@
                                                     <span class="price-regular"><?= formatPrice($sanPham['gia_san_pham']). 'đ' ?></span>
 
                                                     <?php }?>
+                                                </div>
+                                                
+                                                <!-- Inventory quantity display -->
+                                                <div class="inventory-info" style="margin-top: 5px; font-size: 12px;">
+                                                    <?php if ($sanPham['so_luong'] > 0) { ?>
+                                                        <span class="text-success">Còn <?= $sanPham['so_luong'] ?> sản phẩm</span>
+                                                    <?php } else { ?>
+                                                        <span class="text-danger">Hết hàng</span>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         </div>
