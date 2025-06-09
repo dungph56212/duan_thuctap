@@ -1,0 +1,419 @@
+/*------------------------------------------------------------------
+White Theme Override CSS for Book Selling Website
+-------------------------------------------------------------------*/
+
+/* ========== COLOR VARIABLES ========== */
+:root {
+  --primary-color: #007bff;          /* Primary blue for main accents */
+  --secondary-color: #6c757d;        /* Gray for secondary elements */
+  --accent-color: #dc3545;           /* Red for sale/special elements */
+  --text-dark: #333333;              /* Dark text */
+  --text-medium: #666666;            /* Medium gray text */
+  --text-light: #bdc3c7;             /* Light gray text */
+  --border-light: #ecf0f1;           /* Very light borders */
+  --background-white: #ffffff;       /* Pure white background */
+  --background-light: #f8f9fa;       /* Light gray background */
+  --shadow-light: rgba(44, 62, 80, 0.1); /* Light shadow */
+  --success-color: #27ae60;          /* Green for success states */
+}
+
+/* ========== GLOBAL OVERRIDES ========== */
+
+/* Body and base styles */
+body {
+  background-color: var(--background-white) !important;
+  color: var(--text-dark) !important;
+}
+
+/* Replace primary color instances */
+.form-control:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25) !important;
+}
+
+::-moz-selection {
+  color: #fff !important;
+  background: var(--primary-color) !important;
+}
+
+::selection {
+  color: #fff !important;
+  background: var(--primary-color) !important;
+}
+
+/* ========== HEADER IMPROVEMENTS ========== */
+
+/* Header area */
+.header-area {
+  background-color: var(--background-white) !important;
+  border-bottom: 1px solid var(--border-light) !important;
+  box-shadow: 0 2px 10px var(--shadow-light) !important;
+}
+
+/* Navigation */
+.main-menu ul li a {
+  color: var(--text-dark) !important;
+  font-weight: 500 !important;
+  padding: 15px 20px !important;
+  transition: all 0.3s ease !important;
+}
+
+.main-menu ul li a:hover,
+.main-menu ul li.active a {
+  color: var(--primary-color) !important;
+  background-color: var(--background-light) !important;
+}
+
+/* Search and user icons */
+.header-action a {
+  color: var(--text-dark) !important;
+  background-color: var(--background-light) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.3s ease !important;
+}
+
+.header-action a:hover {
+  background-color: var(--primary-color) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 15px var(--shadow-light) !important;
+}
+
+/* ========== BUTTONS AND INTERACTIVE ELEMENTS ========== */
+
+/* Primary buttons */
+.btn-primary,
+.button,
+.add-to-cart,
+.shop-btn {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #fff !important;
+  padding: 12px 30px !important;
+  border-radius: 25px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+}
+
+.btn-primary:hover,
+.button:hover,
+.add-to-cart:hover,
+.shop-btn:hover {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+  color: #fff !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px var(--shadow-light) !important;
+}
+
+/* Secondary buttons */
+.btn-outline-primary {
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+  background-color: transparent !important;
+  border-radius: 25px !important;
+  padding: 12px 30px !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-color) !important;
+  color: #fff !important;
+}
+
+/* Sale/Special buttons */
+.sale-btn,
+.special-offer,
+.discount-btn {
+  background-color: var(--accent-color) !important;
+  border-color: var(--accent-color) !important;
+  color: #fff !important;
+}
+
+/* ========== PRODUCT CARDS ========== */
+
+/* Product containers */
+.product-item,
+.single-product,
+.product-card {
+  background-color: var(--background-white) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 15px !important;
+  padding: 20px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important;
+}
+
+.product-item:hover,
+.single-product:hover,
+.product-card:hover {
+  box-shadow: 0 8px 30px rgba(44, 62, 80, 0.15) !important;
+  transform: translateY(-5px) !important;
+  border-color: var(--primary-color) !important;
+}
+
+/* Product titles */
+.product-title,
+.product-name h3,
+.product-name h4 {
+  color: var(--text-dark) !important;
+  font-weight: 600 !important;
+  margin-bottom: 10px !important;
+}
+
+/* Product prices */
+.product-price,
+.price,
+.current-price {
+  color: var(--primary-color) !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+}
+
+.old-price,
+.original-price {
+  color: var(--text-medium) !important;
+  text-decoration: line-through !important;
+}
+
+.sale-price,
+.discount-price {
+  color: var(--accent-color) !important;
+}
+
+/* ========== CARDS AND CONTAINERS ========== */
+
+/* General cards */
+.card {
+  background-color: var(--background-white) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 15px !important;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05) !important;
+}
+
+/* Featured sections */
+.features-area,
+.category-area,
+.testimonial-area {
+  background-color: var(--background-light) !important;
+  padding: 80px 0 !important;
+}
+
+/* ========== NAVIGATION AND PAGINATION ========== */
+
+/* Pagination */
+.pagination .page-link {
+  color: var(--text-dark) !important;
+  background-color: var(--background-white) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 5px !important;
+  margin: 0 2px !important;
+}
+
+.pagination .page-link:hover,
+.pagination .page-item.active .page-link {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #fff !important;
+}
+
+/* ========== FORMS ========== */
+
+/* Form inputs */
+.form-control {
+  border: 1px solid var(--border-light) !important;
+  border-radius: 8px !important;
+  padding: 12px 15px !important;
+  background-color: var(--background-white) !important;
+  color: var(--text-dark) !important;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25) !important;
+}
+
+/* ========== SPECIAL SECTIONS ========== */
+
+/* Hero/Banner sections */
+.slider-area,
+.banner-area {
+  background: linear-gradient(135deg, var(--background-white) 0%, var(--background-light) 100%) !important;
+}
+
+/* Testimonials */
+.testimonial-item {
+  background-color: var(--background-white) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 15px !important;
+  padding: 30px !important;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05) !important;
+}
+
+/* ========== FOOTER ========== */
+
+/* Footer area */
+.footer-area {
+  background-color: var(--text-dark) !important;
+  color: #fff !important;
+  padding: 60px 0 30px !important;
+}
+
+.footer-area h3,
+.footer-area h4 {
+  color: #fff !important;
+  margin-bottom: 20px !important;
+}
+
+.footer-area a {
+  color: var(--text-light) !important;
+  transition: color 0.3s ease !important;
+}
+
+.footer-area a:hover {
+  color: var(--secondary-color) !important;
+}
+
+/* ========== SHOPPING CART ========== */
+
+/* Cart items */
+.cart-item {
+  background-color: var(--background-white) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 10px !important;
+  padding: 20px !important;
+  margin-bottom: 15px !important;
+}
+
+/* Cart totals */
+.cart-total {
+  background-color: var(--background-light) !important;
+  border-radius: 10px !important;
+  padding: 25px !important;
+}
+
+/* ========== MISCELLANEOUS ========== */
+
+/* Links */
+a {
+  color: var(--primary-color) !important;
+  transition: color 0.3s ease !important;
+}
+
+a:hover {
+  color: var(--secondary-color) !important;
+  text-decoration: none !important;
+}
+
+/* Badges and tags */
+.badge,
+.tag {
+  background-color: var(--primary-color) !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+  padding: 5px 12px !important;
+}
+
+.badge.sale,
+.tag.sale {
+  background-color: var(--accent-color) !important;
+}
+
+/* Success/Error messages */
+.alert-success {
+  background-color: rgba(39, 174, 96, 0.1) !important;
+  border: 1px solid var(--success-color) !important;
+  color: var(--success-color) !important;
+}
+
+.alert-danger {
+  background-color: rgba(231, 76, 60, 0.1) !important;
+  border: 1px solid var(--accent-color) !important;
+  color: var(--accent-color) !important;
+}
+
+/* ========== RESPONSIVE IMPROVEMENTS ========== */
+
+@media (max-width: 768px) {
+  .header-area {
+    padding: 10px 0 !important;
+  }
+  
+  .main-menu ul li a {
+    padding: 10px 15px !important;
+    font-size: 14px !important;
+  }
+  
+  .btn-primary,
+  .button {
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+  }
+  
+  .product-item,
+  .single-product {
+    margin-bottom: 20px !important;
+  }
+}
+
+/* ========== OVERRIDE EXISTING COLORS ========== */
+
+/* Replace all instances of the old gold color #c29958 */
+*[style*="#c29958"] {
+  color: var(--primary-color) !important;
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+/* Target specific color instances */
+.text-primary,
+.color-primary {
+  color: var(--primary-color) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.border-primary {
+  border-color: var(--primary-color) !important;
+}
+
+/* Improved visual hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-dark) !important;
+  font-weight: 600 !important;
+}
+
+p {
+  color: var(--text-medium) !important;
+  line-height: 1.7 !important;
+}
+
+/* Clean, modern spacing */
+.section {
+  padding: 80px 0 !important;
+}
+
+.container {
+  max-width: 1200px !important;
+}
+
+/* Enhanced visual elements */
+.shadow-sm {
+  box-shadow: 0 2px 10px rgba(44, 62, 80, 0.08) !important;
+}
+
+.shadow {
+  box-shadow: 0 4px 20px rgba(44, 62, 80, 0.12) !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 8px 30px rgba(44, 62, 80, 0.15) !important;
+}

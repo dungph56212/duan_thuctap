@@ -26,32 +26,40 @@
             <div class="container" style="max-width:40vw">
                 <div class="member-area-from-wrap">
                     <div class="row">
-                        <!-- Login Content Start -->
-                        <div class="col-lg-12">
+                        <!-- Login Content Start -->                        <div class="col-lg-12">
                             <div class="login-reg-form-wrap">
                                 <h5 class="text-center">Đăng nhập</h5>
-                                <?php if (isset($_SESSION['erros'])) {?>
-                                 <p class="text-danger login-box-mgs text-center"<?= $_SESSION['erros'] ?>></p>
-                              <?php }else{?>
-                                <p class="login-box-msg text-center">Vui lòng đăng nhập</p>
-                             <?php   } ?>
-                                <form action="<?= BASE_URL . '?act=check-login'?>" method="post">
+                                
+                                <!-- Display notifications -->
+                                <?php echo displayNotification(); ?>
+                                
+                                <p class="login-box-msg text-center">Vui lòng đăng nhập</p>                                  <form action="<?= BASE_URL . '?act=check-login'?>" method="post">
+                                    <!-- CSRF Token -->
+                                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
+                                    
                                     <div class="single-input-item">
-                                        <input type="email" placeholder="Email hoặc tên đăng nhập" name="email" required />
+                                        <input type="email" 
+                                               placeholder="Email hoặc tên đăng nhập" 
+                                               name="email" 
+                                               value="<?= old('email') ?>"
+                                               required />
+                                        <?= displayFieldError('email') ?>
                                     </div>
                                     <div class="single-input-item">
-                                        <input type="password" placeholder="Nhập mật khẩu" name="password" required />
+                                        <input type="password" 
+                                               placeholder="Nhập mật khẩu" 
+                                               name="password" 
+                                               required />
+                                        <?= displayFieldError('password') ?>
                                     </div>
                                     <div class="single-input-item">
                                         <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
-                                            
-                                            <a href="#" class="forget-pwd">Quên mật khẩu</a> <hr>
-                                         <a href="<?= BASE_URL. '?act=register' ?>" class="forget-pwd">Đăng ký tài khoản</a> 
-
+                                            <a href="#" class="forget-pwd">Quên mật khẩu</a>
+                                            <a href="<?= BASE_URL. '?act=register' ?>" class="forget-pwd">Đăng ký tài khoản</a> 
                                         </div>
                                     </div>
                                     <div class="single-input-item">
-                                        <button class="btn btn-sqr">Đăng nhập</button>
+                                        <button class="btn btn-sqr" type="submit">Đăng nhập</button>
                                     </div>
                                 </form>
                             </div>

@@ -13,10 +13,3 @@ define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 
 define('PATH_ROOT'    , __DIR__ . '/../');
-
-// Helper function to fix image URL path
-function getImageUrl($imagePath) {
-    // Remove leading slash if it exists to prevent double slashes
-    $cleanPath = ltrim($imagePath, '/');
-    return BASE_URL . $cleanPath;
-}

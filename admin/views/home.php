@@ -159,11 +159,12 @@
                     <th>Thao tác</th>
                   </tr>
                   </thead>
-                  <tbody>                  <?php if (!empty($topSellingProducts)): ?>
+                  <tbody>
+                  <?php if (!empty($topSellingProducts)): ?>
                     <?php foreach ($topSellingProducts as $product): ?>
                     <tr>
                       <td>
-                        <img src="<?= getImageUrl($product['hinh_anh']) ?>" alt="<?= htmlspecialchars($product['ten_san_pham']) ?>" class="img-circle img-size-32 mr-2" onerror="this.src='<?= BASE_URL ?>assets/img/default-product.png'">
+                        <img src="<?= BASE_URL . $product['hinh_anh'] ?>" alt="<?= htmlspecialchars($product['ten_san_pham']) ?>" class="img-circle img-size-32 mr-2" onerror="this.src='<?= BASE_URL ?>assets/img/default-product.png'">
                         <?= htmlspecialchars($product['ten_san_pham']) ?>
                       </td>
                       <td>
@@ -365,10 +366,11 @@
                       <th>Thao tác</th>
                     </tr>
                   </thead>
-                  <tbody>                    <?php foreach ($lowStockProducts as $product): ?>
+                  <tbody>
+                    <?php foreach ($lowStockProducts as $product): ?>
                     <tr>
                       <td>
-                        <img src="<?= getImageUrl($product['hinh_anh']) ?>" alt="<?= htmlspecialchars($product['ten_san_pham']) ?>" class="img-circle img-size-32 mr-2" onerror="this.src='<?= BASE_URL ?>assets/img/default-product.png'">
+                        <img src="<?= BASE_URL . $product['hinh_anh'] ?>" alt="<?= htmlspecialchars($product['ten_san_pham']) ?>" class="img-circle img-size-32 mr-2" onerror="this.src='<?= BASE_URL ?>assets/img/default-product.png'">
                         <?= htmlspecialchars($product['ten_san_pham']) ?>
                       </td>
                       <td><?= htmlspecialchars($product['ten_danh_muc']) ?></td>

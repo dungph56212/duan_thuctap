@@ -17,19 +17,16 @@
             }
         }
 
-        public function getAllDanhMucId($id){
+        public function getDetailDanhMuc($id){
             try {
-                $sql = 'select * from danh_mucs where danh_muc_id = :id';
+                $sql = 'SELECT * FROM danh_mucs WHERE id = :id';
                 $stmt = $this->conn->prepare($sql);
-                $stmt->execute([
-                    ':id' => $id
-                ]);
-                return $stmt->fetchAll();
+                $stmt->execute([':id' => $id]);
+                return $stmt->fetch();
             } catch (Exception $e) {
                 echo "lỗi" . $e->getMessage();
             }
         }
-
 
         public function getAllCate(){
             try {

@@ -132,9 +132,128 @@
     <!-- google map api -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfmCVTjRI007pC1Yk2o2d_EhgkjTsFVN8"></script>
     <!-- google map active js -->
-    <script src="<?= BASE_URL ?>assets/js/plugins/google-map.js"></script>
-    <!-- Main JS -->
+    <script src="<?= BASE_URL ?>assets/js/plugins/google-map.js"></script>    <!-- Main JS -->
     <script src="<?= BASE_URL ?>assets/js/main.js"></script>
+    
+    <!-- Custom Authentication Notifications -->
+    <script>
+        // Auto-hide alerts after 5 seconds
+        $(document).ready(function() {
+            setTimeout(function() {
+                $('.alert').fadeOut('slow');
+            }, 5000);
+            
+            // Enhanced form validation feedback
+            $('form').on('submit', function() {
+                var $submitBtn = $(this).find('button[type="submit"]');
+                var originalText = $submitBtn.text();
+                
+                $submitBtn.prop('disabled', true)
+                          .html('<i class="fa fa-spinner fa-spin"></i> Đang xử lý...');
+                
+                // Re-enable button after 3 seconds in case of client-side issues
+                setTimeout(function() {
+                    $submitBtn.prop('disabled', false).text(originalText);
+                }, 3000);
+            });
+            
+            // Show notifications if they exist
+            <?php if (isset($_SESSION['error']) && isset($_SESSION['flash'])): ?>
+                showNotification('error', '<?= addslashes($_SESSION['error']) ?>');
+            <?php endif; ?>
+            
+            <?php if (isset($_SESSION['success']) && isset($_SESSION['flash'])): ?>
+                showNotification('success', '<?= addslashes($_SESSION['success']) ?>');
+            <?php endif; ?>
+        });
+        
+        // Custom notification function
+        function showNotification(type, message) {
+            var iconClass = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+            var bgClass = type === 'success' ? 'alert-success' : 'alert-danger';
+            
+            var notification = $(`
+                <div class="notification-toast ${bgClass}" style="
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 9999;
+                    min-width: 300px;
+                    max-width: 400px;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    animation: slideInRight 0.3s ease-out;
+                    color: white;
+                ">
+                    <i class="fa ${iconClass}" style="margin-right: 8px;"></i>
+                    <span>${message}</span>
+                    <button type="button" class="close" style="
+                        float: right;
+                        background: none;
+                        border: none;
+                        color: white;
+                        font-size: 18px;
+                        margin-left: 10px;
+                        opacity: 0.8;
+                        cursor: pointer;
+                    ">&times;</button>
+                </div>
+            `);
+            
+            $('body').append(notification);
+            
+            // Auto close after 5 seconds
+            setTimeout(function() {
+                notification.fadeOut(300, function() {
+                    $(this).remove();
+                });
+            }, 5000);
+            
+            // Close button functionality
+            notification.find('.close').on('click', function() {
+                notification.fadeOut(300, function() {
+                    $(this).remove();
+                });
+            });
+        }
+    </script>
+    
+    <style>
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .notification-toast.alert-success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+        
+        .notification-toast.alert-danger {
+            background: linear-gradient(135deg, #dc3545, #e83e8c);
+        }
+        
+        .form-control.is-invalid {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+        
+        .invalid-feedback {
+            display: block;
+        }
+        
+        /* Loading state styles */
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
 </body>
 
 

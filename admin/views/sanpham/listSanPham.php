@@ -46,8 +46,9 @@
                     <?php foreach($listSanPham as $key=>$sanPham): ?>
                   <tr>
                   <td><?= $key+1 ?></td>
-                  <td><?=$sanPham['ten_san_pham'] ?></td>                  <td>
-                    <img src="<?= getImageUrl($sanPham['hinh_anh']) ?>" style="width: 100px" alt=""
+                  <td><?=$sanPham['ten_san_pham'] ?></td>
+                  <td>
+                    <img src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" style="width: 100px" alt=""
                    
 
                     onerror="this.onerror=null; this.src = 'https://img.lovepik.com/free-png/20210923/lovepik-creative-three-hardcover-books-illustration-png-image_401276495_wh1200.png'"  

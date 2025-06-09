@@ -28,9 +28,17 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/plugins/animate.css">
     <!-- Nice Select css -->
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/plugins/nice-select.css">    <!-- jquery UI css -->
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/plugins/jqueryui.min.css">
-    <!-- main style css -->
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/plugins/jqueryui.min.css">    <!-- main style css -->    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
+    <!-- Modern White Theme CSS -->
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/modern-white-theme.css">
+    <!-- Enhanced Components CSS -->
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/enhanced-components.css">
+    <!-- Category Styles CSS -->
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/category-styles.css">
+    <!-- White theme override css -->
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/white-theme.css">
+    <!-- Color override css -->
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/color-override.css">
 
 </head>
 <body>

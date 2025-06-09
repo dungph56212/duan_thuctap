@@ -107,8 +107,9 @@
                     <button type="button" class="close" onclick="markAsRead(<?= $alert['id'] ?>)">
                       <span aria-hidden="true">&times;</span>
                     </button>
-                    <div class="row align-items-center">                      <div class="col-md-1">
-                        <img src="<?= getImageUrl($alert['hinh_anh']) ?>" 
+                    <div class="row align-items-center">
+                      <div class="col-md-1">
+                        <img src="<?= BASE_URL . $alert['hinh_anh'] ?>" 
                              class="img-circle img-size-50" 
                              alt="<?= htmlspecialchars($alert['ten_san_pham']) ?>"
                              onerror="this.src='<?= BASE_URL ?>assets/img/default-product.png'">

@@ -35,6 +35,7 @@ match ($act) {
     '/'                 => (new HomeController())->home(),
     'trangchu'           =>(new HomeController())->trangchu(),
     'chi-tiet-san-pham' => (new HomeController())->chiTietSanPham(),
+    'san-pham-theo-danh-muc' => (new HomeController())->sanPhamTheoDanhMuc(),
     'them-gio-hang'     =>(new HomeController())->addGioHang(),
     'gio-hang'         =>(new HomeController())->gioHang(),
     'thanh-toan'         =>(new HomeController())->thanhToan(),
@@ -50,13 +51,14 @@ match ($act) {
     'them-dia-chi' => (new HomeController())->themDiaChi(),
     'sua-dia-chi' => (new HomeController())->suaDiaChi(),
     'xoa-dia-chi' => (new HomeController())->xoaDiaChi(),
-    'dat-dia-chi-mac-dinh' => (new HomeController())->datDiaChiMacDinh(),
-    //auth    
+    'dat-dia-chi-mac-dinh' => (new HomeController())->datDiaChiMacDinh(),    //auth    
     'login'  => (new HomeController())->formLogin(),
     'check-login'  => (new HomeController())->postLogin(),
     'register'  => (new HomeController())-> registers(),
     'logout'  => (new HomeController())-> logout(),
     'add_comment'  => (new HomeController())-> add_comment(),
+    'edit_comment'  => (new HomeController())-> edit_comment(),
+    'delete_comment'  => (new HomeController())-> delete_comment(),
     'productlist' => (new ProductController())->index(),
 
 

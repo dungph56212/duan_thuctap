@@ -27,11 +27,12 @@ Table of content
 -------------------------------------------------------------------*/
 /*------ Typography Style Start ------*/
 body {
-  color: #555555;
+  color: #333333;
   line-height: 1.7;
   font-size: 14px;
   font-weight: 400;
   font-family: "Lato", sans-serif;
+  background-color: #ffffff;
 }
 
 a {

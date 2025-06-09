@@ -138,11 +138,12 @@
                       <th>Thao Tác</th>
                     </tr>
                   </thead>
-                  <tbody>                    <?php foreach ($outOfStockProducts as $key => $sanPham): ?>
+                  <tbody>
+                    <?php foreach ($outOfStockProducts as $key => $sanPham): ?>
                       <tr>
                         <td><?= $key + 1 ?></td>
                         <td>
-                          <img src="<?= getImageUrl($sanPham['hinh_anh']) ?>" 
+                          <img src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" 
                                style="width: 50px; height: 50px; object-fit: cover;" 
                                alt="<?= $sanPham['ten_san_pham'] ?>">
                         </td>
@@ -203,11 +204,12 @@
                       <th>Thao Tác</th>
                     </tr>
                   </thead>
-                  <tbody>                    <?php foreach ($lowStockProducts as $key => $sanPham): ?>
+                  <tbody>
+                    <?php foreach ($lowStockProducts as $key => $sanPham): ?>
                       <tr>
                         <td><?= $key + 1 ?></td>
                         <td>
-                          <img src="<?= getImageUrl($sanPham['hinh_anh']) ?>" 
+                          <img src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" 
                                style="width: 50px; height: 50px; object-fit: cover;" 
                                alt="<?= $sanPham['ten_san_pham'] ?>">
                         </td>
@@ -291,11 +293,12 @@
                       <th>Thao Tác</th>
                     </tr>
                   </thead>
-                  <tbody>                    <?php foreach ($allProducts as $key => $sanPham): ?>
+                  <tbody>
+                    <?php foreach ($allProducts as $key => $sanPham): ?>
                       <tr data-product-id="<?= $sanPham['id'] ?>">
                         <td><?= $key + 1 ?></td>
                         <td>
-                          <img src="<?= getImageUrl($sanPham['hinh_anh']) ?>" 
+                          <img src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" 
                                style="width: 50px; height: 50px; object-fit: cover;" 
                                alt="<?= $sanPham['ten_san_pham'] ?>">
                         </td>

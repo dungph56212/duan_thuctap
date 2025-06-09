@@ -1,0 +1,190 @@
+/* Category Cards Styles */
+/* Styles for the product categories section on homepage */
+
+/* ===== CATEGORY CARDS SECTION ===== */
+.product-categories-area {
+    background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%) !important;
+    padding: 60px 0 !important;
+}
+
+.category-card {
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.08) !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+    position: relative !important;
+    height: 100% !important;
+    border: 2px solid transparent !important;
+}
+
+.category-card::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: linear-gradient(135deg, #007bff, #0056b3) !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+    z-index: -1 !important;
+}
+
+.category-card:hover::before {
+    opacity: 0.95 !important;
+}
+
+.category-card:hover {
+    transform: translateY(-10px) scale(1.02) !important;
+    box-shadow: 0 20px 50px rgba(0,123,255,0.2) !important;
+    border-color: #007bff !important;
+}
+
+.category-link {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 40px 20px !important;
+    text-decoration: none !important;
+    color: #333333 !important;
+    height: 100% !important;
+    position: relative !important;
+    z-index: 1 !important;
+    transition: color 0.3s ease !important;
+}
+
+.category-card:hover .category-link {
+    color: #ffffff !important;
+}
+
+.category-icon {
+    width: 80px !important;
+    height: 80px !important;
+    background: linear-gradient(135deg, #007bff, #0056b3) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-bottom: 20px !important;
+    font-size: 36px !important;
+    color: #ffffff !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(0,123,255,0.3) !important;
+}
+
+.category-card:hover .category-icon {
+    background: #ffffff !important;
+    color: #007bff !important;
+    transform: scale(1.1) rotate(5deg) !important;
+    box-shadow: 0 6px 25px rgba(255,255,255,0.4) !important;
+}
+
+.category-content {
+    text-align: center !important;
+    flex-grow: 1 !important;
+}
+
+.category-name {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    margin-bottom: 10px !important;
+    color: inherit !important;
+    transition: color 0.3s ease !important;
+}
+
+.category-desc {
+    font-size: 14px !important;
+    opacity: 0.8 !important;
+    margin-bottom: 20px !important;
+    line-height: 1.5 !important;
+    color: inherit !important;
+}
+
+.category-arrow {
+    font-size: 18px !important;
+    opacity: 0 !important;
+    transform: translateX(-10px) !important;
+    transition: all 0.3s ease !important;
+}
+
+.category-card:hover .category-arrow {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+
+/* Category page sidebar styles */
+.shop-categories li a {
+    color: #666666 !important;
+    text-decoration: none !important;
+    padding: 8px 15px !important;
+    display: block !important;
+    border-radius: 5px !important;
+    transition: all 0.3s ease !important;
+}
+
+.shop-categories li a:hover,
+.shop-categories li a.active {
+    background: #007bff !important;
+    color: #ffffff !important;
+    transform: translateX(5px) !important;
+}
+
+/* Modern card style for products */
+.product-item.modern-card {
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+    transition: all 0.4s ease !important;
+    border: 1px solid #f0f0f0 !important;
+}
+
+.product-item.modern-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 12px 40px rgba(0,123,255,0.15) !important;
+    border-color: #007bff !important;
+}
+
+/* Responsive Design for Categories */
+@media (max-width: 768px) {
+    .product-categories-area {
+        padding: 40px 0 !important;
+    }
+    
+    .category-link {
+        padding: 30px 15px !important;
+    }
+    
+    .category-icon {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 28px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .category-name {
+        font-size: 18px !important;
+    }
+    
+    .category-desc {
+        font-size: 13px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .category-link {
+        padding: 25px 10px !important;
+    }
+    
+    .category-icon {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 24px !important;
+        margin-bottom: 12px !important;
+    }
+    
+    .category-name {
+        font-size: 16px !important;
+    }
+}

@@ -93,9 +93,62 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>        </div>
         <!-- service policy area end -->
+
+        <!-- product categories area start -->
+        <section class="product-categories-area section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- section title start -->
+                        <div class="section-title text-center">
+                            <h2 class="title">Danh mục sản phẩm</h2>
+                            <p class="sub-title">Khám phá các danh mục sách đa dạng</p>
+                        </div>
+                        <!-- section title end -->
+                    </div>
+                </div>
+                <div class="row">
+                    <?php if (!empty($listDanhMuc)): ?>
+                        <?php foreach($listDanhMuc as $key => $danhMuc): ?>
+                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                                <div class="category-card">
+                                    <a href="<?= BASE_URL . '?act=san-pham-theo-danh-muc&danh_muc_id=' . $danhMuc['id']; ?>" class="category-link">
+                                        <div class="category-icon">
+                                            <i class="pe-7s-bookmarks"></i>
+                                        </div>
+                                        <div class="category-content">
+                                            <h5 class="category-name"><?= $danhMuc['ten_danh_muc'] ?></h5>
+                                            <?php if (!empty($danhMuc['mo_ta'])): ?>
+                                                <p class="category-desc"><?= $danhMuc['mo_ta'] ?></p>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="category-arrow">
+                                            <i class="pe-7s-angle-right"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="col-12">
+                            <div class="text-center">
+                                <p>Chưa có danh mục sản phẩm nào.</p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12 text-center">
+                        <a href="<?= BASE_URL . '?act=san-pham-theo-danh-muc' ?>" class="btn btn-primary btn-modern">
+                            Xem tất cả sản phẩm
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- product categories area end -->
 
         <!-- banner statistics area start -->
         <div class="banner-statistics-area">
@@ -150,8 +203,9 @@
                                         <!-- product item start -->
                                         <div class="product-item">
                                             <figure class="product-thumb">
-                                                <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id']; ?>">                                                    <img class="pri-img" src="<?= getImageUrl($sanPham['hinh_anh']) ?>" alt="product">
-                                                    <img class="sec-img" src="<?= getImageUrl($sanPham['hinh_anh']) ?>" alt="product">
+                                                <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id']; ?>">
+                                                    <img class="pri-img" src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="product">
+                                                    <img class="sec-img" src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="product">
                                                 </a>
                                                 <div class="product-badge">
                                                     <?php 

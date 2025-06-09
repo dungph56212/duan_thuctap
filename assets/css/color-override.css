@@ -1,0 +1,294 @@
+/*------------------------------------------------------------------
+Targeted Color Override CSS - Replaces #c29958 with modern colors
+-------------------------------------------------------------------*/
+
+/* ========== DIRECT COLOR REPLACEMENTS ========== */
+
+/* Form Controls */
+.form-control:focus {
+  border-color: #007bff !important;
+}
+
+/* Selection Colors */
+::-moz-selection {
+  background: #007bff !important;
+}
+
+::selection {
+  background: #007bff !important;
+}
+
+/* ========== SLIDER ARROW STYLES ========== */
+.slick-arrow-style button.slick-arrow:hover {
+  color: #007bff !important;
+}
+
+.slick-arrow-style_hero button.slick-arrow:hover {
+  color: #007bff !important;
+}
+
+.slick-append button:hover {
+  color: #007bff !important;
+}
+
+/* ========== SLIDER DOT STYLES ========== */
+.slick-dot-style ul.slick-dots li.slick-active button {
+  border-color: #007bff !important;
+  background-color: #007bff !important;
+}
+
+/* ========== NAVIGATION AND LINKS ========== */
+.main-menu ul li a:hover,
+.main-menu ul li.menu-item-has-children:hover > a {
+  color: #007bff !important;
+}
+
+/* ========== BUTTONS ========== */
+.btn-outline-info {
+  border-color: #007bff !important;
+  color: #007bff !important;
+}
+
+.btn-outline-info:hover {
+  background-color: #2c3e50 !important;
+  border-color: #2c3e50 !important;
+}
+
+/* ========== PRODUCT ELEMENTS ========== */
+.product-item .product-thumb .action-links li a:hover,
+.product-item .product-content .price,
+.single-product-wrap .product-thumb .action-links li a:hover {
+  color: #2c3e50 !important;
+}
+
+.single-product-wrap .product-thumb .action-links li a:hover,
+.product-item .product-thumb .action-links li a:hover {
+  background-color: #2c3e50 !important;
+}
+
+/* ========== FEATURE ELEMENTS ========== */
+.feature-icon-box .feature-icon i {
+  color: #2c3e50 !important;
+}
+
+.feature-icon-box:hover .feature-icon i {
+  color: #ffffff !important;
+}
+
+.feature-icon-box:hover {
+  background-color: #2c3e50 !important;
+}
+
+/* ========== CATEGORY ELEMENTS ========== */
+.category-item .category-content h3 a:hover {
+  color: #2c3e50 !important;
+}
+
+/* ========== TESTIMONIAL ELEMENTS ========== */
+.testimonial-item .client-rating i {
+  color: #2c3e50 !important;
+}
+
+/* ========== BLOG ELEMENTS ========== */
+.blog-item .blog-content .blog-meta a:hover,
+.blog-item .blog-content h3 a:hover {
+  color: #2c3e50 !important;
+}
+
+/* ========== PAGINATION ========== */
+.pagination-wrap ul.pagination li a:hover,
+.pagination-wrap ul.pagination li.active a {
+  background-color: #2c3e50 !important;
+  border-color: #2c3e50 !important;
+}
+
+/* ========== SHOP ELEMENTS ========== */
+.shop-top-bar .shop-tab ul li.active a,
+.shop-top-bar .shop-tab ul li a:hover {
+  color: #2c3e50 !important;
+}
+
+.shop-sidebar .sidebar-single .sidebar-widget ul li a:hover {
+  color: #2c3e50 !important;
+}
+
+.price-range-slider .ui-slider .ui-slider-range {
+  background-color: #2c3e50 !important;
+}
+
+.price-range-slider .ui-slider .ui-slider-handle {
+  border: 2px solid #2c3e50 !important;
+  background-color: #2c3e50 !important;
+}
+
+/* ========== PRODUCT DETAILS ========== */
+.product-details-content .pro-details-price .new-price {
+  color: #2c3e50 !important;
+}
+
+.product-details-content .pro-details-rating span a i {
+  color: #2c3e50 !important;
+}
+
+.pro-details-size-color .pro-details-color-wrap .pro-details-color-content ul li.active a,
+.pro-details-size-color .pro-details-size-wrap .pro-details-size-content ul li.active a {
+  border-color: #2c3e50 !important;
+}
+
+/* ========== CART ELEMENTS ========== */
+.cart-item .cart-item-info .cart-item-title a:hover {
+  color: #2c3e50 !important;
+}
+
+/* ========== WISHLIST ELEMENTS ========== */
+.wishlist-item .wishlist-item-info .wishlist-item-title a:hover {
+  color: #2c3e50 !important;
+}
+
+/* ========== COMPARE ELEMENTS ========== */
+.compare-item .compare-item-info .compare-item-title a:hover {
+  color: #2c3e50 !important;
+}
+
+/* ========== ACCOUNT ELEMENTS ========== */
+.myaccount-tab-menu ul li a.active,
+.myaccount-tab-menu ul li a:hover {
+  color: #2c3e50 !important;
+}
+
+/* ========== CONTACT ELEMENTS ========== */
+.contact-form-wrap .contact-form button:hover {
+  background-color: #2c3e50 !important;
+}
+
+/* ========== FOOTER ELEMENTS ========== */
+.footer-widget ul li a:hover,
+.footer-widget h3 a:hover {
+  color: #2c3e50 !important;
+}
+
+/* ========== BANNER ELEMENTS ========== */
+.banner-item .banner-content h2 a:hover {
+  color: #2c3e50 !important;
+}
+
+/* ========== MODAL ELEMENTS ========== */
+.modal-header .modal-title {
+  color: #2c3e50 !important;
+}
+
+/* ========== BREADCRUMB ========== */
+.breadcrumb-area .breadcrumb li a:hover {
+  color: #2c3e50 !important;
+}
+
+/* ========== ADDITIONAL OVERRIDES ========== */
+
+/* Any remaining instances of the old color */
+*[style*="#c29958"] {
+  color: #2c3e50 !important;
+}
+
+/* Target specific CSS classes that might use the old color */
+.text-c29958,
+.color-c29958 {
+  color: #2c3e50 !important;
+}
+
+.bg-c29958 {
+  background-color: #2c3e50 !important;
+}
+
+.border-c29958 {
+  border-color: #2c3e50 !important;
+}
+
+/* ========== HOVER EFFECTS IMPROVEMENTS ========== */
+
+/* Enhanced button hover effects */
+.btn:hover,
+button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 15px rgba(44, 62, 80, 0.2) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Enhanced card hover effects */
+.product-item:hover,
+.category-item:hover,
+.blog-item:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 8px 25px rgba(44, 62, 80, 0.15) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Enhanced link hover effects */
+a:hover {
+  text-decoration: none !important;
+  transition: color 0.3s ease !important;
+}
+
+/* ========== FOCUS IMPROVEMENTS ========== */
+
+/* Better focus states for accessibility */
+button:focus,
+.btn:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #3498db !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2) !important;
+}
+
+/* ========== MODERN SPACING ========== */
+
+/* Improved padding and margins for modern look */
+.container {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+.section-padding {
+  padding-top: 80px !important;
+  padding-bottom: 80px !important;
+}
+
+/* ========== TYPOGRAPHY IMPROVEMENTS ========== */
+
+/* Better font weights and letter spacing */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.btn {
+  font-weight: 500 !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+}
+
+/* ========== MODERN BORDERS ========== */
+
+/* Softer, more modern borders */
+.card,
+.product-item,
+.category-item {
+  border: 1px solid #ecf0f1 !important;
+  border-radius: 12px !important;
+}
+
+/* ========== IMPROVED SHADOWS ========== */
+
+/* Modern shadow system */
+.shadow-sm {
+  box-shadow: 0 2px 10px rgba(44, 62, 80, 0.08) !important;
+}
+
+.shadow {
+  box-shadow: 0 4px 20px rgba(44, 62, 80, 0.12) !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 8px 30px rgba(44, 62, 80, 0.15) !important;
+}

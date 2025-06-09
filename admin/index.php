@@ -11,6 +11,7 @@ require_once './controllers/AdminSanPhamController.php';
 require_once './controllers/AdminBaoCaoThongKeController.php';
 require_once './controllers/AdminTaiKhoanController.php';
 require_once './controllers/AdminDonHangController.php';
+require_once './controllers/AdminBinhLuanController.php';
 
 // Require toàn bộ file Models
 require_once './models/AdminDanhMuc.php';
@@ -18,9 +19,7 @@ require_once './models/AdminSanPham.php';
 require_once './models/AdminTaiKhoan.php';
 require_once './models/AdminBaoCaoThongKe.php';
 require_once './models/AdminDonHang.php';
-
-// Require models from main directory that are used in admin controllers
-require_once '../models/SanPham.php';
+require_once './models/AdminBinhLuan.php';
 // Route
 $act = $_GET['act'] ?? '';
 
@@ -55,6 +54,17 @@ match ($act) {
 
 // bình luận
 'update-trang-thai-binh-luan' =>(new AdminSanPhamController())->updateTrangThaiBinhLuan(),
+
+// quản lý bình luận
+'binh-luan' => (new AdminBinhLuanController())->danhSachBinhLuan(),
+'chi-tiet-binh-luan' => (new AdminBinhLuanController())->chiTietBinhLuan(),
+'cap-nhat-trang-thai-binh-luan' => (new AdminBinhLuanController())->updateTrangThaiBinhLuan(),
+'duyet-hang-loat-binh-luan' => (new AdminBinhLuanController())->duyetHangLoatBinhLuan(),
+'xoa-binh-luan' => (new AdminBinhLuanController())->xoaBinhLuan(),
+'filter-binh-luan' => (new AdminBinhLuanController())->filterBinhLuan(),
+'tra-loi-binh-luan' => (new AdminBinhLuanController())->traLoiBinhLuan(),
+'bao-cao-binh-luan' => (new AdminBinhLuanController())->baoCaoBinhLuan(),
+'get-pending-comments-count' => (new AdminBinhLuanController())->getPendingCommentsCount(),
 
 //route quản lý tài khoản
   //quản lý tài khoản quản trị

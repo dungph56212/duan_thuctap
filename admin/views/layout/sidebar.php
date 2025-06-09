@@ -58,7 +58,49 @@
  
               </p>
             </a>
-          </li>          <li class="nav-item">
+          </li>          <!-- Comment Management Section -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-comments"></i>
+              <p>Quản lý bình luận</p>
+              <i class="fas fa-angle-left right"></i>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=binh-luan' ?>" class="nav-link">
+                  <i class="fas fa-list"></i>
+                  <p>Danh sách bình luận</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=filter-binh-luan&trang_thai=pending' ?>" class="nav-link">
+                  <i class="fas fa-clock"></i>
+                  <p>Bình luận chờ duyệt</p>
+                  <span id="pending-comments-badge" class="badge badge-warning right" style="display: none;">0</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=filter-binh-luan&trang_thai=approved' ?>" class="nav-link">
+                  <i class="fas fa-check-circle"></i>
+                  <p>Bình luận đã duyệt</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=filter-binh-luan&trang_thai=rejected' ?>" class="nav-link">
+                  <i class="fas fa-times-circle"></i>
+                  <p>Bình luận bị từ chối</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=bao-cao-binh-luan' ?>" class="nav-link">
+                  <i class="fas fa-chart-bar"></i>
+                  <p>Báo cáo thống kê</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="fas fa-boxes"></i>
               <p>Quản lý tồn kho</p>

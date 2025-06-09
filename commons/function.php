@@ -41,12 +41,47 @@ function connectDB() {
 // xóa sesion sau khi load trang
 function deleteSessionError(){
     if(isset($_SESSION['flash'])){
-    // HUY SESION SAU KHI ĐÃ TẢI TRANG 
-    unset($_SESSION['flash']);
-    unset($_SESSION['error']);
-    // session_unset();
-    // session_destroy();
+        // HUY SESION SAU KHI ĐÃ TẢI TRANG 
+        unset($_SESSION['flash']);
+        unset($_SESSION['error']);
+        unset($_SESSION['success']);
+        unset($_SESSION['errors']);
+        unset($_SESSION['old_data']);
     }
+}
+
+// Function to display notification messages
+function displayNotification() {
+    $output = '';
+    
+    if (isset($_SESSION['error']) && isset($_SESSION['flash'])) {
+        $output .= '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-circle me-2"></i>' . $_SESSION['error'] . '
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+    }
+    
+    if (isset($_SESSION['success']) && isset($_SESSION['flash'])) {
+        $output .= '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle me-2"></i>' . $_SESSION['success'] . '
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>';
+    }
+    
+    return $output;
+}
+
+// Function to get old form data for repopulating forms after validation errors
+function old($field, $default = '') {
+    return isset($_SESSION['old_data'][$field]) ? $_SESSION['old_data'][$field] : $default;
+}
+
+// Function to display field-specific error messages
+function displayFieldError($field) {
+    if (isset($_SESSION['errors'][$field])) {
+        return '<span class="text-danger small">' . $_SESSION['errors'][$field] . '</span>';
+    }
+    return '';
 }
 
 //upload album ảnh

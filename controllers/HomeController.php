@@ -1,4 +1,5 @@
 <?php
+require_once './commons/Security.php';
 
 class HomeController
 {    public $modelSanPham;
@@ -7,6 +8,7 @@ class HomeController
     public $modelDonHang;
     public $commentModel;
     public $modelDiaChi;
+    public $modelDanhMuc;
     public function __construct()
     {
         $this->modelSanPham = new SanPham();
@@ -15,82 +17,119 @@ class HomeController
         $this->modelDonHang = new DonHang();
         $this->commentModel = new commentModel();
         $this->modelDiaChi = new DiaChi();
+        $this->modelDanhMuc = new DanhMuc();
     }
-
-
     public function home()
     {
         // echo "Dự án 1 team 9";
         // $listSanPham = $this->modelSanPham->getAllSanPham();
         $listSanPham = $this->modelSanPham->getAllProduct();
+        $listDanhMuc = $this->modelDanhMuc->getAllDanhMuc();
         // var_dump($listSanPham);die;
         require_once './views/home.php';
     }
-    public function trangchu()
+
+    public function sanPhamTheoDanhMuc()
     {
-        echo "Đây là trang chủ của tôi";
+        $danh_muc_id = $_GET['danh_muc_id'] ?? null;
+        if ($danh_muc_id) {
+            $listSanPham = $this->modelSanPham->getListSanPhamDanhMuc($danh_muc_id);
+            $danhMuc = $this->modelDanhMuc->getDetailDanhMuc($danh_muc_id);
+            $listDanhMuc = $this->modelDanhMuc->getAllDanhMuc();
+        } else {
+            $listSanPham = $this->modelSanPham->getAllProduct();
+            $danhMuc = null;
+            $listDanhMuc = $this->modelDanhMuc->getAllDanhMuc();
+        }
+        require_once './views/sanPhamTheoDanhMuc.php';
     }
-  
     public function chiTietSanPham()
     {
         $id = $_GET['id_san_pham'];
         $sanPham = $this->modelSanPham->getDetailSanPham($id);
-        // var_dump($sanPham['hinh_anh']);die;
-        $listAnhSanPham = $this->modelSanPham->getListAnhSanPham($id);
-        // var_dump($listAnhSanPham);die;
-        // exit;
-        $listBinhLuan = $this->modelSanPham->getBinhLuanFromSanPham($id);
-        $listSanPhamCungDanhMuc = $this->modelSanPham->getListSanPhamDanhMuc($sanPham['danh_muc_id']);
-        $dataComment = $this->modelSanPham->getDataComment();
-        if ($sanPham) {
-            require_once './views/detailSanPham.php';
-        } else {
+        
+        if (!$sanPham) {
             header("Location: " . BASE_URL);
             exit();
         }
-    }
 
-    public function formLogin()
+        $listAnhSanPham = $this->modelSanPham->getListAnhSanPham($id);
+        
+        // Use enhanced comment model to get approved comments with admin replies
+        $listBinhLuan = $this->commentModel->get_approved_comments_by_product($id);
+        
+        $listSanPhamCungDanhMuc = $this->modelSanPham->getListSanPhamDanhMuc($sanPham['danh_muc_id']);
+        
+        // Generate CSRF token for forms
+        if (!isset($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+
+        require_once './views/detailSanPham.php';
+    }public function formLogin()
     {
+        Security::generateCSRFToken();
         require_once './views/auth/formLogin.php';
         deleteSessionError();
         exit();
-    }
-
-    public function postLogin()
+    }    public function postLogin()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-         $user = $this->modelTaiKhoan->checkLogin($email, $password);
-         if ($user == $email) {
-            // $_SESSION['user_client'] = $user;
-            header("Location: " . BASE_URL);
-            exit();
+            // CSRF Token validation
+            if (!isset($_POST['csrf_token']) || !Security::validateCSRFToken($_POST['csrf_token'])) {
+                $_SESSION['error'] = "Token bảo mật không hợp lệ. Vui lòng thử lại.";
+                $_SESSION['flash'] = true;
+                header("Location: " . BASE_URL . '?act=login');
+                exit();
+            }
             
-         }else{
-            $_SESSION['error'] = $user;
-            $_SESSION['flash'] = true;
-            header("Location: " . BASE_URL. '?act=login');
-            exit();
-
-         }
-
-
-
-
-            // $user = $this->modelTaiKhoan->checkLogin($email, $password);
-            // var_dump($user);die;
-            // if ($user == $email) {
-            //     $_SESSION['user_client'] = $user;
-            //     header("Location: " . BASE_URL);
-            //     exit();
-            // } else {
-            //     $_SESSION['error'] = $user;
-            //     $_SESSION['flash'] = true;
-            //     header("Location: " . BASE_URL . '?act=login');
-            //     exit();
-            // }
+            // Validate input
+            $email = Security::sanitizeInput(trim($_POST['email'] ?? ''));
+            $password = $_POST['password'] ?? '';
+            
+            // Basic validation
+            if (empty($email) || empty($password)) {
+                $_SESSION['error'] = "Vui lòng nhập đầy đủ email và mật khẩu";
+                $_SESSION['flash'] = true;
+                header("Location: " . BASE_URL . '?act=login');
+                exit();
+            }
+            
+            // Validate email format
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $_SESSION['error'] = "Email không hợp lệ";
+                $_SESSION['flash'] = true;
+                header("Location: " . BASE_URL . '?act=login');
+                exit();
+            }
+            
+            // Check rate limiting
+            if (Security::isRateLimited($email)) {
+                $remainingTime = Security::getRemainingLockoutTime($email);
+                $minutes = ceil($remainingTime / 60);
+                $_SESSION['error'] = "Bạn đã thử đăng nhập quá nhiều lần. Vui lòng thử lại sau {$minutes} phút.";
+                $_SESSION['flash'] = true;
+                header("Location: " . BASE_URL . '?act=login');
+                exit();
+            }
+            
+            $result = $this->modelTaiKhoan->checkLogin($email, $password);
+            
+            if ($result == $email) {
+                // Login successful - clear failed attempts and set success message
+                Security::clearLoginAttempts($email);
+                $_SESSION['success'] = "Đăng nhập thành công! Chào mừng bạn trở lại.";
+                $_SESSION['flash'] = true;
+                header("Location: " . BASE_URL);
+                exit();
+            } else {
+                // Login failed - record attempt and display error
+                Security::recordLoginAttempt($email);
+                $_SESSION['error'] = $result;
+                $_SESSION['flash'] = true;
+                header("Location: " . BASE_URL . '?act=login');
+                exit();
+            }
         }
     }
     
@@ -390,62 +429,97 @@ class HomeController
             var_dump('Chưa đăng nhập');
             die;
         }
-    }
-
-    public function registers()
+    }    public function registers()
     {
-        // var_dump(123);die;
-        if (empty($_POST['email'])) {
+        // If GET request, show the registration form
+        if ($_SERVER['REQUEST_METHOD'] == 'GET' || empty($_POST['email'])) {
+            Security::generateCSRFToken();
             require_once './views/auth/register.php';
-            die;
+            deleteSessionError();
+            exit();
         }
-        $errors = [];
-        $email = $_POST['email'];
-        // var_dump($email);die;
-        // Kiểm tra email có tồn tại không
-        if ($this->modelTaiKhoan->checkEmailExist($email)) {
-            $errors['email'] = "Email đã tồn tại.";
-            $_SESSION['errors'] = $errors;
-            // var_dump($errors);
-            require_once './views/auth/register.php';
-            die;
-        }
-        // die;
-        $ho_ten = $_POST['ho_ten'];
-        $mat_khau = ($_POST['mat_khau']);
-        // var_dump($mat_khau)
-        $xac_nhan_mat_khau = ($_POST['xac_nhan_mat_khau']);
         
-        if($mat_khau != $xac_nhan_mat_khau){
-            $errors['xac_nhan_mat_khau'] = "Nhập lại mật khẩu không trùng khớp.";
-            $_SESSION['errors'] = $errors;
+        // Handle POST request - registration process
+        // CSRF Token validation
+        if (!isset($_POST['csrf_token']) || !Security::validateCSRFToken($_POST['csrf_token'])) {
+            $_SESSION['error'] = "Token bảo mật không hợp lệ. Vui lòng thử lại.";
+            $_SESSION['flash'] = true;
             require_once './views/auth/register.php';
-            die;
+            exit();
         }
-        if($this->modelTaiKhoan->register($ho_ten, $email, password_hash($mat_khau, PASSWORD_DEFAULT))){
-            // var_dump(123);die;
-            header("location: " . BASE_URL . '?act=login');
-            die();
-        }else{
-            header("location: " . BASE_URL . '?act=register');
-            die();
+        
+        $errors = [];
+        
+        // Get and sanitize input data
+        $ho_ten = Security::sanitizeInput(trim($_POST['ho_ten'] ?? ''));
+        $email = Security::sanitizeInput(trim($_POST['email'] ?? ''));
+        $mat_khau = $_POST['mat_khau'] ?? '';
+        $xac_nhan_mat_khau = $_POST['xac_nhan_mat_khau'] ?? '';
+        
+        // Validate required fields
+        if (empty($ho_ten)) {
+            $errors['ho_ten'] = "Họ tên không được để trống";
+        } elseif (strlen($ho_ten) < 2) {
+            $errors['ho_ten'] = "Họ tên phải có ít nhất 2 ký tự";
+        } elseif (strlen($ho_ten) > 100) {
+            $errors['ho_ten'] = "Họ tên không được quá 100 ký tự";
         }
-
-        // $ma_xac_thuc =
-        // // var_dump($ma_xac_thuc);die;
-        // if ($ma_xac_thuc) {
-        //     $subject = 'Đăng Ký Tại PawPaw';
-        //     $content = 'Vui lòng không chia sẽ mã này với bất kỳ ai. Mã xác thực của bạn là: ' . $ma_xac_thuc;
-        //     sendMail($email, $subject, $content);
-
-        //     // Chuyển đến view yêu cầu mã xác thực
-        //     require_once './views/auth/comfirm_register.php';
-        //     die;
-        // } else {
-        //     $_SESSION['errors']['email'] = "Email đã tồn tại.";
-        //     require_once './views/auth/register.php';
-        //     die;
-        // }
+        
+        if (empty($email)) {
+            $errors['email'] = "Email không được để trống";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = "Email không hợp lệ";
+        } elseif (strlen($email) > 255) {
+            $errors['email'] = "Email không được quá 255 ký tự";
+        }
+        
+        if (empty($mat_khau)) {
+            $errors['mat_khau'] = "Mật khẩu không được để trống";
+        } else {
+            // Validate password strength using Security class
+            $passwordErrors = Security::validatePasswordStrength($mat_khau);
+            if (!empty($passwordErrors)) {
+                $errors['mat_khau'] = implode('. ', $passwordErrors);
+            }
+        }
+        
+        if (empty($xac_nhan_mat_khau)) {
+            $errors['xac_nhan_mat_khau'] = "Vui lòng xác nhận mật khẩu";
+        } elseif ($mat_khau != $xac_nhan_mat_khau) {
+            $errors['xac_nhan_mat_khau'] = "Nhập lại mật khẩu không trùng khớp";
+        }
+        
+        // Check if email already exists
+        if (empty($errors['email']) && $this->modelTaiKhoan->checkEmailExist($email)) {
+            $errors['email'] = "Email đã tồn tại";
+        }
+        
+        // If there are validation errors, show the form with errors
+        if (!empty($errors)) {
+            $_SESSION['errors'] = $errors;
+            $_SESSION['old_data'] = [
+                'ho_ten' => $ho_ten,
+                'email' => $email
+            ];
+            require_once './views/auth/register.php';
+            exit();
+        }
+        
+        // Hash password using Argon2ID for better security
+        $hashedPassword = Security::hashPassword($mat_khau);
+        
+        // Attempt to register the user
+        if ($this->modelTaiKhoan->register($ho_ten, $email, $hashedPassword)) {
+            $_SESSION['success'] = "Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.";
+            $_SESSION['flash'] = true;
+            header("Location: " . BASE_URL . '?act=login');
+            exit();
+        } else {
+            $_SESSION['error'] = "Có lỗi xảy ra trong quá trình đăng ký. Vui lòng thử lại.";
+            $_SESSION['flash'] = true;
+            header("Location: " . BASE_URL . '?act=register');
+            exit();
+        }
     }
 
 
@@ -495,17 +569,141 @@ class HomeController
             }
         }
     }
-
-
     public function add_comment() {
-        $san_pham_id = $_GET['id_san_pham'];
+        if (!isset($_SESSION['user_client'])) {
+            header('location: ' . BASE_URL . '?act=login');
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('location: ' . BASE_URL);
+            exit();
+        }
+
+        $san_pham_id = $_GET['id_san_pham'] ?? null;
         $tai_khoan_id = $_SESSION['user_client']['id'];
-        $noi_dung = $_POST['noi_dung'];
-        // var_dump($noi_dung);
-        $this->commentModel->add_comment($san_pham_id, $tai_khoan_id, $noi_dung);
+        $noi_dung = $_POST['noi_dung'] ?? '';
+        $csrf_token = $_POST['csrf_token'] ?? '';
+
+        // CSRF Protection
+        if (!isset($_SESSION['csrf_token']) || $csrf_token !== $_SESSION['csrf_token']) {
+            $_SESSION['error'] = "Token bảo mật không hợp lệ. Vui lòng thử lại.";
+            header('location: ' . BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $san_pham_id);
+            exit();
+        }
+
+        // Validate input
+        $errors = $this->commentModel->validate_comment($noi_dung);
+        
+        if (!$san_pham_id) {
+            $errors[] = "Sản phẩm không tồn tại";
+        }
+
+        // Check if user can comment (rate limiting)
+        if (!$this->commentModel->can_user_comment($tai_khoan_id, $san_pham_id)) {
+            $errors[] = "Bạn đã bình luận quá nhiều lần cho sản phẩm này. Vui lòng thử lại sau.";
+        }
+
+        if (!empty($errors)) {
+            $_SESSION['comment_errors'] = $errors;
+            $_SESSION['comment_data'] = ['noi_dung' => $noi_dung];
+            header('location: ' . BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $san_pham_id);
+            exit();
+        }
+
+        $result = $this->commentModel->add_comment($san_pham_id, $tai_khoan_id, $noi_dung);
+        
+        if ($result) {
+            $_SESSION['success'] = "Bình luận của bạn đã được gửi và đang chờ duyệt.";
+        } else {
+            $_SESSION['error'] = "Có lỗi xảy ra khi gửi bình luận. Vui lòng thử lại.";
+        }
+
+        // Regenerate CSRF token
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        
         header('location: ' . BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $san_pham_id);
         exit();
+    }
 
+    public function edit_comment() {
+        if (!isset($_SESSION['user_client'])) {
+            echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập']);
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['success' => false, 'message' => 'Phương thức không hợp lệ']);
+            exit();
+        }
+
+        $comment_id = $_POST['comment_id'] ?? null;
+        $noi_dung = $_POST['noi_dung'] ?? '';
+        $tai_khoan_id = $_SESSION['user_client']['id'];
+        $csrf_token = $_POST['csrf_token'] ?? '';
+
+        // CSRF Protection
+        if (!isset($_SESSION['csrf_token']) || $csrf_token !== $_SESSION['csrf_token']) {
+            echo json_encode(['success' => false, 'message' => 'Token bảo mật không hợp lệ']);
+            exit();
+        }
+
+        // Validate input
+        $errors = $this->commentModel->validate_comment($noi_dung);
+        
+        if (!$comment_id) {
+            $errors[] = "Bình luận không tồn tại";
+        }
+
+        if (!empty($errors)) {
+            echo json_encode(['success' => false, 'message' => implode(', ', $errors)]);
+            exit();
+        }
+
+        $result = $this->commentModel->update_comment($comment_id, $noi_dung, $tai_khoan_id);
+        
+        if ($result) {
+            echo json_encode(['success' => true, 'message' => 'Cập nhật bình luận thành công']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Không thể cập nhật bình luận']);
+        }
+        exit();
+    }
+
+    public function delete_comment() {
+        if (!isset($_SESSION['user_client'])) {
+            echo json_encode(['success' => false, 'message' => 'Vui lòng đăng nhập']);
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['success' => false, 'message' => 'Phương thức không hợp lệ']);
+            exit();
+        }
+
+        $comment_id = $_POST['comment_id'] ?? null;
+        $tai_khoan_id = $_SESSION['user_client']['id'];
+        $csrf_token = $_POST['csrf_token'] ?? '';
+
+        // CSRF Protection
+        if (!isset($_SESSION['csrf_token']) || $csrf_token !== $_SESSION['csrf_token']) {
+            echo json_encode(['success' => false, 'message' => 'Token bảo mật không hợp lệ']);
+            exit();
+        }
+
+        if (!$comment_id) {
+            echo json_encode(['success' => false, 'message' => 'Bình luận không tồn tại']);
+            exit();
+        }
+
+        $result = $this->commentModel->delete_comment($comment_id, $tai_khoan_id);
+        
+        if ($result) {
+            echo json_encode(['success' => true, 'message' => 'Xóa bình luận thành công']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Không thể xóa bình luận']);
+        }
+        exit();
     }
 
     public function logout()
