@@ -8,6 +8,7 @@ require_once './commons/function.php'; // Hàm hỗ trợ
 // Require toàn bộ file Controllers
 require_once './controllers/HomeController.php';
 require_once './controllers/productlistController.php';
+require_once './controllers/ForgotPasswordController.php';
 
 // Require toàn bộ file Models
 require_once './models/SanPham.php';
@@ -18,6 +19,7 @@ require_once './models/comment.php';
 require_once './models/danhmucmodels.php';
 require_once './models/productlistModel.php';
 require_once './models/DiaChi.php';
+require_once './models/KhuyenMai.php';
 // Route
 $act = $_GET['act'] ?? '/';
 // var_dump($_GET['act']);die();
@@ -35,9 +37,10 @@ match ($act) {
     '/'                 => (new HomeController())->home(),
     'trangchu'           =>(new HomeController())->trangchu(),
     'chi-tiet-san-pham' => (new HomeController())->chiTietSanPham(),
-    'san-pham-theo-danh-muc' => (new HomeController())->sanPhamTheoDanhMuc(),
-    'them-gio-hang'     =>(new HomeController())->addGioHang(),
+    'san-pham-theo-danh-muc' => (new HomeController())->sanPhamTheoDanhMuc(),    'them-gio-hang'     =>(new HomeController())->addGioHang(),
     'gio-hang'         =>(new HomeController())->gioHang(),
+    'ap-dung-ma-giam-gia' => (new HomeController())->apDungMaGiamGia(),
+    'xoa-ma-giam-gia' => (new HomeController())->xoaMaGiamGia(),
     'thanh-toan'         =>(new HomeController())->thanhToan(),
     'xu-ly-thanh-toan'         =>(new HomeController())->postThanhToan(),
     'lich-su-mua-hang'         =>(new HomeController())->lichSuMuaHang(),
@@ -60,6 +63,6 @@ match ($act) {
     'edit_comment'  => (new HomeController())-> edit_comment(),
     'delete_comment'  => (new HomeController())-> delete_comment(),
     'productlist' => (new ProductController())->index(),
-
-
+    'forgot-password' => (new ForgotPasswordController())->forgotPassword(),
+    'reset-password' => (new ForgotPasswordController())->resetPassword(),
 };
