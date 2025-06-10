@@ -181,5 +181,43 @@ public function updateMatKhau($id, $mat_khau){
     }
 }
 
+// Lấy user theo email
+public function getUserByEmail($email) {
+    $sql = "SELECT * FROM tai_khoans WHERE TRIM(LOWER(email)) = TRIM(LOWER(:email)) LIMIT 1";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([':email' => $email]);
+    return $stmt->fetch();
+}
+
+// Lưu token reset password
+public function saveResetToken($email, $token) {
+    $sql = "INSERT INTO password_resets (email, token, created_at) VALUES (:email, :token, NOW())";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([':email' => $email, ':token' => $token]);
+}
+
+// Lấy email theo token
+public function getEmailByToken($token) {
+    $sql = "SELECT email FROM password_resets WHERE token = :token ORDER BY created_at DESC LIMIT 1";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([':token' => $token]);
+    $row = $stmt->fetch();
+    return $row ? $row['email'] : false;
+}
+
+// Cập nhật mật khẩu mới
+public function updatePasswordByEmail($email, $password) {
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $sql = "UPDATE tai_khoans SET mat_khau = :mat_khau WHERE email = :email";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([':mat_khau' => $hash, ':email' => $email]);
+}
+
+// Xóa token sau khi dùng
+public function deleteResetToken($token) {
+    $sql = "DELETE FROM password_resets WHERE token = :token";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([':token' => $token]);
+}
 
 }
