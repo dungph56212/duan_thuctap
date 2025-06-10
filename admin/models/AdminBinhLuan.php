@@ -114,14 +114,19 @@ class AdminBinhLuan {
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
             $stmt->execute();
-            
+
             // Xóa bình luận chính
             $sql = "DELETE FROM binh_luans WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id);
-            
-            return $stmt->execute();
+            $result = $stmt->execute();
+            if (!$result) {
+                $errorInfo = $stmt->errorInfo();
+                error_log('XOA BINH LUAN LOI: ' . print_r($errorInfo, true));
+            }
+            return $result;
         } catch (Exception $e) {
+            error_log('XOA BINH LUAN LOI: ' . $e->getMessage());
             return false;
         }
     }
