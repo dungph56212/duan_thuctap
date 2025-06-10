@@ -47,18 +47,39 @@
                                 <span data-bs-toggle="collapse" data-bs-target="#couponaccordion" style="color: #007bff; cursor: pointer; text-decoration: underline; font-size: 14px;">
                                     Click để nhập mã giảm giá
                                 </span>
-                            </h6>
-                            <div id="couponaccordion" class="collapse" data-parent="#checkOutAccordion">
+                            </h6>                            <div id="couponaccordion" class="collapse" data-parent="#checkOutAccordion">
                                 <div class="card-body" style="background: white; border-radius: 8px; padding: 20px; margin-top: 15px;">
                                     <div class="cart-update-option">
                                         <div class="apply-coupon-wrapper">
-                                            <form action="#" method="post" class="d-block d-md-flex align-items-center">
-                                                <input type="text" placeholder="Nhập mã giảm giá" required style="border: 2px solid #e9ecef; border-radius: 8px; padding: 12px 15px; margin-right: 15px; background: white; outline: none; font-size: 14px; flex: 1; transition: all 0.3s ease;" />
-                                                <button class="btn btn-sqr" style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
-                                                    <i class="fa fa-check" style="margin-right: 8px;"></i>
-                                                    Áp dụng mã
-                                                </button>
-                                            </form>
+                                            <!-- Hiển thị mã giảm giá đã áp dụng -->
+                                            <?php if (isset($_SESSION['ma_giam_gia'])): ?>
+                                                <div class="applied-coupon" style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <strong style="color: #155724;">
+                                                                <i class="fa fa-tag" style="margin-right: 5px;"></i>
+                                                                <?= $_SESSION['ma_giam_gia']['ma_khuyen_mai'] ?>
+                                                            </strong>
+                                                            <div style="color: #155724; font-size: 13px; margin-top: 2px;">
+                                                                <?= $_SESSION['ma_giam_gia']['ten_khuyen_mai'] ?>
+                                                            </div>
+                                                        </div>
+                                                        <a href="<?= BASE_URL ?>?act=xoa-ma-giam-gia" 
+                                                           style="color: #dc3545; text-decoration: none; font-size: 18px; padding: 5px;"
+                                                           onclick="return confirm('Bạn có muốn hủy mã giảm giá này?')">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            <?php else: ?>
+                                                <form action="<?= BASE_URL ?>?act=ap-dung-ma-giam-gia" method="post" class="d-block d-md-flex align-items-center">
+                                                    <input type="text" name="ma_giam_gia" placeholder="Nhập mã giảm giá" required style="border: 2px solid #e9ecef; border-radius: 8px; padding: 12px 15px; margin-right: 15px; background: white; outline: none; font-size: 14px; flex: 1; transition: all 0.3s ease;" />
+                                                    <button class="btn btn-sqr" type="submit" style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                                                        <i class="fa fa-check" style="margin-right: 8px;"></i>
+                                                        Áp dụng mã
+                                                    </button>
+                                                </form>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -174,7 +195,25 @@
                                             <td style="border: 1px solid #e9ecef; padding: 15px;">
                                                 <strong style="color: #007bff; font-size: 1.2rem;"><?=formatPrice($tongGioHang).'đ' ?></strong>
                                             </td>
+                                        </tr>                                        <?php if (isset($_SESSION['ma_giam_gia'])): 
+                                            $discount = 0;
+                                            if ($_SESSION['ma_giam_gia']['phan_tram_giam'] > 0) {
+                                                $discount = $tongGioHang * ($_SESSION['ma_giam_gia']['phan_tram_giam'] / 100);
+                                            } else {
+                                                $discount = $_SESSION['ma_giam_gia']['gia_giam'];
+                                            }
+                                            $discount = min($discount, $tongGioHang);
+                                        ?>
+                                        <tr style="background: #d4edda;">
+                                            <td style="border: 1px solid #c3e6cb; padding: 15px; color: #155724; font-weight: 600;">
+                                                <i class="fa fa-gift" style="color: #28a745; margin-right: 8px;"></i>
+                                                Giảm giá (<?= $_SESSION['ma_giam_gia']['ma_khuyen_mai'] ?>)
+                                            </td>
+                                            <td style="border: 1px solid #c3e6cb; padding: 15px;">
+                                                <strong style="color: #28a745; font-size: 1.2rem;">-<?= formatPrice($discount) . 'đ' ?></strong>
+                                            </td>
                                         </tr>
+                                        <?php endif; ?>
                                         <tr style="background: #f8f9fa;">
                                             <td style="border: 1px solid #e9ecef; padding: 15px; color: #495057; font-weight: 600;">
                                                 <i class="fa fa-truck" style="color: #28a745; margin-right: 8px;"></i>
@@ -189,9 +228,16 @@
                                                 <i class="fa fa-money" style="margin-right: 8px;"></i>
                                                 Tổng đơn hàng
                                             </td>
-                                            <input type="hidden" name="tong_tien" value="<?=($tongGioHang + 30000) ?>">
+                                            <?php 
+                                            $finalTotal = $tongGioHang + 30000;
+                                            if (isset($_SESSION['ma_giam_gia'])) {
+                                                $finalTotal -= $discount;
+                                            }
+                                            ?>
+                                            <input type="hidden" name="tong_tien" value="<?= $finalTotal ?>">
+                                            <input type="hidden" name="ma_khuyen_mai_id" value="<?= isset($_SESSION['ma_giam_gia']) ? $_SESSION['ma_giam_gia']['id'] : '' ?>">
                                             <td style="border: none; padding: 20px;">
-                                                <strong style="font-size: 1.4rem;"><?= formatPrice($tongGioHang + 30000) . 'đ' ?></strong>
+                                                <strong style="font-size: 1.4rem;"><?= formatPrice($finalTotal) . 'đ' ?></strong>
                                             </td>
                                         </tr>
                                     </tfoot>                                </table>
