@@ -34,7 +34,32 @@
                 </div>
             </div>
         </div>
-        <!-- breadcrumb area end -->        <!-- cart main wrapper start -->
+        <!-- breadcrumb area end -->
+        
+        <!-- Thông báo -->
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="container">
+                <div class="alert alert-success alert-dismissible fade show" style="margin-top: 20px; border-radius: 8px; border: none; box-shadow: 0 2px 10px rgba(40, 167, 69, 0.2);">
+                    <i class="fa fa-check-circle" style="margin-right: 8px;"></i>
+                    <?= $_SESSION['success'] ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+        
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="container">
+                <div class="alert alert-danger alert-dismissible fade show" style="margin-top: 20px; border-radius: 8px; border: none; box-shadow: 0 2px 10px rgba(220, 53, 69, 0.2);">
+                    <i class="fa fa-exclamation-triangle" style="margin-right: 8px;"></i>
+                    <?= $_SESSION['error'] ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+        
+        <!-- cart main wrapper start -->
         <div class="cart-main-wrapper section-padding" style="background: #ffffff; padding: 80px 0;">
             <div class="container">
                 <div class="section-bg-color" style="background: #ffffff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 40px;">
@@ -133,19 +158,42 @@
                                 </table>
                             </div>
                             <!-- Cart Update Option -->
-                            <div class="cart-update-option d-block d-md-flex justify-content-between" style="background: #f8f9fa; border-radius: 12px; padding: 25px; margin-bottom: 30px;">
-                                <div class="apply-coupon-wrapper">
+                            <div class="cart-update-option d-block d-md-flex justify-content-between" style="background: #f8f9fa; border-radius: 12px; padding: 25px; margin-bottom: 30px;">                                <div class="apply-coupon-wrapper">
                                     <h6 style="color: #495057; font-weight: 600; margin-bottom: 15px;">
                                         <i class="fa fa-gift" style="color: #007bff; margin-right: 8px;"></i>
                                         Mã giảm giá
                                     </h6>
-                                    <form action="#" method="post" class="d-block d-md-flex align-items-center">
-                                        <input type="text" placeholder="Nhập mã giảm giá" required style="border: 2px solid #e9ecef; border-radius: 8px; padding: 12px 15px; margin-right: 15px; background: white; outline: none; font-size: 14px; width: 250px; transition: all 0.3s ease;" />
-                                        <button class="btn btn-sqr" type="submit" style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);">
-                                            <i class="fa fa-check" style="margin-right: 8px;"></i>
-                                            Áp dụng
-                                        </button>
-                                    </form>
+                                    
+                                    <!-- Hiển thị mã giảm giá đã áp dụng -->
+                                    <?php if (isset($_SESSION['ma_giam_gia'])): ?>
+                                        <div class="applied-coupon" style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <strong style="color: #155724;">
+                                                        <i class="fa fa-tag" style="margin-right: 5px;"></i>
+                                                        <?= $_SESSION['ma_giam_gia']['ma_khuyen_mai'] ?>
+                                                    </strong>
+                                                    <div style="color: #155724; font-size: 13px; margin-top: 2px;">
+                                                        <?= $_SESSION['ma_giam_gia']['ten_khuyen_mai'] ?>
+                                                    </div>
+                                                </div>
+                                                <a href="<?= BASE_URL ?>?act=xoa-ma-giam-gia" 
+                                                   style="color: #dc3545; text-decoration: none; font-size: 18px; padding: 5px;"
+                                                   onclick="return confirm('Bạn có muốn hủy mã giảm giá này?')">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php else: ?>
+                                        <form action="<?= BASE_URL ?>?act=ap-dung-ma-giam-gia" method="post" class="d-block d-md-flex align-items-center">
+                                            <input type="text" name="ma_giam_gia" placeholder="Nhập mã giảm giá" required 
+                                                   style="border: 2px solid #e9ecef; border-radius: 8px; padding: 12px 15px; margin-right: 15px; background: white; outline: none; font-size: 14px; width: 250px; transition: all 0.3s ease;" />
+                                            <button class="btn btn-sqr" type="submit" style="background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(40, 167, 69, 0.3);">
+                                                <i class="fa fa-check" style="margin-right: 8px;"></i>
+                                                Áp dụng
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="cart-update">
                                     <button class="btn btn-secondary" style="background: #6c757d; border: none; padding: 12px 25px; border-radius: 8px; color: white; font-weight: 600;">
@@ -165,8 +213,7 @@
                                         Tổng đơn hàng
                                     </h6>
                                     <div class="table-responsive">
-                                        <table class="table" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
-                                            <tr style="background: #f8f9fa;">
+                                        <table class="table" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">                                            <tr style="background: #f8f9fa;">
                                                 <td style="border: none; padding: 15px 20px; color: #495057; font-weight: 600;">
                                                     <i class="fa fa-shopping-bag" style="color: #007bff; margin-right: 8px;"></i>
                                                     Tổng tiền sản phẩm
@@ -175,6 +222,26 @@
                                                     <?= formatPrice($tongGioHang) . 'đ' ?>
                                                 </td>
                                             </tr>
+                                            <?php if (isset($_SESSION['ma_giam_gia'])): 
+                                                $discount = 0;
+                                                if ($_SESSION['ma_giam_gia']['phan_tram_giam'] > 0) {
+                                                    $discount = $tongGioHang * ($_SESSION['ma_giam_gia']['phan_tram_giam'] / 100);
+                                                } else {
+                                                    $discount = $_SESSION['ma_giam_gia']['gia_giam'];
+                                                }
+                                                $discount = min($discount, $tongGioHang); // Không giảm quá tổng tiền
+                                                $_SESSION['discount_amount'] = $discount;
+                                            ?>
+                                            <tr style="background: #d4edda;">
+                                                <td style="border: none; padding: 15px 20px; color: #155724; font-weight: 600;">
+                                                    <i class="fa fa-gift" style="color: #28a745; margin-right: 8px;"></i>
+                                                    Giảm giá (<?= $_SESSION['ma_giam_gia']['ma_khuyen_mai'] ?>)
+                                                </td>
+                                                <td style="border: none; padding: 15px 20px; color: #28a745; font-weight: 700; font-size: 1.1rem; text-align: right;">
+                                                    -<?= formatPrice($discount) . 'đ' ?>
+                                                </td>
+                                            </tr>
+                                            <?php endif; ?>
                                             <tr style="background: #f8f9fa;">
                                                 <td style="border: none; padding: 15px 20px; color: #495057; font-weight: 600;">
                                                     <i class="fa fa-truck" style="color: #28a745; margin-right: 8px;"></i>
@@ -190,7 +257,13 @@
                                                     Tổng thanh toán
                                                 </td>
                                                 <td class="total-amount" style="border: none; padding: 20px; font-weight: 700; font-size: 1.3rem; text-align: right;">
-                                                    <?= formatPrice($tongGioHang + 30000) . 'đ' ?>
+                                                    <?php 
+                                                    $finalTotal = $tongGioHang + 30000;
+                                                    if (isset($_SESSION['discount_amount'])) {
+                                                        $finalTotal -= $_SESSION['discount_amount'];
+                                                    }
+                                                    echo formatPrice($finalTotal) . 'đ';
+                                                    ?>
                                                 </td>
                                             </tr>
                                         </table>
