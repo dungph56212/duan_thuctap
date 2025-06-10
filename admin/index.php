@@ -12,6 +12,7 @@ require_once './controllers/AdminBaoCaoThongKeController.php';
 require_once './controllers/AdminTaiKhoanController.php';
 require_once './controllers/AdminDonHangController.php';
 require_once './controllers/AdminBinhLuanController.php';
+require_once './controllers/KhuyenMaiController.php';
 
 // Require toàn bộ file Models
 require_once './models/AdminDanhMuc.php';
@@ -74,7 +75,7 @@ match ($act) {
   'form-sua-quan-tri' => (new AdminTaiKhoanController())->formEditQuanTri(),
   'sua-quan-tri' => (new AdminTaiKhoanController())->postEditQuanTri(),
   // route reset password tk
-  'reset-password' =>(new AdminTaiKhoanController())->resetPassword(),
+  'reset-password-admin' =>(new AdminTaiKhoanController())->resetPassword(),
 
   // khách hàng
   'list-tai-khoan-khach-hang' =>(new AdminTaiKhoanController())->danhSachKhachHang(),
@@ -109,5 +110,27 @@ match ($act) {
  'lich-su-ton-kho' => (new AdminBaoCaoThongKeController())->inventoryHistory(),
  'canh-bao-ton-kho' => (new AdminBaoCaoThongKeController())->inventoryAlerts(),
  'danh-dau-da-doc-canh-bao' => (new AdminBaoCaoThongKeController())->markAlertRead(),
- 'ajax-get-alerts' => (new AdminBaoCaoThongKeController())->getAjaxAlerts()
+ 'ajax-get-alerts' => (new AdminBaoCaoThongKeController())->getAjaxAlerts(),
+
+// Quản lý khuyến mãi
+'danh-sach-khuyen-mai' => (new KhuyenMaiController())->danhSachKhuyenMai(),
+'form-them-khuyen-mai' => (new KhuyenMaiController())->formAddKhuyenMai(),
+'them-khuyen-mai' => (new KhuyenMaiController())->postAddKhuyenMai(),
+'form-sua-khuyen-mai' => (new KhuyenMaiController())->formEditKhuyenMai(),
+'sua-khuyen-mai' => (new KhuyenMaiController())->postEditKhuyenMai(),
+'xoa-khuyen-mai' => (new KhuyenMaiController())->deleteKhuyenMai(),
+
+// Quản lý khuyến mãi nâng cao
+'khuyen-mai-dang-hoat-dong' => (new KhuyenMaiController())->activeKhuyenMai(),
+'khuyen-mai-sap-het-han' => (new KhuyenMaiController())->expiringKhuyenMai(),
+'khuyen-mai-da-het-han' => (new KhuyenMaiController())->expiredKhuyenMai(),
+'bao-cao-khuyen-mai' => (new KhuyenMaiController())->baoCaoKhuyenMai(),
+'cai-dat-khuyen-mai' => (new KhuyenMaiController())->caiDatKhuyenMai(),
+'post-cai-dat-khuyen-mai' => (new KhuyenMaiController())->postCaiDatKhuyenMai(),
+'toggle-promotion-status' => (new KhuyenMaiController())->togglePromotionStatus(),
+'duplicate-promotion' => (new KhuyenMaiController())->duplicatePromotion(),
+'export-promotion-report' => (new KhuyenMaiController())->exportPromotionReport(),
+'get-promotion-counts' => (new KhuyenMaiController())->getPromotionCounts(),
+
+default => header("Location: " . BASE_URL_ADMIN)
 };
