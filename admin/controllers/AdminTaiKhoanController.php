@@ -132,20 +132,28 @@ class AdminTaiKhoanController{
 
     public function resetPassword()
     {
-        $tai_khoan_id = $_GET['id_quan_tri'];
+        $tai_khoan_id = $_GET['id_quan_tri'] ?? null;
+        if (!$tai_khoan_id) {
+            echo "Thiếu id_quan_tri!";
+            exit();
+        }
         $tai_khoan = $this->modelTaiKhoan->getDetailTaiKhoan($tai_khoan_id);
+        if (!$tai_khoan) {
+            echo "Không tìm thấy tài khoản!";
+            exit();
+        }
         $password = password_hash('123123', PASSWORD_BCRYPT);
-       $status = $this->modelTaiKhoan->resetPassword($tai_khoan_id, $password);
-       if($status && $tai_khoan['chuc_vu_id'] == 1){
-        header("Location:" . BASE_URL_ADMIN . '?act=list-tai-khoan-quan-tri');
-        exit();
-       }elseif ($status && $tai_khoan['chuc_vu_id'] == 2) {
-        header("Location:" . BASE_URL_ADMIN . '?act=list-tai-khoan-khach-hang');
-        exit();
-       }
-       else{
-        echo "Sai";
-       }
+        $status = $this->modelTaiKhoan->resetPassword($tai_khoan_id, $password);
+        if($status && $tai_khoan['chuc_vu_id'] == 1){
+            header("Location:" . BASE_URL_ADMIN . '?act=list-tai-khoan-quan-tri');
+            exit();
+        }elseif ($status && $tai_khoan['chuc_vu_id'] == 2) {
+            header("Location:" . BASE_URL_ADMIN . '?act=list-tai-khoan-khach-hang');
+            exit();
+        }
+        else{
+            echo "Sai";
+        }
     }
 
     public function danhSachKhachHang()
