@@ -156,6 +156,59 @@
               </li>
             </ul>
             
+          </li>          <!-- Promotion Management Section -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-tags"></i>
+              <p>Quản lý khuyến mãi</p>
+              <i class="fas fa-angle-left right"></i>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=danh-sach-khuyen-mai' ?>" class="nav-link">
+                  <i class="fas fa-list"></i>
+                  <p>Danh sách khuyến mãi</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=form-them-khuyen-mai' ?>" class="nav-link">
+                  <i class="fas fa-plus-circle"></i>
+                  <p>Thêm khuyến mãi</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=khuyen-mai-dang-hoat-dong' ?>" class="nav-link">
+                  <i class="fas fa-play-circle text-success"></i>
+                  <p>Đang hoạt động</p>
+                  <span id="active-promotions-badge" class="badge badge-success right" style="display: none;">0</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=khuyen-mai-sap-het-han' ?>" class="nav-link">
+                  <i class="fas fa-clock text-warning"></i>
+                  <p>Sắp hết hạn</p>
+                  <span id="expiring-promotions-badge" class="badge badge-warning right" style="display: none;">0</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=khuyen-mai-da-het-han' ?>" class="nav-link">
+                  <i class="fas fa-stop-circle text-danger"></i>
+                  <p>Đã hết hạn</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=bao-cao-khuyen-mai' ?>" class="nav-link">
+                  <i class="fas fa-chart-bar"></i>
+                  <p>Báo cáo thống kê</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=cai-dat-khuyen-mai' ?>" class="nav-link">
+                  <i class="fas fa-cogs"></i>
+                  <p>Cài đặt</p>
+                </a>
+              </li>
+            </ul>
           </li>
          </ul>
       </nav>
