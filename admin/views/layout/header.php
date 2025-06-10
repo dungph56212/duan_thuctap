@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <header>
@@ -18,6 +17,8 @@
   <link rel="stylesheet" href="./assets/dist/css/adminlte.min.css">
   <!-- Toastr -->
   <link rel="stylesheet" href="./assets/plugins/toastr/toastr.min.css">
+  <!-- Chart.js -->
+  <script src="./assets/plugins/chart.js/Chart.bundle.js"></script>
 </header>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
