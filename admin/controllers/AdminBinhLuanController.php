@@ -78,6 +78,11 @@ class AdminBinhLuanController
                 $stats = [];
                 error_log("Lỗi getCommentStats: " . $e->getMessage());
             }
+            // Đảm bảo $stats luôn đồng bộ với $thongKeBinhLuan
+            $stats['total'] = $thongKeBinhLuan['tong_binh_luan'] ?? 0;
+            $stats['pending'] = $thongKeBinhLuan['cho_duyet'] ?? 0;
+            $stats['approved'] = $thongKeBinhLuan['da_duyet'] ?? 0;
+            $stats['hidden'] = $thongKeBinhLuan['bi_tu_choi'] ?? 0;
             
             require_once './views/binhluans/listBinhLuan.php';
         } catch (Exception $e) {
@@ -105,22 +110,20 @@ class AdminBinhLuanController
     // Cập nhật trạng thái bình luận (duyệt/ẩn)
     public function updateTrangThaiBinhLuan()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id_binh_luan = $_POST['id_binh_luan'];
-            $trang_thai_moi = $_POST['trang_thai_moi'];
-            $ly_do = $_POST['ly_do'] ?? '';
-            
-            $result = $this->modelBinhLuan->updateTrangThaiBinhLuan($id_binh_luan, $trang_thai_moi, $ly_do);
-            
-            if ($result) {
-                $_SESSION['success'] = "Cập nhật trạng thái bình luận thành công!";
-            } else {
-                $_SESSION['error'] = "Có lỗi xảy ra khi cập nhật trạng thái bình luận!";
-            }
-            
-            header("Location: " . BASE_URL_ADMIN . '?act=binh-luan');
+        $id_binh_luan = $_POST['id'] ?? $_POST['id_binh_luan'] ?? null;
+        $trang_thai_moi = $_POST['trang_thai'] ?? $_POST['trang_thai_moi'] ?? null;
+        $ly_do = $_POST['ly_do'] ?? '';
+        if (!$id_binh_luan || $trang_thai_moi === null) {
+            echo json_encode(['success' => false, 'message' => 'Thiếu dữ liệu!']);
             exit();
         }
+        $result = $this->modelBinhLuan->updateTrangThaiBinhLuan($id_binh_luan, $trang_thai_moi, $ly_do);
+        if ($result) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Có lỗi xảy ra khi cập nhật trạng thái bình luận!']);
+        }
+        exit();
     }
 
     // Duyệt hàng loạt bình luận
@@ -129,29 +132,24 @@ class AdminBinhLuanController
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['selected_comments'])) {
             $selectedComments = $_POST['selected_comments'];
             $action = $_POST['bulk_action'];
-            
             $successCount = 0;
             $errorCount = 0;
-            
             foreach ($selectedComments as $commentId) {
                 $trangThai = ($action === 'approve') ? 1 : 2; // 1: duyệt, 2: ẩn
                 $result = $this->modelBinhLuan->updateTrangThaiBinhLuan($commentId, $trangThai);
-                
                 if ($result) {
                     $successCount++;
                 } else {
                     $errorCount++;
                 }
             }
-            
-            if ($successCount > 0) {
-                $_SESSION['success'] = "Đã cập nhật thành công $successCount bình luận!";
-            }
-            if ($errorCount > 0) {
-                $_SESSION['error'] = "Có $errorCount bình luận không thể cập nhật!";
-            }
+            echo json_encode([
+                'success' => $errorCount === 0,
+                'successCount' => $successCount,
+                'errorCount' => $errorCount
+            ]);
+            exit();
         }
-        
         header("Location: " . BASE_URL_ADMIN . '?act=list-binh-luan');
         exit();
     }
@@ -159,24 +157,48 @@ class AdminBinhLuanController
     // Xóa bình luận
     public function xoaBinhLuan()
     {
-        $id = $_GET['id_binh_luan'];
+        $id = $_POST['id'] ?? $_GET['id_binh_luan'] ?? null;
+        if (!$id) {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                echo json_encode(['success' => false, 'message' => 'Thiếu ID bình luận']);
+                exit();
+            } else {
+                $_SESSION['error'] = 'Thiếu ID bình luận!';
+                header("Location: " . BASE_URL_ADMIN . '?act=list-binh-luan');
+                exit();
+            }
+        }
         $binhLuan = $this->modelBinhLuan->getDetailBinhLuan($id);
-        
         if ($binhLuan) {
             $result = $this->modelBinhLuan->deleteBinhLuan($id);
-            
             if ($result) {
-                $_SESSION['success'] = "Xóa bình luận thành công!";
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    echo json_encode(['success' => true]);
+                    exit();
+                } else {
+                    $_SESSION['success'] = "Xóa bình luận thành công!";
+                }
             } else {
-                $_SESSION['error'] = "Có lỗi xảy ra khi xóa bình luận!";
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    echo json_encode(['success' => false, 'message' => 'Có lỗi xảy ra khi xóa bình luận!']);
+                    exit();
+                } else {
+                    $_SESSION['error'] = "Có lỗi xảy ra khi xóa bình luận!";
+                }
             }
         } else {
-            $_SESSION['error'] = "Bình luận không tồn tại!";
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                echo json_encode(['success' => false, 'message' => 'Bình luận không tồn tại!']);
+                exit();
+            } else {
+                $_SESSION['error'] = "Bình luận không tồn tại!";
+            }
         }
-        
         header("Location: " . BASE_URL_ADMIN . '?act=list-binh-luan');
         exit();
-    }    // Lọc bình luận theo trạng thái
+    }
+
+    // Lọc bình luận theo trạng thái
     public function filterBinhLuan()
     {
         try {
@@ -222,6 +244,11 @@ class AdminBinhLuanController
             } catch (Exception $e) {
                 $stats = [];
             }
+            // Đảm bảo $stats luôn đồng bộ với $thongKeBinhLuan
+            $stats['total'] = $thongKeBinhLuan['tong_binh_luan'] ?? 0;
+            $stats['pending'] = $thongKeBinhLuan['cho_duyet'] ?? 0;
+            $stats['approved'] = $thongKeBinhLuan['da_duyet'] ?? 0;
+            $stats['hidden'] = $thongKeBinhLuan['bi_tu_choi'] ?? 0;
             
             try {
                 $listSanPham = $this->modelSanPham->getAllSanPham();
@@ -264,9 +291,9 @@ class AdminBinhLuanController
     {
         $thongKeTheoThang = $this->modelBinhLuan->getThongKeBinhLuanTheoThang();
         $thongKeTheoSanPham = $this->modelBinhLuan->getThongKeBinhLuanTheoSanPham();
-        $topKhachHangBinhLuan = $this->modelBinhLuan->getTopKhachHangBinhLuan();        $thongKeTongQuan = $this->modelBinhLuan->getThongKeBinhLuan();
-        
-        require_once './views/binhluans/baoCaoBinhLuan.php';
+        $topKhachHangBinhLuan = $this->modelBinhLuan->getTopKhachHangBinhLuan();
+        $thongKeTongQuan = $this->modelBinhLuan->getThongKeBinhLuan();
+        require './views/binhluans/baoCaoBinhLuan.php';
     }
 
     // Lấy số lượng bình luận chờ duyệt cho notification badge
