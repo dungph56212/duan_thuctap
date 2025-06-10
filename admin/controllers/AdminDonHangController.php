@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../../models/SanPham.php';
+require_once __DIR__ . '/../models/AdminDonHang.php';
+
 class AdminDonHangController{
     public $modelDonHang;
     public $modelSanPham;
