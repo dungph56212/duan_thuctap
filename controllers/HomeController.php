@@ -9,6 +9,7 @@ class HomeController
     public $commentModel;
     public $modelDiaChi;
     public $modelDanhMuc;
+    public $modelKhuyenMai;
     public function __construct()
     {
         $this->modelSanPham = new SanPham();
@@ -18,6 +19,7 @@ class HomeController
         $this->commentModel = new commentModel();
         $this->modelDiaChi = new DiaChi();
         $this->modelDanhMuc = new DanhMuc();
+        $this->modelKhuyenMai = new KhuyenMai();
     }
     public function home()
     {
@@ -245,8 +247,7 @@ class HomeController
         }
         
         require_once './views/thanhToan.php';
-    }
-    public function postThanhToan(){
+    }    public function postThanhToan(){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // var_dump($_POST);die;
             $ten_nguoi_nhan= $_POST['ten_nguoi_nhan'];
@@ -256,6 +257,7 @@ class HomeController
             $ghi_chu= $_POST['ghi_chu'];
             $tong_tien= $_POST['tong_tien'];
             $phuong_thuc_thanh_toan_id = $_POST['phuong_thuc_thanh_toan_id'];
+            $ma_khuyen_mai_id = $_POST['ma_khuyen_mai_id'] ?? null;
 
             $ngay_dat = date('Y-m-d');
             // var_dump($ngay_dat);die;
@@ -312,13 +314,27 @@ class HomeController
                         $donGia,
                         $donGia * $item['so_luong']
                     );
-                    
-                    // Decrement inventory
+                      // Decrement inventory
                     $this->modelSanPham->decrementInventory($item['san_pham_id'], $item['so_luong']);
                 }
                 
+                // Record promotion usage if discount was applied
+                if ($ma_khuyen_mai_id && isset($_SESSION['ma_giam_gia'])) {
+                    $this->modelKhuyenMai->updateUsageCount($ma_khuyen_mai_id);
+                }
+                
+                // Clear cart and discount session
                 $this->modelGioHang->clearDetailGioHang($gioHang['id']);
                 $this->modelGioHang->clearGioHang($tai_khoan_id);
+                
+                // Clear discount session
+                if (isset($_SESSION['ma_giam_gia'])) {
+                    unset($_SESSION['ma_giam_gia']);
+                }
+                if (isset($_SESSION['discount_amount'])) {
+                    unset($_SESSION['discount_amount']);
+                }
+                
                 header("Location: ".BASE_URL . '?act=lich-su-mua-hang');
                 exit;
             }else{
@@ -1035,5 +1051,83 @@ class HomeController
         header("Location: " . BASE_URL . '?act=quan-ly-dia-chi');
         exit();
     }
-
+    
+    /**
+     * Áp dụng mã giảm giá
+     */
+    public function apDungMaGiamGia() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (!isset($_SESSION['user_client']['id'])) {
+                $_SESSION['error'] = 'Vui lòng đăng nhập để sử dụng mã giảm giá!';
+                header("Location: " . BASE_URL . '?act=login');
+                exit();
+            }
+            
+            $maGiamGia = trim($_POST['ma_giam_gia'] ?? '');
+            
+            if (empty($maGiamGia)) {
+                $_SESSION['error'] = 'Vui lòng nhập mã giảm giá!';
+                header("Location: " . BASE_URL . '?act=gio-hang');
+                exit();
+            }
+            
+            // Kiểm tra mã giảm giá có hợp lệ không
+            $khuyenMai = $this->modelKhuyenMai->getKhuyenMaiByCode($maGiamGia);
+            
+            if (!$khuyenMai) {
+                $_SESSION['error'] = 'Mã giảm giá không tồn tại!';
+                header("Location: " . BASE_URL . '?act=gio-hang');
+                exit();
+            }
+            
+            // Kiểm tra trạng thái khuyến mãi
+            if ($khuyenMai['trang_thai'] != 1) {
+                $_SESSION['error'] = 'Mã giảm giá đã hết hiệu lực!';
+                header("Location: " . BASE_URL . '?act=gio-hang');
+                exit();
+            }
+            
+            // Kiểm tra thời gian hiệu lực
+            $currentDate = date('Y-m-d H:i:s');
+            if ($currentDate < $khuyenMai['ngay_bat_dau']) {
+                $_SESSION['error'] = 'Mã giảm giá chưa có hiệu lực!';
+                header("Location: " . BASE_URL . '?act=gio-hang');
+                exit();
+            }
+            
+            if ($currentDate > $khuyenMai['ngay_ket_thuc']) {
+                $_SESSION['error'] = 'Mã giảm giá đã hết hạn!';
+                header("Location: " . BASE_URL . '?act=gio-hang');
+                exit();
+            }
+            
+            // Kiểm tra số lượng còn lại
+            if ($khuyenMai['so_luong'] <= $khuyenMai['so_lan_su_dung']) {
+                $_SESSION['error'] = 'Mã giảm giá đã hết lượt sử dụng!';
+                header("Location: " . BASE_URL . '?act=gio-hang');
+                exit();
+            }
+            
+            // Lưu mã giảm giá vào session
+            $_SESSION['ma_giam_gia'] = $khuyenMai;
+            $_SESSION['success'] = 'Áp dụng mã giảm giá thành công!';
+            
+        }
+        
+        header("Location: " . BASE_URL . '?act=gio-hang');
+        exit();
+    }
+    
+    /**
+     * Xóa mã giảm giá
+     */
+    public function xoaMaGiamGia() {
+        if (isset($_SESSION['ma_giam_gia'])) {
+            unset($_SESSION['ma_giam_gia']);
+            $_SESSION['success'] = 'Đã hủy mã giảm giá!';
+        }
+        
+        header("Location: " . BASE_URL . '?act=gio-hang');
+        exit();
+    }
 }
