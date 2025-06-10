@@ -1,78 +1,101 @@
-<?php require_once 'views/layout/header.php';  ?>
-<?php require_once 'views/layout/menu.php';  ?>
-
-<main>
-        <!-- breadcrumb area start -->
-        <div class="breadcrumb-area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="breadcrumb-wrap">
-                            <nav aria-label="breadcrumb">
-                                <ul class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-home"></i></a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">login-Register</li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- breadcrumb area end -->
-
-        <!-- login register wrapper start -->
-        <div class="login-register-wrapper section-padding">
-            <div class="container" style="max-width:40vw">
-                <div class="member-area-from-wrap">
-                    <div class="row">
-                        <!-- Login Content Start -->                        <div class="col-lg-12">
-                            <div class="login-reg-form-wrap">
-                                <h5 class="text-center">Đăng nhập</h5>
-                                
-                                <!-- Display notifications -->
-                                <?php echo displayNotification(); ?>
-                                
-                                <p class="login-box-msg text-center">Vui lòng đăng nhập</p>                                  <form action="<?= BASE_URL . '?act=check-login'?>" method="post">
-                                    <!-- CSRF Token -->
-                                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
-                                    
-                                    <div class="single-input-item">
-                                        <input type="email" 
-                                               placeholder="Email hoặc tên đăng nhập" 
-                                               name="email" 
-                                               value="<?= old('email') ?>"
-                                               required />
-                                        <?= displayFieldError('email') ?>
-                                    </div>
-                                    <div class="single-input-item">
-                                        <input type="password" 
-                                               placeholder="Nhập mật khẩu" 
-                                               name="password" 
-                                               required />
-                                        <?= displayFieldError('password') ?>
-                                    </div>
-                                    <div class="single-input-item">
-                                        <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
-                                            <a href="#" class="forget-pwd">Quên mật khẩu</a>
-                                            <a href="<?= BASE_URL. '?act=register' ?>" class="forget-pwd">Đăng ký tài khoản</a> 
-                                        </div>
-                                    </div>
-                                    <div class="single-input-item">
-                                        <button class="btn btn-sqr" type="submit">Đăng nhập</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- login register wrapper end -->
-
-    </main>
-
+<?php require_once 'views/layout/header.php'; ?>
+<style>
+.auth-bg {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.auth-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    padding: 2.5rem 2rem 2rem 2rem;
+    max-width: 420px;
+    width: 100%;
+    margin: 2rem 0;
+    animation: fadeIn .7s;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(40px);} to { opacity: 1; transform: none;}}
+.auth-card .icon {
+    font-size: 3rem;
+    color: #6366f1;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+}
+.auth-card h3 {
+    font-weight: 700;
+    color: #22223b;
+}
+.auth-card .form-control {
+    border-radius: 10px;
+    font-size: 1.08rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border: 1.5px solid #e0e7ff;
+    transition: border-color 0.2s;
+}
+.auth-card .form-control:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px #6366f133;
+}
+.auth-card .btn-main {
+    background: linear-gradient(90deg, #6366f1 0%, #60a5fa 100%);
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.7rem 0;
+    margin-top: 0.5rem;
+    transition: background 0.2s;
+}
+.auth-card .btn-main:hover {
+    background: linear-gradient(90deg, #60a5fa 0%, #6366f1 100%);
+}
+.auth-card .auth-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+    font-size: 0.98rem;
+}
+.auth-card .auth-links a {
+    color: #6366f1;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.auth-card .auth-links a:hover {
+    color: #22223b;
+    text-decoration: underline;
+}
+.auth-card .alert {
+    border-radius: 8px;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+</style>
+<div class="auth-bg">
+  <div class="auth-card">
+    <div class="icon"><i class="fa fa-user-circle"></i></div>
+    <h3 class="text-center mb-3">Đăng nhập</h3>
+    <?php echo displayNotification(); ?>
+    <form action="<?= BASE_URL . '?act=check-login'?>" method="post">
+      <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?? '' ?>">
+      <input type="email" class="form-control" placeholder="Email hoặc tên đăng nhập" name="email" value="<?= old('email') ?>" required />
+      <?= displayFieldError('email') ?>
+      <input type="password" class="form-control" placeholder="Nhập mật khẩu" name="password" required />
+      <?= displayFieldError('password') ?>
+      <button class="btn btn-main w-100" type="submit">Đăng nhập</button>
+      <div class="auth-links">
+        <a href="<?= BASE_URL ?>?act=forgot-password"><i class="fa fa-unlock-alt"></i> Quên mật khẩu?</a>
+        <a href="<?= BASE_URL. '?act=register' ?>"><i class="fa fa-user-plus"></i> Đăng ký</a>
+      </div>
+    </form>
+  </div>
+</div>
+<?php require_once 'views/layout/footer.php'; ?>
 
 <!-- offcanvas mini cart start -->
 <div class="offcanvas-minicart-wrapper">
@@ -152,4 +175,3 @@
     </div>
 </div>
 <!-- offcanvas mini cart end -->
-<?php require_once 'views/layout/footer.php' ?>
