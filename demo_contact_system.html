@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Hệ Thống Liên Hệ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .demo-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border: none;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 32px;
+        }
+        
+        .btn-demo {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-demo:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .screenshot {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 20px 0;
+        }
+        
+        .status-demo {
+            display: inline-block;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 5px;
+        }
+        
+        .status-pending {
+            background: linear-gradient(135deg, #ffc107, #ff8f00);
+            color: white;
+        }
+        
+        .status-read {
+            background: linear-gradient(135deg, #17a2b8, #007bff);
+            color: white;
+        }
+        
+        .status-replied {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+        
+        .status-closed {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+        }
+        
+        .timeline-demo {
+            position: relative;
+            padding-left: 30px;
+            margin: 30px 0;
+        }
+        
+        .timeline-demo::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+        
+        .timeline-item-demo {
+            position: relative;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-item-demo::before {
+            content: '';
+            position: absolute;
+            left: -22px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-header">
+        <div class="container">
+            <h1 class="display-4 mb-3">🎯 Demo Hệ Thống Liên Hệ</h1>
+            <p class="lead">Giao diện đẹp, tính năng mạnh mẽ, trải nghiệm người dùng tuyệt vời</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Quick Access -->
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="mb-4">🚀 Truy Cập Nhanh</h2>
+                <a href="index.php?act=lienhe" class="btn-demo mr-3">
+                    <i class="fas fa-comments mr-2"></i>Trang Liên Hệ
+                </a>
+                <a href="admin/index.php?ctl=lienhe" class="btn-demo mr-3">
+                    <i class="fas fa-cogs mr-2"></i>Quản Lý Admin
+                </a>
+                <a href="update_database.php" class="btn-demo">
+                    <i class="fas fa-database mr-2"></i>Cập Nhật DB
+                </a>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="row">
+            <div class="col-12 text-center mb-4">
+                <h2>✨ Tính Năng Nổi Bật</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h4>Giao Diện Đẹp</h4>
+                    <p>Thiết kế hiện đại với gradient màu sắc, hoạt ảnh mượt mà và responsive hoàn hảo trên mọi thiết bị.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>Kiểm Tra Phản Hồi</h4>
+                    <p>Khách hàng có thể tự kiểm tra phản hồi bằng email, xem lịch sử liên hệ và trạng thái xử lý.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>Dashboard Admin</h4>
+                    <p>Bảng điều khiển mạnh mẽ với thống kê, bộ lọc, tìm kiếm và quản lý liên hệ chuyên nghiệp.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h4>Phân Loại Thông Minh</h4>
+                    <p>Hệ thống trạng thái và mức độ ưu tiên giúp quản lý liên hệ hiệu quả hơn.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h4>Email Tự Động</h4>
+                    <p>Gửi thông báo cho admin và email xác nhận cho khách hàng tự động khi có liên hệ mới.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+                <div class="feature-card text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>Responsive Design</h4>
+                    <p>Hoạt động mượt mà trên desktop, tablet và mobile với thiết kế tối ưu cho từng thiết bị.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Demo -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="feature-card">
+                    <h3 class="text-center mb-4">📊 Hệ Thống Trạng Thái</h3>
+                    <div class="text-center">
+                        <span class="status-demo status-pending">Chờ Xử Lý</span>
+                        <span class="status-demo status-read">Đã Đọc</span>
+                        <span class="status-demo status-replied">Đã Phản Hồi</span>
+                        <span class="status-demo status-closed">Đã Đóng</span>
+                    </div>
+                    <p class="text-center mt-3">Quản lý trạng thái liên hệ một cách trực quan và dễ hiểu</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Demo -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="feature-card">
+                    <h3 class="text-center mb-4">📅 Timeline Liên Hệ</h3>
+                    <div class="timeline-demo">
+                        <div class="timeline-item-demo">
+                            <h5><i class="fas fa-envelope mr-2"></i>#001: Hỏi về sản phẩm</h5>
+                            <p class="mb-2"><strong>Khách hàng:</strong> Tôi muốn tìm hiểu về sản phẩm XYZ...</p>
+                            <small class="text-muted">15/06/2024 10:30</small>
+                        </div>
+                        <div class="timeline-item-demo">
+                            <h5><i class="fas fa-reply mr-2"></i>Phản hồi từ nhân viên</h5>
+                            <p class="mb-2"><strong>Admin:</strong> Cảm ơn bạn đã quan tâm. Sản phẩm XYZ hiện đang có sẵn...</p>
+                            <small class="text-muted">15/06/2024 14:15</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Features -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="feature-card">
+                    <h3 class="text-center mb-4">⚙️ Tính Năng Kỹ Thuật</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-shield-alt mr-2"></i>Bảo Mật</h5>
+                            <ul>
+                                <li>Validation dữ liệu đầu vào</li>
+                                <li>Chống SQL Injection</li>
+                                <li>Chống XSS attacks</li>
+                                <li>Rate limiting cho form</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-rocket mr-2"></i>Hiệu Suất</h5>
+                            <ul>
+                                <li>Database indexing tối ưu</li>
+                                <li>Pagination cho dữ liệu lớn</li>
+                                <li>AJAX loading states</li>
+                                <li>CSS/JS minification</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Use -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="feature-card">
+                    <h3 class="text-center mb-4">📖 Hướng Dẫn Sử Dụng</h3>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-user mr-2"></i>Dành Cho Khách Hàng</h5>
+                            <ol>
+                                <li>Truy cập trang liên hệ</li>
+                                <li>Điền thông tin và gửi tin nhắn</li>
+                                <li>Nhận email xác nhận</li>
+                                <li>Kiểm tra phản hồi bằng email</li>
+                            </ol>
+                        </div>
+                        <div class="col-md-6">
+                            <h5><i class="fas fa-user-tie mr-2"></i>Dành Cho Admin</h5>
+                            <ol>
+                                <li>Đăng nhập admin panel</li>
+                                <li>Xem dashboard và thống kê</li>
+                                <li>Quản lý và phản hồi liên hệ</li>
+                                <li>Theo dõi tiến độ xử lý</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Installation -->
+        <div class="row mt-5 mb-5">
+            <div class="col-12">
+                <div class="feature-card">
+                    <h3 class="text-center mb-4">🛠️ Cài Đặt & Triển Khai</h3>
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <div class="feature-icon mx-auto" style="width: 60px; height: 60px; font-size: 24px;">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h5>Bước 1</h5>
+                            <p>Chạy <code>update_database.php</code> để cập nhật cơ sở dữ liệu</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="feature-icon mx-auto" style="width: 60px; height: 60px; font-size: 24px;">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <h5>Bước 2</h5>
+                            <p>Cấu hình email settings trong controller</p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="feature-icon mx-auto" style="width: 60px; height: 60px; font-size: 24px;">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <h5>Bước 3</h5>
+                            <p>Test hệ thống với <code>test_contact_system.php</code></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-4" style="background: #2c3e50; color: white;">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Contact System Demo. Made with ❤️</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

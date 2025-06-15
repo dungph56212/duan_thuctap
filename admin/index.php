@@ -13,6 +13,8 @@ require_once './controllers/AdminTaiKhoanController.php';
 require_once './controllers/AdminDonHangController.php';
 require_once './controllers/AdminBinhLuanController.php';
 require_once './controllers/KhuyenMaiController.php';
+require_once './controllers/BannerAdsController.php';
+require_once './controllers/LienHeController.php';
 
 // Require toàn bộ file Models
 require_once './models/AdminDanhMuc.php';
@@ -23,9 +25,45 @@ require_once './models/AdminDonHang.php';
 require_once './models/AdminBinhLuan.php';
 // Route
 $act = $_GET['act'] ?? '';
+$ctl = $_GET['ctl'] ?? '';
 
 if($act !=='login-admin' && $act !=='check-login-admin' && $act !=='logout-admin') {
   checkLoginAdmin();
+}
+
+// Route riêng cho quản lý liên hệ
+if ($ctl === 'lienhe') {
+    $action = $_GET['act'] ?? 'index';
+    $lienHeController = new LienHeController();
+    
+    switch ($action) {
+        case 'index':
+        case '':
+            $lienHeController->index();
+            break;
+        case 'view':
+            $lienHeController->view();
+            break;
+        case 'updateStatus':
+            $lienHeController->updateStatus();
+            break;
+        case 'reply':
+            $lienHeController->reply();
+            break;
+        case 'delete':
+            $lienHeController->delete();
+            break;
+        case 'bulk':
+            $lienHeController->bulkAction();
+            break;
+        case 'stats':
+            $lienHeController->stats();
+            break;
+        default:
+            $lienHeController->index();
+            break;
+    }
+    exit;
 }
 
 // Để bảo bảo tính chất chỉ gọi 1 hàm Controller để xử lý request thì mình sử dụng match
@@ -131,6 +169,18 @@ match ($act) {
 'duplicate-promotion' => (new KhuyenMaiController())->duplicatePromotion(),
 'export-promotion-report' => (new KhuyenMaiController())->exportPromotionReport(),
 'get-promotion-counts' => (new KhuyenMaiController())->getPromotionCounts(),
+
+// Quản lý Banner
+'danh-sach-banner' => (new BannerAdsController())->danhSachBanner(),
+'form-them-banner' => (new BannerAdsController())->formAddBanner(),
+'them-banner' => (new BannerAdsController())->postAddBanner(),
+'form-sua-banner' => (new BannerAdsController())->formEditBanner(),
+'sua-banner' => (new BannerAdsController())->postEditBanner(),
+'xoa-banner' => (new BannerAdsController())->deleteBanner(),
+'update-banner-status' => (new BannerAdsController())->updateBannerStatus(),
+'banner-popup' => (new BannerAdsController())->danhSachBannerPopup(),
+'banner-slide' => (new BannerAdsController())->danhSachBannerSlide(),
+'thong-ke-banner' => (new BannerAdsController())->thongKeBanner(),
 
 default => header("Location: " . BASE_URL_ADMIN)
 };

@@ -248,8 +248,7 @@ class KhuyenMai {
             throw new Exception("Lỗi khi nhân bản khuyến mãi: " . $e->getMessage());
         }
     }
-    
-    /**
+      /**
      * Lấy thống kê khuyến mãi
      */
     public function getPromotionStatistics() {
@@ -257,6 +256,8 @@ class KhuyenMai {
             $sql = "SELECT 
                         COUNT(*) as total_promotions,
                         SUM(CASE WHEN trang_thai = 1 AND ngay_bat_dau <= NOW() AND ngay_ket_thuc >= NOW() THEN 1 ELSE 0 END) as active_promotions,
+                        SUM(CASE WHEN ngay_bat_dau > NOW() THEN 1 ELSE 0 END) as upcoming_promotions,
+                        SUM(CASE WHEN ngay_ket_thuc < NOW() THEN 1 ELSE 0 END) as expired_promotions,
                         SUM(so_lan_su_dung) as total_usage,
                         SUM(CASE 
                             WHEN phan_tram_giam > 0 THEN so_lan_su_dung * 50000 
@@ -265,11 +266,23 @@ class KhuyenMai {
                     FROM khuyen_mai";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
-            return $stmt->fetch();
+            $result = $stmt->fetch();
+            
+            // Ensure all values are not null to avoid the deprecated warning
+            return [
+                'total_promotions' => (int)($result['total_promotions'] ?? 0),
+                'active_promotions' => (int)($result['active_promotions'] ?? 0),
+                'upcoming_promotions' => (int)($result['upcoming_promotions'] ?? 0),
+                'expired_promotions' => (int)($result['expired_promotions'] ?? 0),
+                'total_usage' => (int)($result['total_usage'] ?? 0),
+                'total_discount_amount' => (float)($result['total_discount_amount'] ?? 0)
+            ];
         } catch (PDOException $e) {
             return [
                 'total_promotions' => 0,
                 'active_promotions' => 0,
+                'upcoming_promotions' => 0,
+                'expired_promotions' => 0,
                 'total_usage' => 0,
                 'total_discount_amount' => 0
             ];

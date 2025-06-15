@@ -46,10 +46,8 @@
                     <?= htmlspecialchars($this->getSuccessMessage()) ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
-            <?php endif; ?>
-
-            <!-- Thống kê tổng quan -->
-            <?php if (isset($statistics)): ?>
+            <?php endif; ?>            <!-- Thống kê tổng quan -->
+            <?php if (isset($statistics) && is_array($statistics)): ?>
             <div class="row mb-4">
                 <div class="col-md-3">
                     <div class="card bg-primary text-white">
@@ -57,7 +55,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h6 class="card-title">Tổng khuyến mãi</h6>
-                                    <h3 class="mb-0"><?= number_format($statistics['total_promotions']) ?></h3>
+                                    <h3 class="mb-0"><?= number_format($statistics['total_promotions'] ?? 0) ?></h3>
                                 </div>
                                 <div class="align-self-center">
                                     <i class="fas fa-tags fa-2x opacity-75"></i>
@@ -72,7 +70,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h6 class="card-title">Đang hoạt động</h6>
-                                    <h3 class="mb-0"><?= number_format($statistics['active_promotions']) ?></h3>
+                                    <h3 class="mb-0"><?= number_format($statistics['active_promotions'] ?? 0) ?></h3>
                                 </div>
                                 <div class="align-self-center">
                                     <i class="fas fa-play-circle fa-2x opacity-75"></i>
@@ -87,7 +85,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h6 class="card-title">Sắp diễn ra</h6>
-                                    <h3 class="mb-0"><?= number_format($statistics['upcoming_promotions']) ?></h3>
+                                    <h3 class="mb-0"><?= number_format($statistics['upcoming_promotions'] ?? 0) ?></h3>
                                 </div>
                                 <div class="align-self-center">
                                     <i class="fas fa-clock fa-2x opacity-75"></i>
@@ -102,7 +100,7 @@
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <h6 class="card-title">Đã hết hạn</h6>
-                                    <h3 class="mb-0"><?= number_format($statistics['expired_promotions']) ?></h3>
+                                    <h3 class="mb-0"><?= number_format($statistics['expired_promotions'] ?? 0) ?></h3>
                                 </div>
                                 <div class="align-self-center">
                                     <i class="fas fa-times-circle fa-2x opacity-75"></i>

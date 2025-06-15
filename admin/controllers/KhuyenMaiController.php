@@ -30,8 +30,7 @@ class KhuyenMaiController {
                 'date_from' => $_GET['date_from'] ?? '',
                 'date_to' => $_GET['date_to'] ?? ''
             ];
-            
-            // Lấy dữ liệu với phân trang
+              // Lấy dữ liệu với phân trang
             $result = $this->model->getAllKhuyenMaiWithPagination($limit, $offset, $filters);
             $list = $result['data'];
             $totalRecords = $result['total'];
@@ -46,6 +45,20 @@ class KhuyenMaiController {
             require './views/khuyenmai/listKhuyenMai.php';
         } catch (Exception $e) {
             $this->errors[] = 'Có lỗi xảy ra khi tải danh sách khuyến mãi: ' . $e->getMessage();
+            
+            // Provide default values when there's an error
+            $list = [];
+            $totalRecords = 0;
+            $totalPages = 0;
+            $statistics = [
+                'total_promotions' => 0,
+                'active_promotions' => 0,
+                'upcoming_promotions' => 0,
+                'expired_promotions' => 0,
+                'total_usage' => 0,
+                'total_discount_amount' => 0
+            ];
+            
             require './views/khuyenmai/listKhuyenMai.php';
         }
     }

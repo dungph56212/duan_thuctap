@@ -1,5 +1,6 @@
 <?php
 require_once './commons/Security.php';
+require_once './controllers/BannerController.php';
 
 class HomeController
 {    public $modelSanPham;
@@ -7,9 +8,9 @@ class HomeController
     public $modelGioHang;
     public $modelDonHang;
     public $commentModel;
-    public $modelDiaChi;
-    public $modelDanhMuc;
+    public $modelDiaChi;    public $modelDanhMuc;
     public $modelKhuyenMai;
+    public $bannerController;
     public function __construct()
     {
         $this->modelSanPham = new SanPham();
@@ -20,13 +21,21 @@ class HomeController
         $this->modelDiaChi = new DiaChi();
         $this->modelDanhMuc = new DanhMuc();
         $this->modelKhuyenMai = new KhuyenMai();
-    }
-    public function home()
+        $this->bannerController = new BannerController();
+    }    public function home()
     {
         // echo "Dự án 1 team 9";
         // $listSanPham = $this->modelSanPham->getAllSanPham();
         $listSanPham = $this->modelSanPham->getAllProduct();
         $listDanhMuc = $this->modelDanhMuc->getAllDanhMuc();
+        
+        // Lấy danh sách banner đang hoạt động
+        $bannerResult = $this->bannerController->getActiveBanners();
+        $listBanners = [];
+        if ($bannerResult['success']) {
+            $listBanners = $bannerResult['banners'];
+        }
+        
         // var_dump($listSanPham);die;
         require_once './views/home.php';
     }

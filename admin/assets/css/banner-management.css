@@ -1,0 +1,187 @@
+/* Banner Management System - Custom Styles */
+
+.banner-stats-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 1rem rgba(102, 126, 234, 0.15);
+}
+
+.banner-stats-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 2rem rgba(102, 126, 234, 0.25);
+}
+
+.banner-stats-card .card-body {
+    padding: 1.25rem;
+}
+
+.banner-stats-card h6 {
+    opacity: 0.9;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.banner-stats-card h3 {
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin-bottom: 0;
+}
+
+.filter-card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border-radius: 10px;
+}
+
+.filter-card .card-header {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border-radius: 10px 10px 0 0;
+    border: none;
+    font-weight: 600;
+}
+
+.banner-table-card {
+    border: none;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.banner-table-card .card-header {
+    background: #f4f6f9;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+}
+
+.banner-table-card .table th {
+    border-top: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    color: #495057;
+    background-color: #f8f9fa;
+    padding: 1rem 0.75rem;
+}
+
+.banner-table-card .table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+.banner-preview {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.banner-preview:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.status-toggle .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-group-sm > .btn {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    margin: 0.1rem;
+    border-radius: 4px;
+}
+
+.empty-state {
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+.empty-state i {
+    opacity: 0.5;
+    margin-bottom: 1rem;
+}
+
+.badge {
+    font-size: 0.7em;
+    font-weight: 500;
+}
+
+.timeline-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.timeline-dot.active {
+    background-color: #28a745;
+    animation: pulse 2s infinite;
+}
+
+.timeline-dot.inactive {
+    background-color: #6c757d;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .banner-stats-card h3 {
+        font-size: 1.5rem;
+    }
+    
+    .btn-group-vertical .btn {
+        font-size: 0.65rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.85rem;
+    }
+    
+    .filter-card .row > div {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .banner-table-card {
+        background-color: #343a40;
+        color: #fff;
+    }
+    
+    .banner-table-card .table th {
+        background-color: #495057;
+        color: #fff;
+    }
+}
+
+/* Fix any conflicts with AdminLTE */
+.content-wrapper .banner-stats-card,
+.content-wrapper .filter-card,
+.content-wrapper .banner-table-card {
+    margin-bottom: 1rem;
+}
+
+/* Ensure proper spacing */
+.content-header {
+    padding: 0 1rem;
+}
+
+.content {
+    padding: 0 1rem;
+}

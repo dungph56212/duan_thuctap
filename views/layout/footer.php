@@ -131,70 +131,333 @@
     <script src="<?= BASE_URL ?>assets/js/plugins/ajax-mail.js"></script>
     <!-- google map api -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfmCVTjRI007pC1Yk2o2d_EhgkjTsFVN8"></script>
-    <!-- google map active js -->
-    <script src="<?= BASE_URL ?>assets/js/plugins/google-map.js"></script>    <!-- Main JS -->
+    <!-- google map active js -->    <script src="<?= BASE_URL ?>assets/js/plugins/google-map.js"></script>    <!-- Main JS -->
     <script src="<?= BASE_URL ?>assets/js/main.js"></script>
-    
-    <!-- Custom Authentication Notifications -->
+
+    <!-- Banner System JS -->
     <script>
-        // Auto-hide alerts after 5 seconds
-        $(document).ready(function() {
-            setTimeout(function() {
-                $('.alert').fadeOut('slow');
-            }, 5000);
-            
-            // Enhanced form validation feedback
-            $('form').on('submit', function() {
-                var $submitBtn = $(this).find('button[type="submit"]');
-                var originalText = $submitBtn.text();
+        // Enhanced Banner Popup System
+        class EnhancedBannerSystem {
+            constructor() {
+                this.apiUrl = '<?= BASE_URL ?>controllers/BannerController.php';
+                this.sessionKey = 'banner_shown_';
+                this.popupContainer = null;
+                this.currentBanner = null;
+                this.bannerContainers = {
+                    top: null,
+                    bottom: null,
+                    sidebar: null
+                };
+                this.init();
+            }
+
+            init() {
+                // Load banner khi DOM ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', () => this.loadBanners());
+                } else {
+                    this.loadBanners();
+                }
                 
-                $submitBtn.prop('disabled', true)
-                          .html('<i class="fa fa-spinner fa-spin"></i> Đang xử lý...');
+                // Tạo containers cho banner positions
+                this.createBannerContainers();
+            }
+
+            createBannerContainers() {
+                // Container cho banner top
+                const topContainer = document.createElement('div');
+                topContainer.id = 'banner-top-container';
+                topContainer.className = 'banner-top';
+                document.body.insertBefore(topContainer, document.body.firstChild);
+                this.bannerContainers.top = topContainer;
+
+                // Container cho banner bottom
+                const bottomContainer = document.createElement('div');
+                bottomContainer.id = 'banner-bottom-container';
+                bottomContainer.className = 'banner-bottom';
+                document.body.appendChild(bottomContainer);
+                this.bannerContainers.bottom = bottomContainer;
+
+                // Container cho banner sidebar
+                const sidebarContainer = document.createElement('div');
+                sidebarContainer.id = 'banner-sidebar-container';
+                sidebarContainer.className = 'banner-sidebar';
+                document.body.appendChild(sidebarContainer);
+                this.bannerContainers.sidebar = sidebarContainer;
+            }
+
+            async loadBanners() {
+                try {
+                    const response = await fetch(this.apiUrl + '?action=getActiveBanners');
+                    const data = await response.json();
+                    
+                    if (data.success && data.banners.length > 0) {
+                        this.processBanners(data.banners);
+                    }
+                } catch (error) {
+                    console.error('Error loading banners:', error);
+                }
+            }
+
+            processBanners(banners) {
+                // Lọc và hiển thị banner theo loại
+                const bannerTypes = {
+                    popup: banners.filter(b => b.loai_hien_thi === 'popup'),
+                    banner_top: banners.filter(b => b.loai_hien_thi === 'banner_top'),
+                    banner_bottom: banners.filter(b => b.loai_hien_thi === 'banner_bottom'),
+                    sidebar: banners.filter(b => b.loai_hien_thi === 'sidebar')
+                };
+
+                // Xử lý popup banner
+                if (bannerTypes.popup.length > 0) {
+                    bannerTypes.popup.sort((a, b) => a.thu_tu - b.thu_tu);
+                    for (const banner of bannerTypes.popup) {
+                        if (this.shouldShowBanner(banner)) {
+                            this.showPopup(banner);
+                            break;
+                        }
+                    }
+                }
+
+                // Xử lý banner top
+                if (bannerTypes.banner_top.length > 0) {
+                    bannerTypes.banner_top.sort((a, b) => a.thu_tu - b.thu_tu);
+                    this.showPositionBanner(bannerTypes.banner_top[0], 'top');
+                }
+
+                // Xử lý banner bottom
+                if (bannerTypes.banner_bottom.length > 0) {
+                    bannerTypes.banner_bottom.sort((a, b) => a.thu_tu - b.thu_tu);
+                    this.showPositionBanner(bannerTypes.banner_bottom[0], 'bottom');
+                }
+
+                // Xử lý banner sidebar
+                if (bannerTypes.sidebar.length > 0) {
+                    bannerTypes.sidebar.sort((a, b) => a.thu_tu - b.thu_tu);
+                    this.showPositionBanner(bannerTypes.sidebar[0], 'sidebar');
+                }
+            }
+
+            shouldShowBanner(banner) {
+                // Kiểm tra thời gian hiển thị
+                if (banner.ngay_bat_dau && new Date(banner.ngay_bat_dau) > new Date()) {
+                    return false;
+                }
                 
-                // Re-enable button after 3 seconds in case of client-side issues
-                setTimeout(function() {
-                    $submitBtn.prop('disabled', false).text(originalText);
-                }, 3000);
+                if (banner.ngay_ket_thuc && new Date(banner.ngay_ket_thuc) < new Date()) {
+                    return false;
+                }
+
+                // Kiểm tra đã hiển thị chưa (chỉ áp dụng cho popup)
+                if (banner.loai_hien_thi === 'popup' && banner.hien_thi_lan_duy_nhat) {
+                    const sessionKey = this.sessionKey + banner.id;
+                    if (sessionStorage.getItem(sessionKey)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            showPopup(banner) {
+                this.currentBanner = banner;
+                
+                // Tạo popup container
+                this.createPopupContainer(banner);
+                
+                // Mark as shown
+                if (banner.hien_thi_lan_duy_nhat) {
+                    sessionStorage.setItem(this.sessionKey + banner.id, '1');
+                }
+
+                // Track view
+                this.trackView(banner.id);
+
+                // Auto close sau thời gian quy định
+                if (banner.thoi_gian_hien_thi > 0) {
+                    setTimeout(() => {
+                        this.closePopup();
+                    }, banner.thoi_gian_hien_thi);
+                }
+            }
+
+            showPositionBanner(banner, position) {
+                const container = this.bannerContainers[position];
+                if (!container) return;
+
+                const img = document.createElement('img');
+                img.src = banner.hinh_anh;
+                img.alt = banner.ten_banner;
+                img.style.cssText = `
+                    width: 100%;
+                    height: auto;
+                    cursor: ${banner.link_url ? 'pointer' : 'default'};
+                `;
+
+                if (banner.link_url) {
+                    img.onclick = () => {
+                        this.trackClick(banner.id);
+                        if (banner.link_url.startsWith('http')) {
+                            window.open(banner.link_url, '_blank');
+                        } else {
+                            window.location.href = banner.link_url;
+                        }
+                    };
+                }
+
+                container.appendChild(img);
+                this.trackView(banner.id);
+            }
+
+            createPopupContainer(banner) {
+                // Tạo overlay
+                const overlay = document.createElement('div');
+                overlay.id = 'banner-popup-overlay';
+
+                // Tạo popup content
+                const popup = document.createElement('div');
+                popup.id = 'banner-popup';
+
+                // Nút đóng
+                const closeBtn = document.createElement('button');
+                closeBtn.innerHTML = '&times;';
+                closeBtn.className = 'banner-close-btn';
+                closeBtn.onclick = () => this.closePopup();
+
+                // Hình ảnh banner
+                const img = document.createElement('img');
+                img.src = banner.hinh_anh;
+                img.alt = banner.ten_banner;
+                img.style.cssText = `
+                    width: 100%;
+                    height: auto;
+                    display: block;
+                    cursor: ${banner.link_url ? 'pointer' : 'default'};
+                `;
+
+                if (banner.link_url) {
+                    img.onclick = () => {
+                        this.trackClick(banner.id);
+                        if (banner.link_url.startsWith('http')) {
+                            window.open(banner.link_url, '_blank');
+                        } else {
+                            window.location.href = banner.link_url;
+                        }
+                        this.closePopup();
+                    };
+                }
+
+                // Ghép các elements
+                popup.appendChild(closeBtn);
+                popup.appendChild(img);
+                overlay.appendChild(popup);
+
+                // Thêm vào DOM
+                document.body.appendChild(overlay);
+                this.popupContainer = overlay;
+
+                // Close khi click overlay
+                overlay.onclick = (e) => {
+                    if (e.target === overlay) {
+                        this.closePopup();
+                    }
+                };
+
+                // Close bằng ESC
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && this.popupContainer) {
+                        this.closePopup();
+                    }
+                });
+            }
+
+            closePopup() {
+                if (this.popupContainer) {
+                    const popup = this.popupContainer.querySelector('#banner-popup');
+                    if (popup) {
+                        popup.style.animation = 'slideOut 0.3s ease-in-out forwards';
+                    }
+                    
+                    setTimeout(() => {
+                        if (this.popupContainer && this.popupContainer.parentNode) {
+                            this.popupContainer.parentNode.removeChild(this.popupContainer);
+                        }
+                        this.popupContainer = null;
+                        this.currentBanner = null;
+                    }, 300);
+                }
+            }
+
+            async trackView(bannerId) {
+                try {
+                    await fetch(this.apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `action=trackView&banner_id=${bannerId}`
+                    });
+                } catch (error) {
+                    console.error('Error tracking view:', error);
+                }
+            }
+
+            async trackClick(bannerId) {
+                try {
+                    await fetch(this.apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `action=trackClick&banner_id=${bannerId}`
+                    });
+                } catch (error) {
+                    console.error('Error tracking click:', error);
+                }
+            }
+        }
+
+        // Khởi tạo banner system
+        const bannerSystem = new EnhancedBannerSystem();
+    </script>
+
+    <!-- Contact Response System Notification -->
+    <script>
+        // Show notification từ PHP session
+        <?php if (isset($_SESSION['contact_notification'])): ?>
+            $(document).ready(function() {
+                const notification = <?= json_encode($_SESSION['contact_notification']) ?>;
+                showNotification(notification.message, notification.type);
             });
-            
-            // Show notifications if they exist
-            <?php if (isset($_SESSION['error']) && isset($_SESSION['flash'])): ?>
-                showNotification('error', '<?= addslashes($_SESSION['error']) ?>');
-            <?php endif; ?>
-            
-            <?php if (isset($_SESSION['success']) && isset($_SESSION['flash'])): ?>
-                showNotification('success', '<?= addslashes($_SESSION['success']) ?>');
-            <?php endif; ?>
-        });
-        
-        // Custom notification function
-        function showNotification(type, message) {
-            var iconClass = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-            var bgClass = type === 'success' ? 'alert-success' : 'alert-danger';
-            
-            var notification = $(`
-                <div class="notification-toast ${bgClass}" style="
+            <?php unset($_SESSION['contact_notification']); ?>
+        <?php endif; ?>
+
+        function showNotification(message, type = 'success') {
+            const notification = $(`
+                <div class="notification-toast alert alert-${type}" style="
                     position: fixed;
                     top: 20px;
                     right: 20px;
-                    z-index: 9999;
+                    z-index: 11000;
                     min-width: 300px;
                     max-width: 400px;
                     padding: 15px 20px;
                     border-radius: 8px;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                    animation: slideInRight 0.3s ease-out;
                     color: white;
+                    font-weight: 500;
+                    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+                    animation: slideInRight 0.4s ease-out;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
                 ">
-                    <i class="fa ${iconClass}" style="margin-right: 8px;"></i>
-                    <span>${message}</span>
+                    <span style="flex: 1; margin-right: 10px;">${message}</span>
                     <button type="button" class="close" style="
-                        float: right;
                         background: none;
                         border: none;
                         color: white;
-                        font-size: 18px;
-                        margin-left: 10px;
+                        font-size: 20px;
+                        font-weight: bold;
                         opacity: 0.8;
                         cursor: pointer;
                     ">&times;</button>

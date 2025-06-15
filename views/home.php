@@ -1,43 +1,50 @@
 <?php require_once'layout/header.php';  ?>
  <?php require_once'layout/menu.php';  ?>
     
-
-
     <main>
         <!-- hero slider area start -->
         <section class="slider-area">
             <div class="hero-slider-active slick-arrow-style slick-arrow-style_hero slick-dot-style">
-                <!-- single slider item start -->
-                <div class="hero-single-slide hero-overlay">
-                    <div class="hero-slider-item bg-img" data-bg="assets/img/slider/Sliver_1.webp">
-                        <div class="container">
-                            <div class="row">
-                                
+                <?php if (!empty($listBanners)): ?>
+                    <?php foreach ($listBanners as $banner): ?>
+                        <!-- single slider item start -->
+                        <div class="hero-single-slide hero-overlay">
+                            <div class="hero-slider-item bg-img" data-bg="<?= htmlspecialchars($banner['hinh_anh']) ?>">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="hero-content">
+                                                <h1><?= htmlspecialchars($banner['ten_banner']) ?></h1>
+                                                <?php if (!empty($banner['mo_ta'])): ?>
+                                                    <p><?= htmlspecialchars($banner['mo_ta']) ?></p>
+                                                <?php endif; ?>
+                                                <?php if (!empty($banner['lien_ket'])): ?>
+                                                    <a href="<?= htmlspecialchars($banner['lien_ket']) ?>" 
+                                                       class="btn btn-hero" 
+                                                       onclick="trackBannerView(<?= $banner['id'] ?>)">
+                                                        Xem thêm
+                                                    </a>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- single slider item end -->
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <!-- Fallback nếu không có banner -->
+                    <div class="hero-single-slide hero-overlay">
+                        <div class="hero-slider-item bg-img" data-bg="assets/img/slider/Sliver_1.webp">
+                            <div class="container">
+                                <div class="row">
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="hero-single-slide hero-overlay">
-                    <div class="hero-slider-item bg-img" data-bg="assets/img/slider/Sliver_2.webp">
-                        <div class="container">
-                            <div class="row">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-single-slide hero-overlay">
-                    <div class="hero-slider-item bg-img" data-bg="assets/img/slider/Sliver_3.webp">
-                        <div class="container">
-                            <div class="row">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- single slider item start -->
-
-
+                <?php endif; ?>
             </div>
         </section>
         <!-- hero slider area end -->
@@ -306,9 +313,24 @@
         <!-- latest blog area end -->
 
         <!-- brand logo area start -->
-       
-        <!-- brand logo area end -->
+         <!-- brand logo area end -->
     </main>
+
+<!-- Banner tracking script -->
+<script>
+function trackBannerView(bannerId) {
+    // Track banner view
+    fetch('?act=track-banner-view', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ banner_id: bannerId })
+    }).catch(error => {
+        console.log('Banner tracking error:', error);
+    });
+}
+</script>
 
 <?php require_once 'layout/miniCart.php'; ?>
    

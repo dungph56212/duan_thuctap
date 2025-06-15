@@ -9,6 +9,8 @@ require_once './commons/function.php'; // Hàm hỗ trợ
 require_once './controllers/HomeController.php';
 require_once './controllers/productlistController.php';
 require_once './controllers/ForgotPasswordController.php';
+require_once './controllers/LienHeController.php';
+require_once './controllers/BannerController.php';
 
 // Require toàn bộ file Models
 require_once './models/SanPham.php';
@@ -59,10 +61,13 @@ match ($act) {
     'check-login'  => (new HomeController())->postLogin(),
     'register'  => (new HomeController())-> registers(),
     'logout'  => (new HomeController())-> logout(),
+    // Liên hệ
+    'lienhe' => (new LienHeController())->index(),
     'add_comment'  => (new HomeController())-> add_comment(),
     'edit_comment'  => (new HomeController())-> edit_comment(),
     'delete_comment'  => (new HomeController())-> delete_comment(),
     'productlist' => (new ProductController())->index(),
     'forgot-password' => (new ForgotPasswordController())->forgotPassword(),
     'reset-password' => (new ForgotPasswordController())->resetPassword(),
+    'track-banner-view' => (new BannerController())->trackBannerView(),
 };

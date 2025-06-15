@@ -32,7 +32,7 @@
                                            
                                             <li class="active"><a href="<?= BASE_URL. '?act=productlist'?>">Sản phẩm</i></a>
                                             <li><a href="#">Giới thiệu</a></li>
-                                            <li><a href="#">Liên hệ</a></li>
+                                            <li><a href="<?= BASE_URL . '?act=lienhe' ?>">Liên hệ</a></li>
                                         </ul>
                                     </nav>
                                     <!-- main menu navbar end -->
