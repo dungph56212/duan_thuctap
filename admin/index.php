@@ -15,6 +15,7 @@ require_once './controllers/AdminBinhLuanController.php';
 require_once './controllers/KhuyenMaiController.php';
 require_once './controllers/BannerAdsController.php';
 require_once './controllers/LienHeController.php';
+require_once './controllers/AdminBookManagerController.php';
 
 // Require toàn bộ file Models
 require_once './models/AdminDanhMuc.php';
@@ -23,6 +24,7 @@ require_once './models/AdminTaiKhoan.php';
 require_once './models/AdminBaoCaoThongKe.php';
 require_once './models/AdminDonHang.php';
 require_once './models/AdminBinhLuan.php';
+require_once './models/AdminBookManager.php';
 // Route
 $act = $_GET['act'] ?? '';
 $ctl = $_GET['ctl'] ?? '';
@@ -181,6 +183,21 @@ match ($act) {
 'banner-popup' => (new BannerAdsController())->danhSachBannerPopup(),
 'banner-slide' => (new BannerAdsController())->danhSachBannerSlide(),
 'thong-ke-banner' => (new BannerAdsController())->thongKeBanner(),
+
+// Quản lý sách và chatbot
+'quan-ly-sach' => (new AdminBookManagerController())->dashboard(),
+'danh-sach-sach' => (new AdminBookManagerController())->listBooks(),
+'form-them-sach' => (new AdminBookManagerController())->addBookForm(),
+'them-sach' => (new AdminBookManagerController())->addBook(),
+'form-sua-sach' => (new AdminBookManagerController())->editBookForm(),
+'sua-sach' => (new AdminBookManagerController())->editBook(),
+'xoa-sach' => (new AdminBookManagerController())->deleteBook(),
+'them-sach-hang-loat' => (new AdminBookManagerController())->bulkAddForm(),
+'post-them-sach-hang-loat' => (new AdminBookManagerController())->postBulkAdd(),
+'danh-muc-sach' => (new AdminBookManagerController())->categoriesForm(),
+'post-danh-muc-sach' => (new AdminBookManagerController())->postCategories(),
+'thong-ke-chatbot' => (new AdminBookManagerController())->chatbotAnalytics(),
+'clear-chat-history' => (new AdminBookManagerController())->clearChatHistory(),
 
 default => header("Location: " . BASE_URL_ADMIN)
 };

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Button Alignment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/button-fix.css">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background: #f8f9fa; 
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        h1 { color: #333; text-align: center; }
+        h2 { color: #007bff; }
+        p { color: #666; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test Button Alignment</h1>
+        
+        <div class="test-section">
+            <h2>1. Button cũ (có vấn đề)</h2>
+            <p>Đây là button với style inline (có thể bị lệch):</p>
+            <button style="background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; padding: 15px 40px; border-radius: 8px; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; width: 100%;">
+                <i class="fa fa-cart-plus" style="margin-right: 10px;"></i>
+                THÊM VÀO GIỎ HÀNG
+            </button>
+        </div>
+
+        <div class="test-section">
+            <h2>2. Button mới (đã sửa)</h2>
+            <p>Đây là button với CSS được tối ưu:</p>
+            <button class="btn-add-to-cart">
+                <i class="fa fa-cart-plus"></i>
+                <span>Thêm vào giỏ hàng</span>
+            </button>
+        </div>
+
+        <div class="test-section">
+            <h2>3. Form hoàn chỉnh</h2>
+            <p>Đây là form với quantity controls và button:</p>
+            <form class="cart-form-container">
+                <div class="quantity-cart-box">
+                    <div class="quantity-section" style="margin-bottom: 20px;">
+                        <h6 style="color: #495057; font-weight: 600; margin-bottom: 15px; font-size: 1.1rem;">
+                            <i class="fa fa-shopping-cart" style="color: #007bff; margin-right: 8px;"></i>
+                            Số lượng:
+                        </h6>
+                        <div class="quantity-controls">
+                            <button type="button" class="qty-btn minus">-</button>
+                            <input type="number" value="1" min="1" max="10" class="quantity-input">
+                            <button type="button" class="qty-btn plus">+</button>
+                        </div>
+                        <small style="color: #6c757d; font-size: 13px; margin-top: 8px; display: block;">
+                            <i class="fa fa-info-circle" style="margin-right: 5px;"></i>
+                            Tối đa 10 sản phẩm có thể đặt hàng
+                        </small>
+                    </div>
+                    <div class="action-section">
+                        <button type="submit" class="btn-add-to-cart">
+                            <i class="fa fa-cart-plus"></i>
+                            <span>Thêm vào giỏ hàng</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="test-section">
+            <h2>4. Test responsive</h2>
+            <p>Thay đổi kích thước cửa sổ để test responsive:</p>
+            <div style="width: 300px; margin: 0 auto; border: 1px solid #ccc; padding: 15px;">
+                <button class="btn-add-to-cart">
+                    <i class="fa fa-cart-plus"></i>
+                    <span>Mobile Button</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>5. Button states</h2>
+            <p>Test các trạng thái khác nhau:</p>
+            
+            <button class="btn-add-to-cart" style="margin-bottom: 10px;">
+                <i class="fa fa-cart-plus"></i>
+                <span>Normal State</span>
+            </button>
+            
+            <button class="btn-add-to-cart" disabled style="margin-bottom: 10px;">
+                <i class="fa fa-times"></i>
+                <span>Disabled State</span>
+            </button>
+            
+            <button class="btn-add-to-cart" onclick="this.innerHTML='<i class=\'fa fa-check\'></i><span>Đã thêm!</span>'; setTimeout(() => location.reload(), 1500);">
+                <i class="fa fa-cart-plus"></i>
+                <span>Click to test</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Test quantity controls
+        document.querySelectorAll('.qty-btn.minus').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const input = this.parentNode.querySelector('.quantity-input');
+                let value = parseInt(input.value);
+                if (value > 1) {
+                    input.value = value - 1;
+                }
+            });
+        });
+
+        document.querySelectorAll('.qty-btn.plus').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const input = this.parentNode.querySelector('.quantity-input');
+                let value = parseInt(input.value);
+                let max = parseInt(input.max);
+                if (value < max) {
+                    input.value = value + 1;
+                }
+            });
+        });
+
+        // Test form submit
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Form submitted! Button alignment OK?');
+            });
+        });
+    </script>
+</body>
+</html>

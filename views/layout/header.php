@@ -34,11 +34,14 @@
     <!-- Enhanced Components CSS -->
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/enhanced-components.css">
     <!-- Category Styles CSS -->
-    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/category-styles.css">
-    <!-- White theme override css -->
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/category-styles.css">    <!-- White theme override css -->
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/white-theme.css">
     <!-- Color override css -->
     <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/color-override.css">
+    <!-- Search autocomplete JS -->
+    <script>
+        const BASE_URL = '<?= BASE_URL ?>';
+    </script>
 
     <!-- Banner System CSS -->
     <style>

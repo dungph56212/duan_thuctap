@@ -510,13 +510,18 @@
         .invalid-feedback {
             display: block;
         }
-        
-        /* Loading state styles */
+          /* Loading state styles */
         .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
-    </style>
+    </style>    <?php 
+    // Include ChatBot Widget
+    include_once __DIR__ . '/../chatbot_widget_new.php'; 
+    ?>
+    
+    <!-- Search Autocomplete Script -->
+    <script src="<?= BASE_URL ?>assets/js/search-autocomplete.js"></script>
 </body>
 
 

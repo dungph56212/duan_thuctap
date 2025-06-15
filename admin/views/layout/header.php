@@ -51,4 +51,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-  
+
+<?php include './views/layout/navbar.php'; ?>
+<?php include './views/layout/sidebar.php'; ?>

@@ -27,7 +27,7 @@ class HomeController
         // echo "Dự án 1 team 9";
         // $listSanPham = $this->modelSanPham->getAllSanPham();
         $listSanPham = $this->modelSanPham->getAllProduct();
-        $listDanhMuc = $this->modelDanhMuc->getAllDanhMuc();
+        $listDanhMuc = $this->modelDanhMuc->getAllDanhMucWithProductCount();
         
         // Lấy danh sách banner đang hoạt động
         $bannerResult = $this->bannerController->getActiveBanners();
@@ -43,15 +43,34 @@ class HomeController
     public function sanPhamTheoDanhMuc()
     {
         $danh_muc_id = $_GET['danh_muc_id'] ?? null;
+        
+        // Get filter parameters
+        $filters = [
+            'search' => $_GET['search'] ?? '',
+            'sort' => $_GET['sort'] ?? 'default',
+            'min_price' => isset($_GET['min_price']) ? (int)$_GET['min_price'] : null,
+            'max_price' => isset($_GET['max_price']) ? (int)$_GET['max_price'] : null,
+            'author' => $_GET['author'] ?? '',
+            'status' => $_GET['status'] ?? '', // available, sale, new
+            'stock_status' => $_GET['stock_status'] ?? '' // in_stock, low_stock, out_of_stock
+        ];
+        
         if ($danh_muc_id) {
-            $listSanPham = $this->modelSanPham->getListSanPhamDanhMuc($danh_muc_id);
+            $listSanPham = $this->modelSanPham->getListSanPhamDanhMucWithFilters($danh_muc_id, $filters);
             $danhMuc = $this->modelDanhMuc->getDetailDanhMuc($danh_muc_id);
             $listDanhMuc = $this->modelDanhMuc->getAllDanhMuc();
         } else {
-            $listSanPham = $this->modelSanPham->getAllProduct();
+            $listSanPham = $this->modelSanPham->getAllProductWithFilters($filters);
             $danhMuc = null;
             $listDanhMuc = $this->modelDanhMuc->getAllDanhMuc();
         }
+        
+        // Get unique authors for filter dropdown
+        $listAuthors = $this->modelSanPham->getUniqueAuthors();
+        
+        // Calculate price range for filter
+        $priceRange = $this->modelSanPham->getPriceRange($danh_muc_id);
+        
         require_once './views/sanPhamTheoDanhMuc.php';
     }
     public function chiTietSanPham()

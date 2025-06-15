@@ -1,6 +1,44 @@
 <?php require_once 'layout/header.php';  ?>
 <?php require_once 'layout/menu.php';  ?>
 
+<!-- Include button fix CSS -->
+<link rel="stylesheet" href="<?= BASE_URL ?>assets/css/button-fix.css">
+
+<style>
+/* Custom CSS for perfect button alignment */
+.btn-cart2 {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    line-height: 1 !important;
+    position: relative !important;
+}
+
+.btn-cart2 i {
+    display: inline-flex !important;
+    align-items: center !important;
+    margin-right: 8px !important;
+    font-size: 14px !important;
+    line-height: 1 !important;
+}
+
+.btn-cart2 span {
+    display: inline-flex !important;
+    align-items: center !important;
+    line-height: 1 !important;
+}
+
+/* Fix for mobile responsiveness */
+@media (max-width: 768px) {
+    .btn-cart2 {
+        padding: 12px 20px !important;
+        font-size: 14px !important;
+    }
+}
+</style>
+
 <main>    <!-- breadcrumb area start -->
     <div class="breadcrumb-area" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 60px 0;">
         <div class="container">
@@ -137,28 +175,26 @@
                                         <p style="color: #6c757d; line-height: 1.6; margin: 0;"><?= $sanPham['mo_ta'] ?></p>
                                     </div>
                                       <?php if ($sanPham['so_luong'] > 0): ?>
-                                        <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="post" id="addToCartForm" style="background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border: 1px solid #e9ecef;">
+                                        <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="post" id="addToCartForm" class="cart-form-container">
                                             <div class="quantity-cart-box">
                                                 <div class="quantity-section" style="margin-bottom: 20px;">
                                                     <h6 class="option-title" style="color: #495057; font-weight: 600; margin-bottom: 15px; font-size: 1.1rem;">
                                                         <i class="fa fa-shopping-cart" style="color: #007bff; margin-right: 8px;"></i>
                                                         Số lượng:
-                                                    </h6>
-                                                    <div class="quantity-controls d-flex align-items-center" style="background: #f8f9fa; border-radius: 8px; padding: 8px; width: fit-content;">
+                                                    </h6>                                                    <div class="quantity-controls">
                                                         <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
-                                                        <button type="button" class="qty-btn minus" style="background: #007bff; color: white; border: none; width: 35px; height: 35px; border-radius: 6px; cursor: pointer; font-size: 18px; font-weight: bold; transition: all 0.3s ease;">-</button>
-                                                        <input type="number" value="1" name="so_luong" min="1" max="<?= $sanPham['so_luong'] ?>" id="quantityInput" style="width: 80px; height: 35px; border: 2px solid #e9ecef; border-radius: 6px; text-align: center; font-size: 16px; font-weight: 600; margin: 0 10px; outline: none; transition: border-color 0.3s ease;">
-                                                        <button type="button" class="qty-btn plus" style="background: #007bff; color: white; border: none; width: 35px; height: 35px; border-radius: 6px; cursor: pointer; font-size: 18px; font-weight: bold; transition: all 0.3s ease;">+</button>
+                                                        <button type="button" class="qty-btn minus">-</button>
+                                                        <input type="number" value="1" name="so_luong" min="1" max="<?= $sanPham['so_luong'] ?>" id="quantityInput" class="quantity-input">
+                                                        <button type="button" class="qty-btn plus">+</button>
                                                     </div>
                                                     <small style="color: #6c757d; font-size: 13px; margin-top: 8px; display: block;">
                                                         <i class="fa fa-info-circle" style="margin-right: 5px;"></i>
                                                         Tối đa <?= $sanPham['so_luong'] ?> sản phẩm có thể đặt hàng
                                                     </small>
-                                                </div>
-                                                <div class="action-section">
-                                                    <button type="submit" class="btn btn-cart2" id="addToCartBtn" style="background: linear-gradient(135deg, #007bff, #0056b3); color: white; border: none; padding: 15px 40px; border-radius: 8px; font-size: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); width: 100%;">
-                                                        <i class="fa fa-cart-plus" style="margin-right: 10px;"></i>
-                                                        Thêm vào giỏ hàng
+                                                </div>                                                <div class="action-section">
+                                                    <button type="submit" class="btn-add-to-cart" id="addToCartBtn">
+                                                        <i class="fa fa-cart-plus"></i>
+                                                        <span>Thêm vào giỏ hàng</span>
                                                     </button>
                                                 </div>
                                             </div>

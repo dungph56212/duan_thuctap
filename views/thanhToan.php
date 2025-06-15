@@ -287,9 +287,7 @@
 
                                 <div class="summary-footer-area" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); border-radius: 12px; padding: 25px; border: 2px solid #e9ecef;">
                                     <div class="custom-control custom-checkbox mb-20" style="margin-bottom: 20px;">
-                                        <input type="checkbox" class="custom-control-input" id="terms" required />
-                                        <label class="custom-control-label" for="terms" style="color: #495057; font-weight: 600; cursor: pointer; font-size: 15px; line-height: 1.6;">
-                                            <i class="fa fa-check-square" style="color: #28a745; margin-right: 8px;"></i>
+                                        <input type="checkbox" class="custom-control-input" id="terms" required />                                        <label class="custom-control-label" for="terms" style="color: #495057; font-weight: 600; cursor: pointer; font-size: 15px; line-height: 1.6;">
                                             Tôi đã đọc và đồng ý với các <a href="#" style="color: #007bff; text-decoration: none;">điều khoản và điều kiện</a> của cửa hàng
                                         </label>
                                     </div>

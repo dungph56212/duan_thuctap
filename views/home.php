@@ -115,21 +115,49 @@
                         </div>
                         <!-- section title end -->
                     </div>
-                </div>
-                <div class="row">
+                </div>                <div class="row">
                     <?php if (!empty($listDanhMuc)): ?>
+                        <?php 
+                        $categoryIcons = [
+                            'pe-7s-culture',     // Văn học
+                            'pe-7s-graph1',      // Kinh tế
+                            'pe-7s-monitor',     // Công nghệ
+                            'pe-7s-science',     // Khoa học
+                            'pe-7s-map-2',       // Lịch sử, địa lý
+                            'pe-7s-users',       // Tâm lý
+                            'pe-7s-smile',       // Thiếu nhi
+                            'pe-7s-study',       // Giáo dục
+                            'pe-7s-plus',        // Y học
+                            'pe-7s-bookmarks'    // Mặc định
+                        ];
+                        $categoryColors = [
+                            '#4f46e5', '#f59e0b', '#10b981', '#ef4444', 
+                            '#8b5cf6', '#06b6d4', '#f97316', '#84cc16',
+                            '#ec4899', '#6b7280'
+                        ];
+                        ?>
                         <?php foreach($listDanhMuc as $key => $danhMuc): ?>
+                            <?php 
+                            $iconClass = $categoryIcons[$key % count($categoryIcons)];
+                            $bgColor = $categoryColors[$key % count($categoryColors)];
+                            ?>
                             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                                <div class="category-card">
+                                <div class="category-card modern-category">
                                     <a href="<?= BASE_URL . '?act=san-pham-theo-danh-muc&danh_muc_id=' . $danhMuc['id']; ?>" class="category-link">
-                                        <div class="category-icon">
-                                            <i class="pe-7s-bookmarks"></i>
+                                        <div class="category-icon" style="background: linear-gradient(135deg, <?= $bgColor ?>, <?= $bgColor ?>cc);">
+                                            <i class="<?= $iconClass ?>"></i>
                                         </div>
                                         <div class="category-content">
                                             <h5 class="category-name"><?= $danhMuc['ten_danh_muc'] ?></h5>
                                             <?php if (!empty($danhMuc['mo_ta'])): ?>
-                                                <p class="category-desc"><?= $danhMuc['mo_ta'] ?></p>
+                                                <p class="category-desc"><?= htmlspecialchars(substr($danhMuc['mo_ta'], 0, 60)) ?><?= strlen($danhMuc['mo_ta']) > 60 ? '...' : '' ?></p>
                                             <?php endif; ?>
+                                            <div class="category-stats">
+                                                <span class="product-count">
+                                                    <i class="pe-7s-news-paper"></i> 
+                                                    <?= $danhMuc['so_san_pham'] ?? 0 ?> sản phẩm
+                                                </span>
+                                            </div>
                                         </div>
                                         <div class="category-arrow">
                                             <i class="pe-7s-angle-right"></i>

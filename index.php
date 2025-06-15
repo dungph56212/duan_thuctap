@@ -11,6 +11,7 @@ require_once './controllers/productlistController.php';
 require_once './controllers/ForgotPasswordController.php';
 require_once './controllers/LienHeController.php';
 require_once './controllers/BannerController.php';
+require_once './controllers/ChatBotController.php';
 
 // Require toàn bộ file Models
 require_once './models/SanPham.php';
@@ -22,6 +23,7 @@ require_once './models/danhmucmodels.php';
 require_once './models/productlistModel.php';
 require_once './models/DiaChi.php';
 require_once './models/KhuyenMai.php';
+require_once './models/ChatBot.php';
 // Route
 $act = $_GET['act'] ?? '/';
 // var_dump($_GET['act']);die();
@@ -70,4 +72,14 @@ match ($act) {
     'forgot-password' => (new ForgotPasswordController())->forgotPassword(),
     'reset-password' => (new ForgotPasswordController())->resetPassword(),
     'track-banner-view' => (new BannerController())->trackBannerView(),
+    // ChatBot API routes
+    'chatbot-send-message' => (new ChatBotController())->sendMessage(),
+    'chatbot-get-history' => (new ChatBotController())->getChatHistory(),
+    'chatbot-clear-chat' => (new ChatBotController())->clearChat(),
+    'chatbot-test' => (new ChatBotController())->test(),
+    'chatbot-popular-products' => (new ChatBotController())->getPopularProducts(),
+    'chatbot-categories' => (new ChatBotController())->getCategories(),
+    'chatbot-search-products' => (new ChatBotController())->searchProducts(),
+    // Search routes
+   
 };

@@ -75,8 +75,7 @@
  
               </p>
             </a>
-          </li>
-          <li class="nav-item">
+          </li>          <li class="nav-item">
             <a href="<?= BASE_URL_ADMIN . '?act=san-pham' ?>" class="nav-link">
               <i  class="fas fa-book"></> </i>
               <p>
@@ -84,7 +83,54 @@
  
               </p>
             </a>
-          </li>          <li class="nav-item">
+          </li>
+
+          <!-- Book Management Section -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-book-open"></i>
+              <p>Quản lý sách & AI</p>
+              <i class="fas fa-angle-left right"></i>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=quan-ly-sach' ?>" class="nav-link">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <p>Dashboard</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=danh-sach-sach' ?>" class="nav-link">
+                  <i class="fas fa-list"></i>
+                  <p>Danh sách sách</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=form-them-sach' ?>" class="nav-link">
+                  <i class="fas fa-plus-circle"></i>
+                  <p>Thêm sách mới</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=them-sach-hang-loat' ?>" class="nav-link">
+                  <i class="fas fa-upload"></i>
+                  <p>Thêm hàng loạt</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=danh-muc-sach' ?>" class="nav-link">
+                  <i class="fas fa-tags"></i>
+                  <p>Danh mục sách</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?= BASE_URL_ADMIN . '?act=thong-ke-chatbot' ?>" class="nav-link">
+                  <i class="fas fa-robot"></i>
+                  <p>Thống kê Chatbot</p>
+                </a>
+              </li>
+            </ul>
+          </li><li class="nav-item">
           <a href="<?= BASE_URL_ADMIN . '?act=don-hang' ?>" class="nav-link">
             <i class="fas fa-file-invoice-dollar"></i>
               <p>

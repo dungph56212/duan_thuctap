@@ -28,9 +28,7 @@
                                         <ul>
                                             <li class="active"><a href="<?= BASE_URL. '?act=/'?>">Trang chủ</i></a>
                                                
-                                            </li>
-                                           
-                                            <li class="active"><a href="<?= BASE_URL. '?act=productlist'?>">Sản phẩm</i></a>
+                                            </li>                                            <li class="active"><a href="<?= BASE_URL. '?act=productlist'?>">Sản phẩm</i></a>
                                             <li><a href="#">Giới thiệu</a></li>
                                             <li><a href="<?= BASE_URL . '?act=lienhe' ?>">Liên hệ</a></li>
                                         </ul>
@@ -43,12 +41,12 @@
 
                         <!-- mini cart area start -->
                         <div class="col-lg-4">
-                            <div class="header-right d-flex align-items-center justify-content-xl-between justify-content-lg-end">
-                                <div class="header-search-container">
+                            <div class="header-right d-flex align-items-center justify-content-xl-between justify-content-lg-end">                                <div class="header-search-container">
                                     <button class="search-trigger d-xl-none d-lg-block"><i class="pe-7s-search"></i></button>
-                                    <form class="header-search-box d-lg-none d-xl-block">
-                                        <input type="text" placeholder="Nhập tên sản phẩm " class="header-search-field">
-                                        <button class="header-search-btn"><i class="pe-7s-search"></i></button>
+                                    <form class="header-search-box d-lg-none d-xl-block" action="<?= BASE_URL ?>?act=tim-kiem" method="GET">
+                                        <input type="hidden" name="act" value="tim-kiem">
+                                        <input type="text" name="keyword" placeholder="Nhập tên sản phẩm" class="header-search-field" value="<?= isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : '' ?>" required>
+                                        <button type="submit" class="header-search-btn"><i class="pe-7s-search"></i></button>
                                     </form>
                                 </div>
                                 <div class="header-configure-area">
